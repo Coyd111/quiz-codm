@@ -1,0 +1,599 @@
+/* ===== ANIMATIONS CSS - Quiz CODM ===== */
+
+/* ===== VARIABLES ===== */
+/* Ajouter des variables pour les durées et les courbes d'animation */
+:root {
+    --animation-duration-fast: 0.3s;
+    --animation-duration-normal: 0.6s;
+    --animation-duration-slow: 0.8s;
+    --animation-timing-function: ease-out; /* Courbe d'animation par défaut */
+}
+
+/* ===== KEYFRAMES ===== */
+
+/* Animation de chargement */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Animation de rebond */
+@keyframes bounce {
+    0%, 20%, 53%, 80%, 100% {
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        transform: translate3d(0, 0, 0);
+    }
+    40%, 43% {
+        animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+        transform: translate3d(0, -30px, 0);
+    }
+    70% {
+        animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+        transform: translate3d(0, -15px, 0);
+    }
+    90% {
+        transform: translate3d(0, -4px, 0);
+    }
+}
+
+/* Animation de fondu d'entrée */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation de fondu d'entrée depuis la gauche */
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Animation de fondu d'entrée depuis la droite */
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Animation de zoom d'entrée */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+    50% { opacity: 1; }
+    to { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+
+/* Animation de secousse */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Animation de rotation */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Animation de pulsation colorée */
+@keyframes colorPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+/* Animation de succès */
+@keyframes successPulse {
+    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(40, 167, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+/* Animation d'erreur */
+@keyframes errorPulse {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+/* Animation de glissement vers le haut */
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Animation de glissement vers le bas */
+@keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Animation de progression */
+@keyframes progressFill {
+    from { width: 0%; }
+    to { width: var(--progress-width, 100%); }
+}
+
+/* Animation de particules */
+@keyframes particles {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+/* Animation de flottement */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Animation de clignotement */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+/* ===== ANIMATIONS D'ÉLÉMENTS ===== */
+
+/* Utilisation des variables pour les animations */
+.header {
+    animation: slideDown var(--animation-duration-slow) var(--animation-timing-function);
+}
+
+.logo {
+    animation: fadeInLeft var(--animation-duration-normal) var(--animation-timing-function) 0.2s both;
+}
+
+.nav-link {
+    animation: fadeInRight var(--animation-duration-normal) var(--animation-timing-function) both;
+}
+
+.nav-link:nth-child(1) { animation-delay: 0.3s; }
+.nav-link:nth-child(2) { animation-delay: 0.4s; }
+.nav-link:nth-child(3) { animation-delay: 0.5s; }
+
+/* Logo hover effect */
+.logo:hover {
+    animation: pulse var(--animation-duration-fast) ease-in-out;
+}
+
+.logo i {
+    transition: transform var(--animation-duration-fast) ease;
+}
+
+.logo:hover i {
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* Welcome section animations */
+.welcome-section {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function);
+}
+
+.main-title {
+    animation: zoomIn var(--animation-duration-normal) var(--animation-timing-function) 0.3s both;
+}
+
+.main-subtitle {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function) 0.6s both;
+}
+
+.stat-item {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function) both;
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.stat-item:nth-child(1) { animation-delay: 0.8s; }
+.stat-item:nth-child(2) { animation-delay: 0.9s; }
+.stat-item:nth-child(3) { animation-delay: 1s; }
+
+.stat-item:hover {
+    animation: bounce var(--animation-duration-normal) ease;
+}
+
+.stat-number {
+    transition: color var(--animation-duration-fast) ease;
+}
+
+.stat-item:hover .stat-number {
+    animation: colorPulse 1.5s infinite;
+}
+
+/* Quiz card animations */
+.quiz-card {
+    animation: slideUp var(--animation-duration-normal) var(--animation-timing-function);
+    transition: transform var(--animation-duration-fast) ease, box-shadow var(--animation-duration-fast) ease;
+}
+
+.quiz-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Quiz start animations */
+.quiz-start {
+    animation: zoomIn var(--animation-duration-normal) var(--animation-timing-function);
+}
+
+.info-item {
+    animation: fadeInLeft var(--animation-duration-fast) var(--animation-timing-function) both;
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.info-item:nth-child(1) { animation-delay: 0.2s; }
+.info-item:nth-child(2) { animation-delay: 0.3s; }
+.info-item:nth-child(3) { animation-delay: 0.4s; }
+
+.info-item:hover {
+    transform: scale(1.05);
+}
+
+/* Button animations */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    animation: colorPulse 2s infinite;
+}
+
+.btn-large {
+    animation: pulse 2s infinite;
+}
+
+/* Progress bar animations */
+.progress-fill {
+    animation: progressFill var(--animation-duration-normal) var(--animation-timing-function) forwards;
+}
+
+/* Question animations */
+.question-container {
+    animation: fadeIn var(--animation-duration-fast) var(--animation-timing-function);
+}
+
+.question-text {
+    animation: fadeInLeft var(--animation-duration-normal) var(--animation-timing-function) 0.2s both;
+}
+
+.answer-btn {
+    animation: fadeInRight var(--animation-duration-fast) var(--animation-timing-function) both;
+    position: relative;
+    overflow: hidden;
+}
+
+.answer-btn:nth-child(1) { animation-delay: 0.1s; }
+.answer-btn:nth-child(2) { animation-delay: 0.2s; }
+.answer-btn:nth-child(3) { animation-delay: 0.3s; }
+.answer-btn:nth-child(4) { animation-delay: 0.4s; }
+
+.answer-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+.answer-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.answer-btn.selected {
+    animation: successPulse 1.5s infinite;
+}
+
+.answer-btn.correct {
+    animation: successPulse 2s ease-out;
+}
+
+.answer-btn.incorrect {
+    animation: shake 0.5s ease-out, errorPulse 2s ease-out;
+}
+
+/* Results animations */
+.quiz-results {
+    animation: zoomIn var(--animation-duration-normal) var(--animation-timing-function);
+}
+
+.score-circle {
+    animation: zoomIn var(--animation-duration-normal) var(--animation-timing-function) 0.3s both, colorPulse 3s infinite 1s;
+    position: relative;
+}
+
+.score-circle::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    animation: rotate 10s linear infinite;
+}
+
+.results-title {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function) 0.5s both;
+}
+
+.results-message {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function) 0.7s both;
+}
+
+.results-actions .btn {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function) both;
+}
+
+.results-actions .btn:first-child { animation-delay: 0.8s; }
+.results-actions .btn:last-child { animation-delay: 0.9s; }
+
+/* Completed state animations */
+.quiz-completed {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function);
+}
+
+.completed-icon {
+    animation: zoomIn var(--animation-duration-normal) var(--animation-timing-function) 0.2s both, successPulse 2s ease-out 1s;
+}
+
+.stat {
+    animation: fadeIn var(--animation-duration-fast) var(--animation-timing-function) both;
+}
+
+.stat:nth-child(1) { animation-delay: 0.4s; }
+.stat:nth-child(2) { animation-delay: 0.5s; }
+
+/* Modal animations */
+.modal {
+    animation: fadeIn var(--animation-duration-fast) var(--animation-timing-function);
+}
+
+.modal-content {
+    animation: slideUp var(--animation-duration-fast) var(--animation-timing-function);
+    transform-origin: center bottom;
+}
+
+.modal-close:hover {
+    animation: rotate var(--animation-duration-fast) ease;
+}
+
+/* Form animations */
+.form-group {
+    animation: fadeInLeft var(--animation-duration-fast) var(--animation-timing-function) both;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+
+.form-group input:focus {
+    animation: colorPulse 2s infinite;
+}
+
+/* Share buttons animations */
+.share-btn {
+    animation: fadeIn var(--animation-duration-fast) var(--animation-timing-function) both;
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.share-btn:nth-child(1) { animation-delay: 0.1s; }
+.share-btn:nth-child(2) { animation-delay: 0.2s; }
+.share-btn:nth-child(3) { animation-delay: 0.3s; }
+.share-btn:nth-child(4) { animation-delay: 0.4s; }
+
+.share-btn:hover {
+    animation: bounce var(--animation-duration-fast) ease;
+}
+
+/* Leaderboard animations */
+.leaderboard-item {
+    animation: fadeInLeft var(--animation-duration-fast) var(--animation-timing-function) both;
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.leaderboard-item:nth-child(odd) { animation-delay: 0.1s; }
+.leaderboard-item:nth-child(even) { animation-delay: 0.2s; }
+
+.leaderboard-item:hover {
+    transform: translateX(10px);
+}
+
+.leaderboard-rank {
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.leaderboard-item:hover .leaderboard-rank {
+    animation: pulse 1s ease-in-out;
+}
+
+/* Winners animations */
+.winner-card {
+    animation: zoomIn var(--animation-duration-fast) var(--animation-timing-function) both;
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.winner-card:nth-child(1) { animation-delay: 0.1s; }
+.winner-card:nth-child(2) { animation-delay: 0.2s; }
+.winner-card:nth-child(3) { animation-delay: 0.3s; }
+.winner-card:nth-child(4) { animation-delay: 0.4s; }
+.winner-card:nth-child(5) { animation-delay: 0.5s; }
+
+.winner-card:hover {
+    animation: float 2s ease-in-out infinite;
+}
+
+.winner-icon {
+    transition: transform var(--animation-duration-fast) ease;
+}
+
+.winner-card:hover .winner-icon {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* Loading animations */
+.loading-spinner i {
+    animation: rotate 1s linear infinite;
+}
+
+.loading-spinner p {
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+/* Ad banner animations */
+.ad-banner {
+    animation: slideDown var(--animation-duration-normal) var(--animation-timing-function);
+}
+
+/* Footer animations */
+.footer {
+    animation: fadeIn var(--animation-duration-normal) var(--animation-timing-function);
+}
+
+.footer-links a {
+    transition: all var(--animation-duration-fast) ease;
+    position: relative;
+}
+
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    background-color: var(--primary-color);
+    transition: all var(--animation-duration-fast) ease;
+}
+
+.footer-links a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Scroll animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all var(--animation-duration-slow) var(--animation-timing-function);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover effects généraux */
+.stat-item,
+.quiz-card,
+.winner-card,
+.leaderboard-item {
+    transition: transform var(--animation-duration-fast) ease, box-shadow var(--animation-duration-fast) ease;
+}
+
+/* Animations responsives - désactiver sur mobile pour de meilleures performances */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Animations spéciales pour mobile */
+@media (max-width: 768px) {
+    .quiz-card {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .answer-btn {
+        animation: fadeIn 0.4s ease-out both;
+    }
+
+    .btn-large {
+        animation: none;
+    }
+
+    .stat-item:hover {
+        animation: none;
+        transform: scale(1.02);
+    }
+}
+
+/* Classes utilitaires d'animation */
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-bounce {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.animate-shake {
+    animation: shake 0.5s ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-zoom-in {
+    animation: zoomIn 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+}
+
+/* Animation de particules de célébration */
+.celebration-particles::before,
+.celebration-particles::after {
+    content: '🎉';
+    position: absolute;
+    font-size: 1.5rem;
+    animation: particles 2s ease-out infinite;
+}
+
+.celebration-particles::before {
+    top: 0;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.celebration-particles::after {
+    top: 0;
+    right: 20%;
+    animation-delay: 0.5s;
+}
+
+/* ===== Améliorations ===== */
+
+/* 1.  VARIABLES CSS :  Centralisation des valeurs */
+/*   -  Définir des variables CSS pour les durées d'animation et les courbes d'animation facilite la modification et la cohérence. */
+/* 2.  SIMPLIFICATION DES ANIMATIONS: Rendre le code plus lisible */
+/*   -  Remplacer les valeurs fixes par des variables permet de modifier facilement les animations de manière globale. */
+/* 3.  MEDIA QUERIES: Optimisation pour la performance sur mobile */
+/*   -  Désactiver certaines animations ou les simplifier sur mobile améliore la performance sur les appareils moins puissants. */
+/* 4.  CLASSES UTILITAIRES : Flexibilité et réutilisabilité */
+/*   -  Créer des classes utilitaires pour les animations courantes permet de les appliquer facilement à différents éléments. */
+/* 5.  COMMENTAIRES: Clarification du code */
+/*   -  Ajouter des commentaires pour expliquer chaque section et les effets désirés facilite la maintenance et la compréhension du code. */
