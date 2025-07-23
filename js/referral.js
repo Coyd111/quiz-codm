@@ -55,7 +55,7 @@ class ReferralManager {
     loadReferralData() {
         try {
             // Chargement des données utilisateur principales
-            const userData = window.QuizStorage?.loadUserData() || {};
+            const userData = window.QuizStorage?.loadUser() || {};
             this.currentUserCode = userData.referralCode || this.generateReferralCode();
             this.referredBy = userData.referredBy || null;
             this.totalReferrals = userData.referralsCount || 0;
@@ -102,7 +102,7 @@ class ReferralManager {
             
             // Mise à jour des données utilisateur principales
             if (window.QuizStorage) {
-                const userData = window.QuizStorage.loadUserData();
+                const userData = window.QuizStorage.loadUser();
                 userData.referralCode = this.currentUserCode;
                 userData.referredBy = this.referredBy;
                 userData.referralsCount = this.totalReferrals;
@@ -282,7 +282,7 @@ class ReferralManager {
     validatePendingReferrals() {
         if (!window.QuizStorage) return;
 
-        const userData = window.QuizStorage.loadUserData();
+        const userData = window.QuizStorage.loadUser();
         const userHasCompletedQuiz = userData.totalQuizzes > 0;
 
         // Si l'utilisateur actuel a des parrainages en attente et a terminé un quiz
@@ -512,7 +512,7 @@ class ReferralManager {
             statsElements.pendingReferrals.textContent = this.pendingReferrals.length;
         }
         if (statsElements.ticketsFromReferrals) {
-            const userData = window.QuizStorage?.loadUserData() || {};
+            const userData = window.QuizStorage?.loadUser() || {};
             statsElements.ticketsFromReferrals.textContent = userData.ticketsFromReferrals || 0;
         }
     }
