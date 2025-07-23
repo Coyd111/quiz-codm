@@ -62,13 +62,21 @@ const elements = {
     mobileNav: document.querySelector('.mobile-nav')
 };
 
-// ===== INITIALISATION =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🎮 Quiz CODM - Initialisation...');
     
     // Attendre que storage.js soit chargé
     if (typeof window.QuizStorage === 'undefined') {
         console.log('⏳ Attente du système de stockage...');
+        setTimeout(() => {
+            document.dispatchEvent(new Event('DOMContentLoaded'));
+        }, 100);
+        return;
+    }
+
+    // Attendre que les modules de partage et parrainage soient chargés
+    if (typeof window.quizShare === 'undefined' || typeof window.quizReferral === 'undefined') {
+        console.log('⏳ Attente des modules de partage et parrainage...');
         setTimeout(() => {
             document.dispatchEvent(new Event('DOMContentLoaded'));
         }, 100);
