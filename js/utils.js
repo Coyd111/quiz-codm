@@ -26,7 +26,7 @@ const UTILS_CONFIG = {
         HOUR: 60 * 60 * 1000,
         DAY: 24 * 60 * 60 * 1000,
         WEEK: 7 * 24 * 60 * 60 * 1000,
-        MONTH: 30 * 24 * 60 * 60 * 1000
+        MONTH: 40 * 24 * 60 * 60 * 1000
     },
     
     // Expressions régulières communes
