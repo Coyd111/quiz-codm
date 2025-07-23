@@ -412,7 +412,7 @@ class ShareManager {
         // Mise à jour des statistiques de partage
         const shareStats = document.getElementById('shareStats');
         if (shareStats) {
-            const userData = window.QuizStorage?.loadUserData() || {};
+            const userData = window.QuizStorage?.loadUser() || {};
             shareStats.innerHTML = `
                 <div class="share-stat">
                     <span class="share-stat-number">${userData.ticketsFromShares || 0}</span>
@@ -467,8 +467,8 @@ class ShareManager {
      * @returns {Object} Statistiques de partage
      */
     getShareStats() {
-        const userData = window.QuizStorage?.loadUserData() || {};
-        return {
+            const userData = window.QuizStorage?.loadUser() || {};
+            return {
             dailyShares: this.dailyShares,
             maxDailyShares: SHARE_CONFIG.TICKETS.MAX_DAILY_SHARES,
             totalTicketsFromShares: userData.ticketsFromShares || 0,
