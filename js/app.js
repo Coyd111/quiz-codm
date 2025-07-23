@@ -65,29 +65,22 @@ const elements = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🎮 Quiz CODM - Initialisation...');
     
-    // Attendre que storage.js soit chargé
-    if (typeof window.QuizStorage === 'undefined') {
-        console.log('⏳ Attente du système de stockage...');
-        setTimeout(() => {
-            document.dispatchEvent(new Event('DOMContentLoaded'));
-        }, 100);
-        return;
-    }
-
-    // Attendre que les modules de partage et parrainage soient chargés
-    if (typeof window.quizShare === 'undefined' || typeof window.quizReferral === 'undefined') {
-        console.log('⏳ Attente des modules de partage et parrainage...');
-        setTimeout(() => {
-            document.dispatchEvent(new Event('DOMContentLoaded'));
-        }, 100);
-        return;
+    // Fonction pour attendre que les modules soient chargés
+    function waitForModules() {
+        if (typeof window.QuizStorage !== 'undefined' && typeof window.QuizStorage.loadUser === 'function' &&
+            typeof window.quizShare !== 'undefined' && typeof window.quizReferral !== 'undefined') {
+            initializeApp();
+            setupEventListeners();
+            checkDailyQuizStatus();
+            updateStats();
+            setupMobileMenu();
+        } else {
+            console.log('⏳ Attente des modules...');
+            setTimeout(waitForModules, 100);
+        }
     }
     
-    initializeApp();
-    setupEventListeners();
-    checkDailyQuizStatus();
-    updateStats();
-    setupMobileMenu();
+    waitForModules();
 });
 
 // ===== FONCTIONS D'INITIALISATION =====
