@@ -28,6 +28,25 @@ const SHARE_CONFIG = {
     }
 };
 
+// ===== GESTION DE L'IDENTIFIANT UNIQUE UTILISATEUR =====
+function getOrCreateUserId() {
+    const KEY = "quizcodm_user_id";
+    let id = localStorage.getItem(KEY);
+    if (!id) {
+        if (window.crypto && window.crypto.randomUUID) {
+            id = crypto.randomUUID();
+        } else {
+            id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        localStorage.setItem(KEY, id);
+    }
+    return id;
+}
+const USER_UNIQUE_ID = getOrCreateUserId();
+
 // ===== CLASSE PRINCIPALE DE PARTAGE =====
 class ShareManager {
     constructor() {
@@ -190,15 +209,10 @@ class ShareManager {
         return message;
     }
 
-    // ===== GÉNÉRATION DE L'URL DE PARTAGE =====
+    // ===== GÉNÉRATION DE L'URL DE PARTAGE (UUID) =====
     generateShareUrl(platform = null) {
         let url = this.baseUrl;
-        
-        // Ajout du code de parrainage
-        if (this.userReferralCode) {
-            url += `?ref=${this.userReferralCode}`;
-        }
-
+        url += `?ref=${USER_UNIQUE_ID}`;
         // Paramètres UTM pour tracking
         const utmParams = new URLSearchParams({
             utm_source: platform || 'share',
@@ -206,7 +220,6 @@ class ShareManager {
             utm_campaign: 'quiz_codm',
             utm_content: 'user_share'
         });
-
         url += (url.includes('?') ? '&' : '?') + utmParams.toString();
         return url;
     }
@@ -441,20 +454,33 @@ class ShareManager {
 
     // ===== SYSTÈME DE NOTIFICATIONS =====
     showNotification(message, type = 'info') {
-        // Création de la notification si elle n'existe pas
         let notification = document.getElementById('shareNotification');
         if (!notification) {
             notification = document.createElement('div');
             notification.id = 'shareNotification';
             notification.className = 'share-notification';
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            notification.setAttribute('tabindex', '-1');
             document.body.appendChild(notification);
         }
-
-        // Configuration de la notification
         notification.className = `share-notification ${type} active`;
-        notification.textContent = message;
-
-        // Auto-suppression
+        notification.innerHTML = `
+            <span>${message}</span>
+            <button class="close-share" aria-label="Fermer la notification">&times;</button>
+        `;
+        notification.focus();
+        // Fermeture clavier (ESC)
+        function handleEscClose(e) {
+            if (e.key === 'Escape') {
+                notification.classList.remove('active');
+                document.removeEventListener('keydown', handleEscClose);
+            }
+        }
+        document.addEventListener('keydown', handleEscClose);
+        // Fermeture bouton
+        const closeBtn = notification.querySelector('.close-share');
+        if (closeBtn) closeBtn.onclick = () => notification.classList.remove('active');
         setTimeout(() => {
             notification.classList.remove('active');
         }, 5000);
