@@ -1,804 +1,914 @@
-// ===== UTILS.JS - FONCTIONS UTILITAIRES QUIZ CODM =====
+// ===== STORAGE.JS - GESTION LOCALSTORAGE QUIZ CODM =====
 
-// ===== CONSTANTES UTILITAIRES =====
-const UTILS_CONFIG = {
-    // Formats de date
-    DATE_FORMATS: {
-        SHORT: 'DD/MM/YYYY',
-        LONG: 'DD MMMM YYYY',
-        TIME: 'HH:mm',
-        FULL: 'DD/MM/YYYY HH:mm'
-    },
-    
-    // Messages d'erreur communs
-    ERROR_MESSAGES: {
-        NETWORK: 'Erreur de connexion. Vérifiez votre internet.',
-        STORAGE: 'Erreur de stockage local. Espace insuffisant ?',
-        VALIDATION: 'Données invalides. Vérifiez vos informations.',
-        TIMEOUT: 'Opération expirée. Réessayez plus tard.',
-        GENERIC: 'Une erreur inattendue s\'est produite.'
-    },
-    
-    // Durées communes (en millisecondes)
-    DURATIONS: {
-        SECOND: 1000,
-        MINUTE: 60 * 1000,
-        HOUR: 60 * 60 * 1000,
-        DAY: 24 * 60 * 60 * 1000,
-        WEEK: 7 * 24 * 60 * 60 * 1000,
-        MONTH: 40 * 24 * 60 * 60 * 1000
-    },
-    
-    // Expressions régulières communes
-    REGEX: {
-        EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        PSEUDO: /^[a-zA-Z0-9_-]{3,20}$/,
-        URL: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
-        PHONE: /^(?:\+33|0)[1-9](?:[0-9]{8})$/
-    }
+// ===== CONSTANTES DE STOCKAGE =====
+const STORAGE_KEYS = {
+    USER_DATA: 'quizCODM_userData',
+    QUIZ_HISTORY: 'quizCODM_quizHistory',
+    LEADERBOARD: 'quizCODM_leaderboard',
+    REFERRALS: 'quizCODM_referrals',
+    SETTINGS: 'quizCODM_settings',
+    PARTICIPATION: 'quizCODM_participation',
+    ANALYTICS: 'quizCODM_analytics'
 };
 
-// ===== CLASSE PRINCIPALE DES UTILITAIRES =====
-class QuizUtils {
-    
-    // ===== GESTION DES DATES =====
-    
-    /**
-     * Formate une date selon le format spécifié
-     * @param {Date|string|number} date - Date à formater
-     * @param {string} format - Format souhaité
-     * @returns {string} Date formatée
-     */
-    static formatDate(date, format = 'DD/MM/YYYY') {
-        try {
-            const d = new Date(date);
-            if (isNaN(d.getTime())) return 'Date invalide';
-            
-            const day = String(d.getDate()).padStart(2, '0');
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const year = d.getFullYear();
-            const hours = String(d.getHours()).padStart(2, '0');
-            const minutes = String(d.getMinutes()).padStart(2, '0');
-            
-            const monthNames = [
-                'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-                'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
-            ];
-            
-            switch (format) {
-                case 'DD/MM/YYYY':
-                    return `${day}/${month}/${year}`;
-                case 'DD MMMM YYYY':
-                    return `${day} ${monthNames[d.getMonth()]} ${year}`;
-                case 'HH:mm':
-                    return `${hours}:${minutes}`;
-                case 'DD/MM/YYYY HH:mm':
-                    return `${day}/${month}/${year} ${hours}:${minutes}`;
-                default:
-                    return d.toLocaleDateString('fr-FR');
-            }
-        } catch (error) {
-            console.error('❌ Erreur formatage date:', error);
-            return 'Erreur date';
-        }
+// Limites de stockage
+const STORAGE_LIMITS = {
+    MAX_QUIZ_HISTORY: 100,
+    MAX_LEADERBOARD_ENTRIES: 50,
+    MAX_REFERRALS: 1000,
+    MAX_STORAGE_SIZE: 5 * 1024 * 1024 // 5MB
+};
+
+// ===== CLASSE PRINCIPALE DE GESTION DU STOCKAGE =====
+class QuizStorage {
+    constructor() {
+        this.isSupported = this.checkStorageSupport();
+        this.version = '1.0.0';
+        this.initializeStorage();
     }
-    
-    /**
-     * Calcule le temps écoulé depuis une date
-     * @param {Date|string|number} date - Date de référence
-     * @returns {string} Temps écoulé en français
-     */
-    static getTimeAgo(date) {
-        try {
-            const now = new Date();
-            const past = new Date(date);
-            const diffMs = now - past;
-            
-            if (diffMs < UTILS_CONFIG.DURATIONS.MINUTE) {
-                return 'À l\'instant';
-            } else if (diffMs < UTILS_CONFIG.DURATIONS.HOUR) {
-                const minutes = Math.floor(diffMs / UTILS_CONFIG.DURATIONS.MINUTE);
-                return `Il y a ${minutes}min`;
-            } else if (diffMs < UTILS_CONFIG.DURATIONS.DAY) {
-                const hours = Math.floor(diffMs / UTILS_CONFIG.DURATIONS.HOUR);
-                return `Il y a ${hours}h`;
-            } else if (diffMs < UTILS_CONFIG.DURATIONS.WEEK) {
-                const days = Math.floor(diffMs / UTILS_CONFIG.DURATIONS.DAY);
-                return `Il y a ${days}j`;
-            } else {
-                return this.formatDate(date, 'DD/MM/YYYY');
-            }
-        } catch (error) {
-            console.error('❌ Erreur calcul temps écoulé:', error);
-            return 'Date inconnue';
-        }
-    }
-    
-    /**
-     * Vérifie si une date est aujourd'hui
-     * @param {Date|string|number} date - Date à vérifier
-     * @returns {boolean} True si c'est aujourd'hui
-     */
-    static isToday(date) {
-        try {
-            const today = new Date();
-            const checkDate = new Date(date);
-            return today.toDateString() === checkDate.toDateString();
-        } catch (error) {
-            return false;
-        }
-    }
-    
-    // ===== VALIDATION DES DONNÉES =====
-    
-    /**
-     * Valide une adresse email
-     * @param {string} email - Email à valider
-     * @returns {boolean} True si valide
-     */
-    static isValidEmail(email) {
-        return typeof email === 'string' && UTILS_CONFIG.REGEX.EMAIL.test(email.trim());
-    }
-    
-    /**
-     * Valide un pseudo utilisateur
-     * @param {string} pseudo - Pseudo à valider
-     * @returns {object} Résultat de validation avec détails
-     */
-    static validatePseudo(pseudo) {
-        if (!pseudo || typeof pseudo !== 'string') {
-            return { valid: false, error: 'Pseudo requis' };
-        }
-        
-        const trimmed = pseudo.trim();
-        
-        if (trimmed.length < 3) {
-            return { valid: false, error: 'Pseudo trop court (min 3 caractères)' };
-        }
-        
-        if (trimmed.length > 20) {
-            return { valid: false, error: 'Pseudo trop long (max 20 caractères)' };
-        }
-        
-        if (!UTILS_CONFIG.REGEX.PSEUDO.test(trimmed)) {
-            return { valid: false, error: 'Caractères autorisés: lettres, chiffres, - et _' };
-        }
-        
-        // Vérifier les mots interdits
-        const forbiddenWords = ['admin', 'codm', 'quiz', 'bot', 'null', 'undefined'];
-        if (forbiddenWords.some(word => trimmed.toLowerCase().includes(word))) {
-            return { valid: false, error: 'Ce pseudo n\'est pas autorisé' };
-        }
-        
-        return { valid: true, pseudo: trimmed };
-    }
-    
-    /**
-     * Valide une URL
-     * @param {string} url - URL à valider
-     * @returns {boolean} True si valide
-     */
-    static isValidURL(url) {
-        return typeof url === 'string' && UTILS_CONFIG.REGEX.URL.test(url);
-    }
-    
-    /**
-     * Nettoie et valide une entrée de texte
-     * @param {string} text - Texte à nettoyer
-     * @param {number} maxLength - Longueur maximale
-     * @returns {string} Texte nettoyé
-     */
-    static sanitizeText(text, maxLength = 1000) {
-        if (!text || typeof text !== 'string') return '';
-        
-        return text
-            .trim()
-            .replace(/[<>'"]/g, '') // Suppression caractères dangereux
-            .substring(0, maxLength);
-    }
-    
-    // ===== MANIPULATION DES TABLEAUX =====
-    
-    /**
-     * Mélange un tableau aléatoirement
-     * @param {Array} array - Tableau à mélanger
-     * @returns {Array} Nouveau tableau mélangé
-     */
-    static shuffleArray(array) {
-        if (!Array.isArray(array)) return [];
-        
-        const shuffled = [...array];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
-    }
-    
-    /**
-     * Sélectionne des éléments aléatoires d'un tableau
-     * @param {Array} array - Tableau source
-     * @param {number} count - Nombre d'éléments à sélectionner
-     * @returns {Array} Éléments sélectionnés
-     */
-    static getRandomElements(array, count) {
-        if (!Array.isArray(array) || count <= 0) return [];
-        
-        const shuffled = this.shuffleArray(array);
-        return shuffled.slice(0, Math.min(count, array.length));
-    }
-    
-    /**
-     * Groupe un tableau par propriété
-     * @param {Array} array - Tableau à grouper
-     * @param {string|function} key - Clé ou fonction de groupage
-     * @returns {Object} Objet groupé
-     */
-    static groupBy(array, key) {
-        if (!Array.isArray(array)) return {};
-        
-        return array.reduce((groups, item) => {
-            const groupKey = typeof key === 'function' ? key(item) : item[key];
-            if (!groups[groupKey]) {
-                groups[groupKey] = [];
-            }
-            groups[groupKey].push(item);
-            return groups;
-        }, {});
-    }
-    
-    // ===== MANIPULATION DES NOMBRES =====
-    
-    /**
-     * Génère un nombre aléatoire entre min et max
-     * @param {number} min - Valeur minimale
-     * @param {number} max - Valeur maximale
-     * @returns {number} Nombre aléatoire
-     */
-    static randomBetween(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    
-    /**
-     * Formate un nombre avec séparateurs de milliers
-     * @param {number} number - Nombre à formater
-     * @returns {string} Nombre formaté
-     */
-    static formatNumber(number) {
-        if (typeof number !== 'number') return '0';
-        return number.toLocaleString('fr-FR');
-    }
-    
-    /**
-     * Calcule un pourcentage
-     * @param {number} value - Valeur
-     * @param {number} total - Total
-     * @param {number} decimals - Nombre de décimales
-     * @returns {number} Pourcentage
-     */
-    static getPercentage(value, total, decimals = 1) {
-        if (total === 0) return 0;
-        return parseFloat(((value / total) * 100).toFixed(decimals));
-    }
-    
-    // ===== GESTION DU STOCKAGE LOCAL =====
-    
-    /**
-     * Sauvegarde sécurisée dans localStorage
-     * @param {string} key - Clé de stockage
-     * @param {any} value - Valeur à stocker
-     * @returns {boolean} Succès de la sauvegarde
-     */
-    static secureSetItem(key, value) {
-        try {
-            const serialized = JSON.stringify(value);
-            localStorage.setItem(key, serialized);
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur localStorage set:', error);
-            this.showNotification(UTILS_CONFIG.ERROR_MESSAGES.STORAGE, 'error');
-            return false;
-        }
-    }
-    
-    /**
-     * Récupération sécurisée depuis localStorage
-     * @param {string} key - Clé de stockage
-     * @param {any} defaultValue - Valeur par défaut
-     * @returns {any} Valeur récupérée ou par défaut
-     */
-    static secureGetItem(key, defaultValue = null) {
-        try {
-            const item = localStorage.getItem(key);
-            return item ? JSON.parse(item) : defaultValue;
-        } catch (error) {
-            console.error('❌ Erreur localStorage get:', error);
-            return defaultValue;
-        }
-    }
-    
-    /**
-     * Suppression sécurisée du localStorage
-     * @param {string} key - Clé à supprimer
-     * @returns {boolean} Succès de la suppression
-     */
-    static secureRemoveItem(key) {
-        try {
-            localStorage.removeItem(key);
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur localStorage remove:', error);
-            return false;
-        }
-    }
-    
-    /**
-     * Vérifie l'espace disponible dans localStorage
-     * @returns {object} Informations sur l'espace de stockage
-     */
-    static getStorageInfo() {
-        try {
-            let used = 0;
-            for (let key in localStorage) {
-                if (localStorage.hasOwnProperty(key)) {
-                    used += localStorage[key].length + key.length;
-                }
-            }
-            
-            // Estimation de l'espace total (généralement ~5-10MB)
-            const total = 5 * 1024 * 1024; // 5MB
-            const usedMB = (used / 1024 / 1024).toFixed(2);
-            const totalMB = (total / 1024 / 1024).toFixed(2);
-            const percentage = this.getPercentage(used, total, 1);
-            
-            return {
-                used: used,
-                usedMB: usedMB,
-                total: total,
-                totalMB: totalMB,
-                percentage: percentage,
-                available: total - used
-            };
-        } catch (error) {
-            console.error('❌ Erreur info stockage:', error);
-            return { error: 'Impossible de calculer l\'espace' };
-        }
-    }
-    
-    // ===== GESTION DES ANIMATIONS ET INTERFACE =====
-    
-    /**
-     * Attend la fin d'une animation CSS
-     * @param {HTMLElement} element - Élément à observer
-     * @returns {Promise} Promesse résolue à la fin de l'animation
-     */
-    static waitForAnimation(element) {
-        return new Promise((resolve) => {
-            const handleAnimationEnd = () => {
-                element.removeEventListener('animationend', handleAnimationEnd);
-                resolve();
-            };
-            element.addEventListener('animationend', handleAnimationEnd);
-        });
-    }
-    
-    /**
-     * Fait défiler vers un élément en douceur
-     * @param {HTMLElement|string} target - Élément ou sélecteur
-     * @param {number} offset - Décalage en pixels
-     */
-    static smoothScrollTo(target, offset = 0) {
-        try {
-            const element = typeof target === 'string' ? document.querySelector(target) : target;
-            if (!element) return;
-            
-            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = elementPosition - offset;
-            
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        } catch (error) {
-            console.error('❌ Erreur scroll:', error);
-        }
-    }
-    
-    /**
-     * Ajoute une classe temporairement
-     * @param {HTMLElement} element - Élément cible
-     * @param {string} className - Classe à ajouter
-     * @param {number} duration - Durée en millisecondes
-     */
-    static addTemporaryClass(element, className, duration = 3000) {
-        if (!element) return;
-        
-        element.classList.add(className);
-        setTimeout(() => {
-            element.classList.remove(className);
-        }, duration);
-    }
-    
-    // ===== GESTION DES ÉVÉNEMENTS =====
-    
-    /**
-     * Debounce une fonction (évite les appels répétés)
-     * @param {function} func - Fonction à débouncer
-     * @param {number} delay - Délai en millisecondes
-     * @returns {function} Fonction débouncée
-     */
-    static debounce(func, delay = 300) {
-        let timeoutId;
-        return function (...args) {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => func.apply(this, args), delay);
-        };
-    }
-    
-    /**
-     * Throttle une fonction (limite la fréquence d'exécution)
-     * @param {function} func - Fonction à throttler
-     * @param {number} delay - Délai en millisecondes
-     * @returns {function} Fonction throttlée
-     */
-    static throttle(func, delay = 100) {
-        let lastCall = 0;
-        return function (...args) {
-            const now = Date.now();
-            if (now - lastCall >= delay) {
-                lastCall = now;
-                return func.apply(this, args);
-            }
-        };
-    }
-    
-    // ===== DÉTECTION DE L'ENVIRONNEMENT =====
-    
-    /**
-     * Détecte si l'utilisateur est sur mobile
-     * @returns {boolean} True si mobile
-     */
-    static isMobile() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-               (window.innerWidth <= 768);
-    }
-    
-    /**
-     * Détecte le navigateur utilisé
-     * @returns {string} Nom du navigateur
-     */
-    static getBrowser() {
-        const userAgent = navigator.userAgent;
-        
-        if (userAgent.indexOf('Firefox') !== -1) return 'Firefox';
-        if (userAgent.indexOf('Opera') !== -1 || userAgent.indexOf('OPR') !== -1) return 'Opera';
-        if (userAgent.indexOf('Trident') !== -1) return 'Internet Explorer';
-        if (userAgent.indexOf('Edge') !== -1) return 'Edge';
-        if (userAgent.indexOf('Chrome') !== -1) return 'Chrome';
-        if (userAgent.indexOf('Safari') !== -1) return 'Safari';
-        
-        return 'Unknown';
-    }
-    
-    /**
-     * Vérifie si le localStorage est supporté
-     * @returns {boolean} True si supporté
-     */
-    static isLocalStorageSupported() {
+
+    // ===== VÉRIFICATION DU SUPPORT =====
+    checkStorageSupport() {
         try {
             const test = '__storage_test__';
             localStorage.setItem(test, test);
             localStorage.removeItem(test);
             return true;
         } catch (error) {
+            console.error('❌ localStorage non supporté:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
             return false;
         }
     }
-    
-    // ===== GÉNÉRATEURS D'ID ET CODES =====
-    
-    /**
-     * Génère un ID unique
-     * @param {string} prefix - Préfixe optionnel
-     * @returns {string} ID unique
-     */
-    static generateUniqueId(prefix = 'id') {
-        const timestamp = Date.now().toString(36);
-        const randomPart = Math.random().toString(36).substr(2, 9);
-        return `${prefix}_${timestamp}_${randomPart}`;
+
+    // ===== INITIALISATION =====
+    initializeStorage() {
+        if (!this.isSupported) {
+            console.warn('⚠️ Stockage local non disponible - Mode dégradé');
+            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
+            return;
+        }
+
+        try {
+            // Migration des données si nécessaire
+            this.migrateData();
+            // Initialisation des structures de base
+            this.ensureDataStructures();
+            // Nettoyage périodique
+            this.performMaintenance();
+            console.log('✅ Système de stockage initialisé');
+        } catch (error) {
+            console.error('❌ Erreur initialisation stockage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
     }
+
+    // ===== GESTION DES DONNÉES UTILISATEUR =====
     
     /**
-     * Génère un code aléatoire
-     * @param {number} length - Longueur du code
-     * @param {string} chars - Caractères autorisés
-     * @returns {string} Code généré
+     * Initialise les données utilisateur par défaut
+     * @returns {Object} Données utilisateur par défaut
      */
-    static generateCode(length = 8, chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') {
+    createDefaultUserData() {
+        const now = new Date();
+        return {
+            // Identité
+            userId: this.generateUserId(),
+            username: null,
+            email: null,
+            createdAt: now.toISOString(),
+            lastActiveDate: now.toISOString(),
+            
+            // Quiz
+            lastPlayDate: null,
+            todayScore: 0,
+            totalQuizzes: 0,
+            bestScore: 0,
+            averageScore: 0,
+            perfectScores: 0,
+            
+            // Système de tickets
+            totalTickets: 0,
+            ticketsEarned: 0,
+            ticketsFromShares: 0,
+            ticketsFromReferrals: 0,
+            
+            // Participation
+            hasParticipated: false,
+            participationDate: null,
+            monthlyParticipations: 0,
+            
+            // Parrainage
+            referralCode: this.generateReferralCode(),
+            referralsCount: 0,
+            referredBy: null,
+            
+            // Préférences
+            settings: this.createDefaultSettings(),
+            
+            // Version des données
+            dataVersion: this.version
+        };
+    }
+
+    /**
+     * Sauvegarde les données utilisateur
+     * @param {Object} userData - Données utilisateur à sauvegarder
+     * @returns {boolean} Succès de la sauvegarde
+     */
+    saveUserData(userData) {
+        try {
+            if (!userData) return false;
+
+            // Validation des données
+            const validatedData = this.validateUserData(userData);
+            
+            // Mise à jour de la date de dernière activité
+            validatedData.lastActiveDate = new Date().toISOString();
+            
+            // Sauvegarde sécurisée
+            return this.secureSet(STORAGE_KEYS.USER_DATA, validatedData);
+        } catch (error) {
+            console.error('❌ Erreur sauvegarde données utilisateur:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Charge les données utilisateur
+     * @returns {Object} Données utilisateur ou données par défaut
+     */
+    loadUserData() {
+        try {
+            const userData = this.secureGet(STORAGE_KEYS.USER_DATA);
+            
+            if (!userData) {
+                const defaultData = this.createDefaultUserData();
+                this.saveUserData(defaultData);
+                return defaultData;
+            }
+
+            // Vérification de la migration nécessaire
+            if (userData.dataVersion !== this.version) {
+                return this.migrateUserData(userData);
+            }
+
+            return userData;
+        } catch (error) {
+            console.error('❌ Erreur chargement données utilisateur:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return this.createDefaultUserData();
+        }
+    }
+
+    // ===== HISTORIQUE DES QUIZ =====
+    
+    /**
+     * Sauvegarde un résultat de quiz
+     * @param {Object} quizResult - Résultat du quiz
+     * @returns {boolean} Succès de la sauvegarde
+     */
+    saveQuizResult(quizResult) {
+        try {
+            const history = this.getQuizHistory();
+            const result = {
+                id: this.generateId(),
+                date: new Date().toISOString(),
+                score: quizResult.score,
+                totalQuestions: quizResult.totalQuestions,
+                timeSpent: quizResult.timeSpent || null,
+                questions: quizResult.questions || [],
+                answers: quizResult.answers || [],
+                difficulty: quizResult.difficulty || 'mixed'
+            };
+
+            // Ajout au début de l'historique
+            history.unshift(result);
+            
+            // Limitation du nombre d'entrées
+            if (history.length > STORAGE_LIMITS.MAX_QUIZ_HISTORY) {
+                history.splice(STORAGE_LIMITS.MAX_QUIZ_HISTORY);
+            }
+
+            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, history);
+            
+            // Mise à jour des statistiques utilisateur
+            this.updateUserStats(result);
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur sauvegarde résultat quiz:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère l'historique des quiz
+     * @param {number} limit - Nombre de résultats à retourner
+     * @returns {Array} Historique des quiz
+     */
+    getQuizHistory(limit = null) {
+        const history = this.secureGet(STORAGE_KEYS.QUIZ_HISTORY) || [];
+        return limit ? history.slice(0, limit) : history;
+    }
+
+    // ===== SYSTÈME DE TICKETS =====
+    
+    /**
+     * Ajoute des tickets à l'utilisateur
+     * @param {number} amount - Nombre de tickets à ajouter
+     * @param {string} source - Source des tickets (quiz, share, referral)
+     * @returns {number} Nombre total de tickets
+     */
+    addTickets(amount, source = 'quiz') {
+        if (!Number.isInteger(amount) || amount <= 0) {
+            console.warn('⚠️ Ajout de tickets invalide:', amount);
+            return this.getTickets(); // Retourne le nombre actuel de tickets
+        }
+
+        try {
+            const userData = this.loadUserData();
+            
+            userData.totalTickets += amount;
+            userData.ticketsEarned += amount;
+            
+            // Suivi par source
+            switch (source) {
+                case 'share':
+                    userData.ticketsFromShares += amount;
+                    break;
+                case 'referral':
+                    userData.ticketsFromReferrals += amount;
+                    break;
+                default:
+                    console.warn('⚠️ Source de tickets inconnue:', source);
+                    break;
+            }
+
+            this.saveUserData(userData);
+            
+            // Log de l'activité
+            this.logActivity('tickets_earned', { amount, source });
+            
+            return userData.totalTickets;
+        } catch (error) {
+            console.error('❌ Erreur ajout tickets:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return this.getTickets(); // Retourne le nombre actuel de tickets
+        }
+    }
+
+    /**
+     * Récupère le nombre de tickets de l'utilisateur
+     * @returns {number} Nombre de tickets
+     */
+    getTickets() {
+        const userData = this.loadUserData();
+        return userData.totalTickets || 0;
+    }
+
+    // ===== SYSTÈME DE PARRAINAGE =====
+    
+    /**
+     * Enregistre un nouveau parrainage
+     * @param {string} referrerCode - Code du parrain
+     * @param {string} newUserCode - Code du nouveau utilisateur
+     * @returns {boolean} Succès de l'enregistrement du parrainage
+     */
+    recordReferral(referrerCode, newUserCode) {
+        if (!referrerCode || !newUserCode) {
+            console.warn('⚠️ Codes de parrainage invalides');
+            return false;
+        }
+
+        try {
+            const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
+
+            // Vérification si le parrainage existe déjà
+            if (referrals.some(ref => ref.referrerCode === referrerCode && ref.newUserCode === newUserCode)) {
+                console.warn('⚠️ Ce parrainage existe déjà');
+                return false;
+            }
+            
+            const referral = {
+                id: this.generateId(),
+                referrerCode,
+                newUserCode,
+                date: new Date().toISOString(),
+                status: 'completed'
+            };
+
+            referrals.push(referral);
+            
+            // Limitation du nombre de parrainages
+            if (referrals.length > STORAGE_LIMITS.MAX_REFERRALS) {
+                referrals.shift();
+            }
+
+            this.secureSet(STORAGE_KEYS.REFERRALS, referrals);
+            
+            // Ajout des tickets bonus au parrain si c'est l'utilisateur actuel
+            const userData = this.loadUserData();
+            if (userData.referralCode === referrerCode) {
+                this.addTickets(1, 'referral');
+                userData.referralsCount++;
+                this.saveUserData(userData);
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur enregistrement parrainage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère les parrainages de l'utilisateur
+     * @returns {Array} Liste des parrainages
+     */
+    getUserReferrals() {
+        const userData = this.loadUserData();
+        const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
+        
+        return referrals.filter(ref => ref.referrerCode === userData.referralCode);
+    }
+
+    // ===== CLASSEMENT =====
+    
+    /**
+     * Met à jour le classement avec un nouveau score
+     * @param {Object} scoreData - Données du score
+     * @returns {boolean} Succès de la mise à jour du classement
+     */
+    updateLeaderboard(scoreData) {
+        if (!scoreData || !Number.isInteger(scoreData.score)) {
+            console.warn('⚠️ Données de score invalides pour le classement');
+            return false;
+        }
+
+        try {
+            const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
+            const userData = this.loadUserData();
+            
+            const entry = {
+                id: userData.userId,
+                username: userData.username || 'Joueur anonyme',
+                score: scoreData.score,
+                totalQuestions: scoreData.totalQuestions,
+                date: new Date().toISOString(),
+                month: new Date().toISOString().substring(0, 7) // YYYY-MM
+            };
+
+            // Recherche d'une entrée existante pour ce mois
+            const currentMonth = new Date().toISOString().substring(0, 7);
+            const existingIndex = leaderboard.findIndex(
+                item => item.id === userData.userId && item.month === currentMonth
+            );
+
+            if (existingIndex >= 0) {
+                // Mise à jour si meilleur score
+                if (scoreData.score > leaderboard[existingIndex].score) {
+                    leaderboard[existingIndex] = entry;
+                } else {
+                    return false; // Pas de mise à jour car le score n'est pas meilleur
+                }
+            } else {
+                // Nouvelle entrée
+                leaderboard.push(entry);
+            }
+
+            // Tri par score décroissant
+            leaderboard.sort((a, b) => b.score - a.score);
+            
+            // Limitation du nombre d'entrées
+            if (leaderboard.length > STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES) {
+                leaderboard.splice(STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES);
+            }
+
+            this.secureSet(STORAGE_KEYS.LEADERBOARD, leaderboard);
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur mise à jour classement:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère le classement mensuel
+     * @param {number} limit - Nombre d'entrées à retourner
+     * @returns {Array} Classement mensuel
+     */
+    getMonthlyLeaderboard(limit = 10) {
+        const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
+        const currentMonth = new Date().toISOString().substring(0, 7);
+        
+        return leaderboard
+            .filter(entry => entry.month === currentMonth)
+            .slice(0, limit);
+    }
+
+    // ===== PARTICIPATION AU TIRAGE =====
+    
+    /**
+     * Enregistre la participation au tirage mensuel
+     * @param {Object} participationData - Données de participation
+     * @returns {boolean} Succès de l'enregistrement de la participation
+     */
+    recordParticipation(participationData) {
+        if (!participationData || !participationData.username || !participationData.email) {
+            console.warn('⚠️ Données de participation incomplètes');
+            return false;
+        }
+
+        try {
+            const userData = this.loadUserData();
+
+            // Vérification si l'utilisateur a déjà participé ce mois-ci
+            if (userData.hasParticipated && userData.participationDate &&
+                userData.participationDate.substring(0, 7) === new Date().toISOString().substring(0, 7)) {
+                console.warn('⚠️ L\'utilisateur a déjà participé ce mois-ci');
+                return false;
+            }
+
+            const participation = {
+                id: this.generateId(),
+                userId: userData.userId,
+                username: participationData.username,
+                email: participationData.email,
+                date: new Date().toISOString(),
+                month: new Date().toISOString().substring(0, 7),
+                tickets: userData.totalTickets,
+                gdprConsent: true
+            };
+
+            // Sauvegarde des données de participation
+            this.secureSet(STORAGE_KEYS.PARTICIPATION, participation);
+            
+            // Mise à jour des données utilisateur
+            userData.hasParticipated = true;
+            userData.participationDate = participation.date;
+            userData.monthlyParticipations++;
+            userData.username = participationData.username;
+            userData.email = participationData.email;
+            
+            this.saveUserData(userData);
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur enregistrement participation:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère les données de participation
+     * @returns {Object|null} Données de participation
+     */
+    getParticipation() {
+        return this.secureGet(STORAGE_KEYS.PARTICIPATION);
+    }
+
+    // ===== ANALYTICS ET STATISTIQUES =====
+    
+    /**
+     * Enregistre une activité utilisateur
+     * @param {string} action - Type d'action
+     * @param {Object} data - Données associées
+     */
+    logActivity(action, data = {}) {
+        if (!action) {
+            console.warn('⚠️ Action d\'activité non spécifiée');
+            return;
+        }
+
+        try {
+            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
+            
+            const activity = {
+                id: this.generateId(),
+                action,
+                data,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent.substring(0, 100) // Limité pour la vie privée
+            };
+
+            analytics.push(activity);
+            
+            // Limitation de l'historique (30 derniers jours)
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            
+            const filteredAnalytics = analytics.filter(
+                item => new Date(item.timestamp) > thirtyDaysAgo
+            );
+
+            this.secureSet(STORAGE_KEYS.ANALYTICS, filteredAnalytics);
+        } catch (error) {
+            console.error('❌ Erreur log activité:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
+    }
+
+    /**
+     * Récupère les statistiques d'utilisation
+     * @returns {Object} Statistiques
+     */
+    getAnalytics() {
+        try {
+            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
+            const userData = this.loadUserData();
+            const quizHistory = this.getQuizHistory();
+            
+            const totalScores = quizHistory.reduce((acc, quiz) => acc + quiz.score, 0);
+            const averageScore = quizHistory.length > 0 ? totalScores / quizHistory.length : 0;
+
+            return {
+                totalActivities: analytics.length,
+                totalQuizzes: userData.totalQuizzes,
+                bestScore: userData.bestScore,
+                averageScore: averageScore,
+                perfectScores: userData.perfectScores,
+                totalTickets: userData.totalTickets,
+                referralsCount: userData.referralsCount,
+                accountAge: this.calculateAccountAge(userData.createdAt),
+                lastActivity: userData.lastActiveDate
+            };
+        } catch (error) {
+            console.error('❌ Erreur lors de la récupération des analytics:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return {
+                totalActivities: 0,
+                totalQuizzes: 0,
+                bestScore: 0,
+                averageScore: 0,
+                perfectScores: 0,
+                totalTickets: 0,
+                referralsCount: 0,
+                accountAge: 0,
+                lastActivity: null
+            };
+        }
+    }
+
+    // ===== FONCTIONS UTILITAIRES =====
+    
+    /**
+     * Sauvegarde sécurisée avec gestion d'erreurs
+     * @param {string} key - Clé de stockage
+     * @param {*} data - Données à sauvegarder
+     * @returns {boolean} Succès de la sauvegarde
+     */
+    secureSet(key, data) {
+        if (!this.isSupported) return false;
+        
+        try {
+            const serializedData = JSON.stringify(data);
+            
+            // Vérification de la taille
+            if (serializedData.length > STORAGE_LIMITS.MAX_STORAGE_SIZE) {
+                console.warn('⚠️ Données trop volumineuses pour le stockage');
+                showStorageErrorNotification(STORAGE_MESSAGES.quota);
+                return false;
+            }
+            
+            localStorage.setItem(key, serializedData);
+            return true;
+        } catch (error) {
+            if (error.name === 'QuotaExceededError') {
+                console.warn('⚠️ Quota de stockage dépassé - Nettoyage en cours...');
+                this.performCleanup();
+                // Nouvelle tentative après nettoyage
+                try {
+                    localStorage.setItem(key, JSON.stringify(data));
+                    return true;
+                } catch (retryError) {
+                    console.error('❌ Impossible de sauvegarder après nettoyage:', retryError);
+                    showStorageErrorNotification(STORAGE_MESSAGES.error);
+                    return false;
+                }
+            }
+            console.error('❌ Erreur sauvegarde sécurisée:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Chargement sécurisé avec gestion d'erreurs
+     * @param {string} key - Clé de stockage
+     * @returns {*} Données chargées ou null
+     */
+    secureGet(key) {
+        if (!this.isSupported) return null;
+        
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('❌ Erreur chargement sécurisé:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return null;
+        }
+    }
+
+    /**
+     * Suppression sécurisée
+     * @param {string} key - Clé de stockage
+     * @returns {boolean} Succès de la suppression
+     */
+    secureRemove(key) {
+        if (!this.isSupported) return false;
+        
+        try {
+            localStorage.removeItem(key);
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur suppression sécurisée:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    // ===== GÉNÉRATION D'IDENTIFIANTS =====
+    
+    /**
+     * Génère un ID utilisateur unique
+     * @returns {string} ID utilisateur
+     */
+    generateUserId() {
+        const timestamp = Date.now().toString();
+        const random = Math.random().toString(36).substring(2, 8);
+        return `user_${timestamp}_${random}`;
+    }
+
+    /**
+     * Génère un code de parrainage
+     * @returns {string} Code de parrainage
+     */
+    generateReferralCode() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let result = '';
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < 8; i++) {
             result += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         return result;
     }
-    
-    // ===== SYSTÈME DE NOTIFICATION =====
-    
+
     /**
-     * Affiche une notification toast
-     * @param {string} message - Message à afficher
-     * @param {string} type - Type de notification (success, error, warning, info)
-     * @param {number} duration - Durée d'affichage
+     * Génère un ID générique
+     * @returns {string} ID unique
      */
-    static showNotification(message, type = 'info', duration = 5000) {
-        // Supprimer les notifications existantes du même type
-        const existing = document.querySelectorAll(`.utils-notification.${type}`);
-        existing.forEach(notif => notif.remove());
-        
-        // Créer la nouvelle notification
-        const notification = document.createElement('div');
-        notification.className = `utils-notification ${type}`;
-        notification.innerHTML = `
-            <div class="notification-content">
-                <span class="notification-icon">${this.getNotificationIcon(type)}</span>
-                <span class="notification-message">${message}</span>
-                <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
-            </div>
-        `;
-        
-        // Ajouter les styles si nécessaire
-        this.ensureNotificationStyles();
-        
-        // Ajouter au DOM
-        document.body.appendChild(notification);
-        
-        // Animation d'entrée
-        requestAnimationFrame(() => {
-            notification.classList.add('show');
-        });
-        
-        // Suppression automatique
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => notification.remove(), 300);
-        }, duration);
+    generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substring(2);
     }
+
+    // ===== VALIDATION ET MIGRATION =====
     
     /**
-     * Obtient l'icône pour un type de notification
-     * @param {string} type - Type de notification
-     * @returns {string} Icône HTML
+     * Valide les données utilisateur
+     * @param {Object} userData - Données à valider
+     * @returns {Object} Données validées
      */
-    static getNotificationIcon(type) {
-        const icons = {
-            success: '✅',
-            error: '❌',
-            warning: '⚠️',
-            info: 'ℹ️'
-        };
-        return icons[type] || icons.info;
-    }
-    
-    /**
-     * S'assure que les styles de notification sont présents
-     */
-    static ensureNotificationStyles() {
-        if (document.getElementById('utils-notification-styles')) return;
+    validateUserData(userData) {
+        const validated = { ...userData };
         
-        const styles = document.createElement('style');
-        styles.id = 'utils-notification-styles';
-        styles.textContent = `
-            .utils-notification {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 10000;
-                max-width: 400px;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
-            }
-            .utils-notification.show {
-                transform: translateX(0);
-            }
-            .utils-notification.success {
-                border-left: 4px solid #28a745;
-            }
-            .utils-notification.error {
-                border-left: 4px solid #dc3545;
-            }
-            .utils-notification.warning {
-                border-left: 4px solid #ffc107;
-            }
-            .utils-notification.info {
-                border-left: 4px solid #17a2b8;
-            }
-            .notification-content {
-                padding: 16px;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-            .notification-icon {
-                font-size: 18px;
-                flex-shrink: 0;
-            }
-            .notification-message {
-                flex: 1;
-                font-size: 14px;
-                line-height: 1.4;
-            }
-            .notification-close {
-                background: none;
-                border: none;
-                font-size: 18px;
-                cursor: pointer;
-                padding: 0;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #666;
-                transition: background-color 0.2s;
-            }
-            .notification-close:hover {
-                background-color: #f0f0f0;
-            }
-        `;
-        document.head.appendChild(styles);
+        // Validation des champs critiques
+        validated.totalTickets = Math.max(0, parseInt(validated.totalTickets) || 0);
+        validated.totalQuizzes = Math.max(0, parseInt(validated.totalQuizzes) || 0);
+        validated.bestScore = Math.max(0, parseInt(validated.bestScore) || 0);
+        validated.referralsCount = Math.max(0, parseInt(validated.referralsCount) || 0);
+        
+        // Validation des chaînes
+        if (validated.username && typeof validated.username === 'string') {
+            validated.username = validated.username.trim().substring(0, 50);
+        }
+        
+        if (validated.email && typeof validated.email === 'string') {
+            validated.email = validated.email.trim().toLowerCase();
+        }
+        
+        return validated;
     }
-    
-    // ===== GESTION DES ERREURS =====
+
+    /**
+     * Migre les données vers une nouvelle version
+     * @param {Object} oldData - Anciennes données
+     * @returns {Object} Données migrées
+     */
+    migrateUserData(oldData) {
+        console.log('🔄 Migration des données utilisateur...');
+        
+        const defaultData = this.createDefaultUserData();
+        const migratedData = { ...defaultData, ...oldData };
+        
+        // Mise à jour de la version
+        migratedData.dataVersion = this.version;
+        
+        // Sauvegarde des données migrées
+        this.saveUserData(migratedData);
+        
+        console.log('✅ Migration terminée');
+        return migratedData;
+    }
+
+    // ===== MAINTENANCE ET NETTOYAGE =====
     
     /**
-     * Logger d'erreurs centralisé
-     * @param {Error|string} error - Erreur à logger
-     * @param {string} context - Contexte de l'erreur
-     * @param {object} data - Données additionnelles
+     * Effectue la maintenance périodique
      */
-    static logError(error, context = 'Unknown', data = {}) {
-        const errorInfo = {
-            timestamp: new Date().toISOString(),
-            context: context,
-            message: error?.message || error,
-            stack: error?.stack || 'No stack trace',
-            userAgent: navigator.userAgent,
-            url: window.location.href,
-            data: data
-        };
-        
-        console.error('🚨 Erreur Quiz CODM:', errorInfo);
-        
-        // Sauvegarder les erreurs critiques
-        this.saveErrorLog(errorInfo);
-    }
-    
-    /**
-     * Sauvegarde un log d'erreur
-     * @param {object} errorInfo - Informations sur l'erreur
-     */
-    static saveErrorLog(errorInfo) {
+    performMaintenance() {
         try {
-            const logs = this.secureGetItem('quizCODM_errorLogs', []);
-            logs.push(errorInfo);
+            // Nettoyage des données obsolètes
+            this.cleanupOldData();
             
-            // Garder seulement les 50 dernières erreurs
-            if (logs.length > 50) {
-                logs.splice(0, logs.length - 50);
-            }
+            // Vérification de l'intégrité
+            this.validateDataIntegrity();
             
-            this.secureSetItem('quizCODM_errorLogs', logs);
+            // Optimisation de l'espace
+            this.optimizeStorage();
+            
+            console.log('🧹 Maintenance du stockage terminée');
         } catch (error) {
-            console.error('❌ Impossible de sauvegarder le log d\'erreur:', error);
+            console.error('❌ Erreur durant la maintenance:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
         }
     }
-    
-    // ===== MÉTHODES DE PERFORMANCE =====
-    
+
     /**
-     * Mesure le temps d'exécution d'une fonction
-     * @param {function} func - Fonction à mesurer
-     * @param {string} label - Libellé pour l'affichage
-     * @returns {any} Résultat de la fonction
+     * Nettoyage d'urgence en cas de quota dépassé
      */
-    static measurePerformance(func, label = 'Function') {
-        const start = performance.now();
-        const result = func();
-        const end = performance.now();
-        
-        console.log(`⏱️ ${label}: ${(end - start).toFixed(2)}ms`);
-        return result;
+    performCleanup() {
+        try {
+            console.log('🧹 Nettoyage d\'urgence du stockage...');
+            
+            // Suppression des anciennes analytics
+            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
+            const recentAnalytics = analytics.slice(-50); // Garde seulement les 50 dernières
+            this.secureSet(STORAGE_KEYS.ANALYTICS, recentAnalytics);
+            
+            // Nettoyage de l'historique
+            const history = this.getQuizHistory();
+            const recentHistory = history.slice(0, 50); // Garde seulement les 50 derniers
+            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, recentHistory);
+            
+            console.log('✅ Nettoyage d\'urgence terminé');
+        } catch (error) {
+            console.error('❌ Erreur durant le nettoyage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
     }
+
+    // ===== FONCTIONS PRIVÉES SUPPLÉMENTAIRES =====
     
-    /**
-     * Créée un délai d'attente
-     * @param {number} ms - Millisecondes d'attente
-     * @returns {Promise} Promesse résolue après le délai
-     */
-    static delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    createDefaultSettings() {
+        return {
+            notifications: true,
+            soundEffects: true,
+            animations: true,
+            theme: 'default',
+            language: 'fr'
+        };
+    }
+
+    ensureDataStructures() {
+        // Vérifie et initialise les structures de données nécessaires
+        const keys = [
+            STORAGE_KEYS.USER_DATA,
+            STORAGE_KEYS.QUIZ_HISTORY,
+            STORAGE_KEYS.LEADERBOARD,
+            STORAGE_KEYS.REFERRALS,
+            STORAGE_KEYS.ANALYTICS
+        ];
+
+        keys.forEach(key => {
+            if (!this.secureGet(key)) {
+                const defaultValue = key === STORAGE_KEYS.USER_DATA ? 
+                    this.createDefaultUserData() : [];
+                this.secureSet(key, defaultValue);
+            }
+        });
+    }
+
+    updateUserStats(quizResult) {
+        const userData = this.loadUserData();
+        
+        // Mise à jour des statistiques
+        userData.totalQuizzes++;
+        userData.bestScore = Math.max(userData.bestScore, quizResult.score);
+        
+        if (quizResult.score === quizResult.totalQuestions) {
+            userData.perfectScores++;
+        }
+        
+        // Calcul de la moyenne
+        userData.averageScore = this.calculateAverageScore();
+        
+        this.saveUserData(userData);
+    }
+
+    calculateAverageScore() {
+        const history = this.getQuizHistory();
+        if (history.length === 0) return 0;
+        
+        const totalScore = history.reduce((sum, quiz) => sum + quiz.score, 0);
+        return Math.round((totalScore / history.length) * 100) / 100;
+    }
+
+    calculateAccountAge(createdAt) {
+        const created = new Date(createdAt);
+        const now = new Date();
+        const diffTime = Math.abs(now - created);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Jours
+    }
+
+    migrateData() {
+        // Logique de migration pour les futures versions
+    }
+
+    cleanupOldData() {
+        // Suppression des données obsolètes (plus de 6 mois)
+    }
+
+    validateDataIntegrity() {
+        // Vérification de l'intégrité des données
+    }
+
+    optimizeStorage() {
+        // Optimisation de l'espace de stockage
     }
 }
 
-// ===== INITIALISATION GLOBALE =====
-window.QuizUtils = QuizUtils;
+// ===== MESSAGES D'ERREUR CENTRALISÉS =====
+const STORAGE_MESSAGES = {
+    error: "Erreur de stockage : vos données ne peuvent pas être enregistrées. Certaines fonctionnalités sont limitées.",
+    unavailable: "Le stockage local est désactivé ou indisponible. Certaines fonctionnalités sont limitées.",
+    quota: "Espace de stockage insuffisant. Veuillez libérer de l'espace pour continuer à utiliser le quiz."
+};
 
-// ===== FONCTIONS HELPER GLOBALES =====
-
-/**
- * Fonction de logging pratique
- * @param {string} message - Message à logger
- * @param {string} type - Type de log
- */
-window.qLog = function(message, type = 'info') {
-    const timestamp = QuizUtils.formatDate(new Date(), 'DD/MM/YYYY HH:mm');
-    const prefix = `🎮 [${timestamp}]`;
-    
-    switch (type) {
-        case 'error':
-            console.error(`${prefix} ❌`, message);
-            break;
-        case 'warn':
-            console.warn(`${prefix} ⚠️`, message);
-            break;
-        case 'success':
-            console.log(`${prefix} ✅`, message);
-            break;
-        default:
-            console.log(`${prefix} ℹ️`, message);
+// ===== NOTIFICATION ACCESSIBLE ERREUR STOCKAGE =====
+function showStorageErrorNotification(message) {
+    let notif = document.getElementById('storageErrorNotification');
+    if (!notif) {
+        notif = document.createElement('div');
+        notif.id = 'storageErrorNotification';
+        notif.className = 'storage-error-notification';
+        notif.setAttribute('role', 'alert');
+        notif.setAttribute('aria-live', 'assertive');
+        notif.setAttribute('tabindex', '-1');
+        document.body.appendChild(notif);
     }
-};
+    notif.innerHTML = `
+        <span>${message}</span>
+        <button class="close-storage-error" aria-label="Fermer la notification">&times;</button>
+    `;
+    notif.classList.add('active');
+    notif.focus();
+    function handleEscClose(e) {
+        if (e.key === 'Escape') {
+            notif.classList.remove('active');
+            document.removeEventListener('keydown', handleEscClose);
+        }
+    }
+    document.addEventListener('keydown', handleEscClose);
+    const closeBtn = notif.querySelector('.close-storage-error');
+    if (closeBtn) closeBtn.onclick = () => notif.classList.remove('active');
+    setTimeout(() => {
+        notif.classList.remove('active');
+    }, 8000);
+}
 
-/**
- * Notification rapide
- * @param {string} message - Message
- * @param {string} type - Type
- */
-window.qNotify = function(message, type = 'info') {
-    QuizUtils.showNotification(message, type);
-};
+// ===== INSTANCE GLOBALE =====
+const quizStorage = new QuizStorage();
 
-/**
- * Validation rapide d'email
- * @param {string} email - Email à valider
- * @returns {boolean}
- */
-window.isValidEmail = function(email) {
-    return QuizUtils.isValidEmail(email);
-};
-
-/**
- * Formatage rapide de date
- * @param {Date} date - Date à formater
- * @param {string} format - Format
- * @returns {string}
- */
-window.formatDate = function(date, format) {
-    return QuizUtils.formatDate(date, format);
-};
-
-// ===== AUTO-INITIALISATION =====
-document.addEventListener('DOMContentLoaded', () => {
-    // Initialisation des utilitaires
-    console.log('🛠️ Utilitaires Quiz CODM chargés');
+// ===== EXPORT POUR UTILISATION =====
+window.QuizStorage = {
+    // Instance principale
+    storage: quizStorage,
     
-    // Gestion globale des erreurs
-    window.addEventListener('error', (event) => {
-        QuizUtils.logError(event.error, 'Global Error', {
-            filename: event.filename,
-            lineno: event.lineno,
-            colno: event.colno
-        });
-    });
+    // Méthodes rapides pour l'app
+    saveUser: (data) => quizStorage.saveUserData(data),
+    loadUser: () => quizStorage.loadUserData(),
+    saveQuiz: (result) => quizStorage.saveQuizResult(result),
+    addTickets: (amount, source) => quizStorage.addTickets(amount, source),
+    getTickets: () => quizStorage.getTickets(),
+    participate: (data) => quizStorage.recordParticipation(data),
+    referral: (referrer, newUser) => quizStorage.recordReferral(referrer, newUser),
+    leaderboard: (scoreData) => quizStorage.updateLeaderboard(scoreData),
+    getLeaderboard: (limit) => quizStorage.getMonthlyLeaderboard(limit),
+    analytics: () => quizStorage.getAnalytics(),
     
-    // Gestion des promesses rejetées
-    window.addEventListener('unhandledrejection', (event) => {
-        QuizUtils.logError(event.reason, 'Unhandled Promise Rejection');
-    });
-});
+    // Utilitaires
+    isSupported: () => quizStorage.isSupported,
+    cleanup: () => quizStorage.performCleanup(),
+    
+    // Pour debug
+    keys: STORAGE_KEYS,
+    limits: STORAGE_LIMITS
+};
 
-console.log('🛠️ Module utilitaires chargé - Quiz CODM');
+console.log('💾 Storage.js chargé! Système de persistance prêt');
