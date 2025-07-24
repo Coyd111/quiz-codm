@@ -1,3571 +1,914 @@
-{
-  "meta": {
-    "version": "1.0.0",
-    "totalQuestions": 88,
-    "lastUpdated": "2025-01-22",
-    "categories": ["armes", "cartes", "battle-royale", "modes", "personnages", "scorestreaks", "equipements", "evenements", "meta", "generale"]
-  },
-  "questions": [
-    {
-      "id": 1,
-      "question": "Quelle arme est considérée comme l'une des meilleures mitraillettes (SMG) en combat rapproché depuis la saison 10 ?",
-      "answers": ["QQ9", "GKS", "Chicom", "PDW-57"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 2,
-      "question": "Quel fusil d'assaut a un mode rafale par défaut ?",
-      "answers": ["M4", "M16", "AK-47", "Man-O-War"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 3,
-      "question": "Quel sniper inflige des dégâts mortels même en tirant dans le torse ?",
-      "answers": ["Arctic .50", "DL Q33", "XPR-50", "Koshka"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 4,
-      "question": "Quelle arme légendaire est connue pour sa skin animée \"Dark Matter\" ?",
-      "answers": ["M13", "Type 25", "Fennec", "AK-47"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 5,
-      "question": "La RPD est une :",
-      "answers": ["Mitraillette", "Fusil d'assaut", "LMG (mitrailleuse légère)", "Sniper"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 6,
-      "question": "Quelle arme est surnommée \"Laser Beam\" pour sa précision extrême ?",
-      "answers": ["M13", "ASM10", "LK24", "M4"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 7,
-      "question": "Quelle mitraillette possède une cadence de tir extrêmement rapide, mais un recul difficile à contrôler ?",
-      "answers": ["Fennec", "MSMC", "Razorback", "PP19 Bizon"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 8,
-      "question": "Quelle arme dispose d'un double canon et est classée comme fusil à pompe ?",
-      "answers": ["BY15", "HS0405", "KRM-262", "R9-0"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 9,
-      "question": "Quelle est l'arme la plus utilisée dans les tournois e-sport en 2024 ?",
-      "answers": ["Kilo 141", "DR-H", "CBR4", "M13"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 10,
-      "question": "Quel est le principal avantage du SKS par rapport aux autres fusils de précision ?",
-      "answers": ["Il a une lunette thermique par défaut", "Il tire en mode automatique", "Il est semi-automatique et rapide", "Il one-shot à la jambe"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 11,
-      "question": "Quelle SMG possède un chargeur de base de 50 balles ?",
-      "answers": ["QQ9", "PP19 Bizon", "Fennec", "AGR 556"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 12,
-      "question": "Le Type 25 est célèbre pour :",
-      "answers": ["Son chargeur tambour", "Sa cadence de tir élevée", "Son silencieux intégré", "Son mode rafale"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 13,
-      "question": "Le DR-H est redoutable grâce à :",
-      "answers": ["Son accessoire OTM Mag", "Son recul très bas", "Son silencieux intégré", "Son viseur thermique"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 14,
-      "question": "Quelle arme est disponible dans les deux modes : Battle Royale et Multijoueur ?",
-      "answers": ["AK117", "Peacekeeper MK2", "RUS-79U", "Toutes les réponses"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 15,
-      "question": "Quelle LMG est redoutable avec le mod tactique \"Disable\" ?",
-      "answers": ["S36", "RPD", "Holger 26", "Chopper"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 16,
-      "question": "Quelle arme a une animation spéciale quand elle est en or (Gold camo) ?",
-      "answers": ["UL736", "RPD", "Kilo 141", "Peacekeeper MK2"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 17,
-      "question": "Le fusil de chasse KRM-262 est réputé pour :",
-      "answers": ["Son auto fire", "Son faible recul", "Son one-shot facile à courte distance", "Son silencieux intégré"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 18,
-      "question": "Quelle arme secondaire peut infliger des dégâts explosifs ?",
-      "answers": ["MW11", "J358", "Crossbow", "Renetti"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 19,
-      "question": "Quelle mitraillette se débloque uniquement via les défis de saison ?",
-      "answers": ["CBR4", "AGR 556", "Fennec", "Razorback"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 20,
-      "question": "Quelle est la particularité du Locus parmi les snipers ?",
-      "answers": ["Le plus de balles dans le chargeur", "Viseur thermique", "Animation de rechargement personnalisée", "Le plus rapide en visée"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
- {
-      "id": 21,
-      "question": "Quelle mitrailleuse lourde a été ajoutée en premier dans le jeu ?",
-      "answers": ["UL736", "Holger 26", "PKM", "RPD"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 22,
-      "question": "Le M4LMG est une variante de quelle arme ?",
-      "answers": ["M16", "M4", "AK-47", "LK24"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 23,
-      "question": "Quelle arme possède une version mythique avec compteur de kills affiché en game ?",
-      "answers": ["Fennec", "Kilo 141", "QQ9", "Peacekeeper MK2"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 24,
-      "question": "Quelle arme a une variante « zombie » obtenue lors d'un événement Halloween ?",
-      "answers": ["ICR-1", "AK117", "DL Q33", "HG 40"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 25,
-      "question": "La PPSh-41 est classée comme :",
-      "answers": ["LMG", "SMG", "Fusil d'assaut", "Arme spéciale"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 26,
-      "question": "La Kilo Bolt-Action est un hybride entre :",
-      "answers": ["Sniper & fusil d'assaut", "Sniper & fusil à pompe", "Fusil de précision & marksman", "Sniper & SMG"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 27,
-      "question": "La Renetti a comme particularité :",
-      "answers": ["Tir automatique", "Tir rafale", "Munitions explosives", "Silencieux intégré"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 28,
-      "question": "Le JAK-12 est :",
-      "answers": ["Un fusil à pompe automatique", "Une SMG", "Une LMG", "Une grenade spéciale"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 29,
-      "question": "Quelle est l'arme de mêlée sortie avec la saison \"Samurai Showdown\" ?",
-      "answers": ["Nunchaku", "Katana", "Hache de guerre", "Couteau"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 30,
-      "question": "Quelle arme est souvent comparée au M4 pour sa facilité d'utilisation ?",
-      "answers": ["AK117", "Type 25", "LK24", "KN-44"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 31,
-      "question": "Quelle mitraillette est inspirée du MP7 de Modern Warfare ?",
-      "answers": ["QQ9", "HG 40", "AGR 556", "MX9"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 32,
-      "question": "Le fusil d'assaut AS VAL est connu pour :",
-      "answers": ["Son silencieux intégré", "Son énorme recul", "Son rechargement lent", "Être utilisable uniquement en Battle Royale"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 33,
-      "question": "La Chopper est une LMG sans :",
-      "answers": ["Recul", "Munitions", "Viseur", "Animation de rechargement"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 34,
-      "question": "Quel fusil de précision est semi-automatique dans CODM ?",
-      "answers": ["DL Q33", "Arctic .50", "XPR-50", "Locus"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 35,
-      "question": "Le Peacekeeper MK2 est originalement issu de quel jeu ?",
-      "answers": ["COD Mobile", "Modern Warfare", "Black Ops III", "Vanguard"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 36,
-      "question": "Quelle arme possède une animation spéciale \"Dragon's Breath\" ?",
-      "answers": ["HS0405", "KRM-262", "R9-0", "JAK-12"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 37,
-      "question": "Quelle SMG possède un silencieux intégré dès sa version de base ?",
-      "answers": ["QXR", "Razorback", "GKS", "Fennec"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 38,
-      "question": "Quelle est l'arme secondaire de poing la plus puissante en tir unique ?",
-      "answers": ["MW11", "J358", "Renetti", "Shorty"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 39,
-      "question": "Quelle SMG était considérée comme \"meta\" à la saison 2 de 2025 ?",
-      "answers": ["CBR4", "AGR 556", "PP19 Bizon", "QQ9"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 40,
-      "question": "Quel fusil de précision peut tirer rapidement sans rechargement après chaque tir ?",
-      "answers": ["Koshka", "SKS", "Locus", "DL Q33"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 41,
-      "question": "Quelle arme est équipée par défaut d'un viseur holographique ?",
-      "answers": ["Type 25", "AK117", "HVK-30", "M4"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 42,
-      "question": "Quelle arme est parfois appelée \"Mitrailleuse laser\" pour sa stabilité ?",
-      "answers": ["UL736", "Holger 26", "M13", "Chopper"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 43,
-      "question": "Le KRM-262 est un :",
-      "answers": ["Fusil à pompe semi-auto", "Fusil à pompe à pompe manuelle", "Fusil automatique", "Fusil de précision"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 44,
-      "question": "La GKS est une SMG idéale pour :",
-      "answers": ["Longue distance", "Corps-à-corps", "Tir automatique", "Vitesse de déplacement"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 45,
-      "question": "Quelle arme est dérivée de la série \"Ghosts\" ?",
-      "answers": ["ICR-1", "LK24", "M4LMG", "Pharo"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 46,
-      "question": "Le fusil Marksman SP-R 208 est principalement utilisé pour :",
-      "answers": ["Corps-à-corps", "Snipe à longue distance", "Rechargement automatique", "Tir en rafale"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 47,
-      "question": "Quelle arme est populaire pour le mode \"Headshot only\" ?",
-      "answers": ["AK117", "Peacekeeper MK2", "LK24", "DR-H"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 48,
-      "question": "Le fusil Echo est une arme de type :",
-      "answers": ["Fusil d'assaut", "Fusil de précision", "Fusil à pompe automatique", "SMG"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 49,
-      "question": "Quel fusil d'assaut est connu pour son accessoire mod \"Large Caliber Ammo\" ?",
-      "answers": ["M13", "AS VAL", "FR.556", "HVK-30"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 50,
-      "question": "Quelle mitraillette était exclusive au Battle Pass à sa sortie ?",
-      "answers": ["Fennec", "MX9", "GKS", "Razorback"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 51,
-      "question": "La Man-O-War est connue pour :",
-      "answers": ["Sa cadence ultra-rapide", "Ses dégâts élevés et recul lent", "Son viseur thermique", "Son faible nombre de balles"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 52,
-      "question": "Quelle SMG possède un mode de tir alternatif en rafale ?",
-      "answers": ["Razorback", "AGR 556", "CBR4", "GKS"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 53,
-      "question": "Quelle est la particularité du Outlaw ?",
-      "answers": ["Il est silencieux", "Il a un viseur x20", "Il tire très rapidement", "Il peut tirer en rafale"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 54,
-      "question": "Le Shorty est une :",
-      "answers": ["Pistolet automatique", "Mini-fusil à pompe", "SMG modifiée", "Arme de mêlée"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 55,
-      "question": "Le Maddox RFB est une arme issue de :",
-      "answers": ["Modern Warfare", "Cold War", "Black Ops 4", "Warzone Mobile"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 56,
-      "question": "Le QXR est à l'origine une variante de :",
-      "answers": ["MP5", "MP7", "Vektor", "Uzi"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 57,
-      "question": "Le Rytec AMR se distingue par :",
-      "answers": ["Sa précision extrême", "Sa lunette thermique", "Ses balles explosives", "Son mode automatique"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 58,
-      "question": "Quelle SMG a un excellent TTK (Time To Kill) mais un recul élevé ?",
-      "answers": ["QQ9", "MX9", "Fennec", "CBR4"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 59,
-      "question": "Quelle arme secondaire peut se jouer avec munitions thermites ?",
-      "answers": ["Renetti", "Crossbow", "MW11", "J358"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 60,
-      "question": "Quelle arme mythique possède une killcam animée unique avec des drones ?",
-      "answers": ["AK-47 Radiance", "Peacekeeper MK2 Artifact", "M13 Morningstar", "QQ9 Neon Grunge"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-        {
-      "id": 61,
-      "question": "Le fusil d'assaut FR .556 est populaire pour :",
-      "answers": ["Sa cadence de tir élevée", "Son faible recul et bonne précision", "Son chargeur de 50 balles", "Son mode rafale"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 62,
-      "question": "Quelle mitraillette a une portée maximale plus élevée que les autres SMG ?",
-      "answers": ["Fennec", "PP19 Bizon", "Razorback", "QQ9"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 63,
-      "question": "Quelle arme a une variante \"épique\" appelée \"Blue Steel\" ?",
-      "answers": ["AK-47", "M4", "LK24", "DR-H"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 64,
-      "question": "Le fusil de précision Koshka est :",
-      "answers": ["Semi-automatique", "À verrou (bolt-action)", "Automatique", "Fusil de chasse"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 65,
-      "question": "Quel fusil d'assaut est disponible dans le mode Battle Royale uniquement ?",
-      "answers": ["AK117", "AS VAL", "M16", "RUS-79U"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 66,
-      "question": "La Man-O-War est meilleure en :",
-      "answers": ["Tir en rafale", "Tir simple et puissant", "Tir automatique rapide", "Corps à corps"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 67,
-      "question": "Quelle arme est souvent utilisée pour le \"spray and pray\" (tir continu) ?",
-      "answers": ["LK24", "M13", "Kilo 141", "HVK-30"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 68,
-      "question": "Le SMG GKS se caractérise par :",
-      "answers": ["Son silencieux intégré et sa précision", "Son chargeur de grande capacité", "Sa cadence ultra-rapide", "Son recul élevé"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 69,
-      "question": "Quelle arme possède un accessoire \"Fast Reload\" très efficace ?",
-      "answers": ["DR-H", "QQ9", "M4", "MX9"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 70,
-      "question": "Quelle arme secondaire est un revolver puissant à un coup ?",
-      "answers": ["J358", "MW11", "Renetti", "Shorty"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 71,
-      "question": "Le fusil à pompe HS0405 est :",
-      "answers": ["Automatique", "À pompe", "Semi-automatique", "À double canon"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 72,
-      "question": "Quel fusil d'assaut est surnommé \"Le fusil de l'arbitre\" pour son recul maîtrisé ?",
-      "answers": ["M4", "AK-47", "LK24", "FR .556"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 73,
-      "question": "Quelle mitraillette est connue pour sa très grande mobilité ?",
-      "answers": ["Fennec", "QQ9", "Razorback", "MSMC"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 74,
-      "question": "Quelle arme a un mode de tir alternatif \"burst\" (rafale) ?",
-      "answers": ["M16", "DR-H", "M4LMG", "Kilo Bolt-Action"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 75,
-      "question": "Le fusil de précision Arctic .50 est :",
-      "answers": ["Semi-automatique", "À verrou (bolt-action)", "Automatique", "Fusil de chasse"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 76,
-      "question": "Quel pistolet automatique a un chargeur de 18 balles ?",
-      "answers": ["MW11", "Renetti", "J358", "Shorty"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 77,
-      "question": "La mitraillette MSMC a une cadence de tir :",
-      "answers": ["Très lente", "Moyenne", "Très rapide", "Variable"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 78,
-      "question": "Quel fusil d'assaut est doté d'un mode \"Burst\" et d'une bonne précision ?",
-      "answers": ["AK117", "M16", "FR .556", "LK24"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 79,
-      "question": "Quel fusil est surnommé \"Le roi des fusils de chasse\" ?",
-      "answers": ["R9-0", "KRM-262", "HS0405", "JAK-12"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 80,
-      "question": "Quel fusil à pompe a un mode \"double tir\" ?",
-      "answers": ["R9-0", "KRM-262", "HS0405", "BY15"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 81,
-      "question": "Le fusil KN-44 est populaire grâce à :",
-      "answers": ["Sa cadence de tir et son recul modéré", "Son silencieux intégré", "Son chargeur énorme", "Sa visée laser"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 82,
-      "question": "Quel pistolet a une version avec tir en rafale ?",
-      "answers": ["Renetti", "MW11", "J358", "Shorty"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 83,
-      "question": "Quelle arme a un accessoire \"Quickdraw\" très apprécié ?",
-      "answers": ["M13", "LK24", "QQ9", "MX9"],
-      "correct": 2,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 84,
-      "question": "Quelle arme est connue pour son \"fast ADS\" (visée rapide) ?",
-      "answers": ["LK24", "M4", "DR-H", "MSMC"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 85,
-      "question": "Quel fusil d'assaut peut équiper un silencieux par défaut ?",
-      "answers": ["HVK-30", "Kilo 141", "AK117", "FR .556"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 86,
-      "question": "Quel fusil de précision est apprécié pour son temps de visée rapide ?",
-      "answers": ["Locus", "Arctic .50", "DL Q33", "SKS"],
-      "correct": 0,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 87,
-      "question": "Quelle SMG a un chargeur de 35 balles ?",
-      "answers": ["QQ9", "Razorback", "MX9", "MSMC"],
-      "correct": 1,
-      "category": "armes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 88,
-      "question": "Quelle arme possède un mode \"One Shot One Kill\" (un coup, une mort) sur la tête ?",
-      "answers": ["DL Q33", "Kilo Bolt-Action", "Arctic .50", "Toutes les réponses"],
-      "correct": 3,
-      "category": "armes",
-      "difficulty": "facile"
-    },
-        {
-      "id": 89,
-      "question": "Sur quelle carte trouve-t-on la zone \"Nuketown\" dans Call of Duty Mobile ?",
-      "answers": ["Nuketown", "Crash", "Crossfire", "Firing Range"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 90,
-      "question": "Quelle carte est connue pour ses trois voies principales et son pont central ?",
-      "answers": ["Crash", "Crossfire", "Firing Range", "Hijacked"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 91,
-      "question": "La carte 'Shipment' est réputée pour :",
-      "answers": ["Sa grande taille", "Son chaos et sa rapidité", "Ses longues distances", "Ses cachettes nombreuses"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 92,
-      "question": "Sur quelle carte peut-on trouver un hélicoptère crashé au centre ?",
-      "answers": ["Crash", "Summit", "Firing Range", "Raid"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 93,
-      "question": "Quelle carte propose un gameplay principalement en intérieur avec de nombreux couloirs ?",
-      "answers": ["Nuketown", "Terminal", "Shipment", "Rust"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 94,
-      "question": "La carte 'Hijacked' se déroule sur :",
-      "answers": ["Un bateau", "Un avion", "Une plateforme pétrolière", "Un train"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 95,
-      "question": "Quelle carte est la plus petite de Call of Duty Mobile ?",
-      "answers": ["Nuketown", "Shipment", "Rust", "Killhouse"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 96,
-      "question": "Sur 'Summit', quel élément caractéristique trouve-t-on au centre ?",
-      "answers": ["Une tour de radio", "Un pont suspendu", "Une station météo", "Un bunker"],
-      "correct": 2,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 97,
-      "question": "La carte 'Raid' se caractérise par :",
-      "answers": ["Un environnement désertique", "Une villa luxueuse", "Une base militaire", "Une usine abandonnée"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 98,
-      "question": "Quelle carte propose des combats principalement à longue distance ?",
-      "answers": ["Shipment", "Crossfire", "Nuketown", "Hijacked"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 99,
-      "question": "Sur quelle carte trouve-t-on une tour emblématique au centre ?",
-      "answers": ["Rust", "Crash", "Terminal", "Firing Range"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 100,
-      "question": "La carte 'Firing Range' est idéale pour :",
-      "answers": ["Les combats rapprochés uniquement", "L'entraînement au snipe", "Les parties courtes", "Le chaos total"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 101,
-      "question": "Quelle carte propose un environnement enneigé ?",
-      "answers": ["Summit", "Crash", "Terminal", "Crossfire"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 102,
-      "question": "Sur 'Terminal', on peut accéder à :",
-      "answers": ["L'avion au centre", "La tour de contrôle", "Les deux zones", "Uniquement l'extérieur"],
-      "correct": 2,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 103,
-      "question": "Quelle carte est connue pour ses containers orange empilés ?",
-      "answers": ["Shipment", "Nuketown", "Crash", "Rust"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 104,
-      "question": "La carte 'Killhouse' se caractérise par :",
-      "answers": ["Sa grande taille", "Ses nombreux étages", "Sa simplicité et rapidité", "Ses véhicules"],
-      "correct": 2,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 105,
-      "question": "Sur quelle carte peut-on trouver une piscine ?",
-      "answers": ["Raid", "Hijacked", "Nuketown", "Terminal"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 106,
-      "question": "Quelle carte propose le plus de verticality (niveaux différents) ?",
-      "answers": ["Shipment", "Highrise", "Nuketown", "Crossfire"],
-      "correct": 1,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 107,
-      "question": "La carte 'Meltdown' se déroule dans :",
-      "answers": ["Une centrale nucléaire", "Une usine", "Un laboratoire", "Une base spatiale"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 108,
-      "question": "Quelle carte est la plus adaptée pour les parties Gun Game ?",
-      "answers": ["Shipment", "Crossfire", "Terminal", "Summit"],
-      "correct": 0,
-      "category": "cartes",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 109,
-      "question": "Quelle est la taille maximale d'une équipe en Battle Royale ?",
-      "answers": ["2 joueurs", "4 joueurs", "6 joueurs", "8 joueurs"],
-      "correct": 1,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 110,
-      "question": "Comment s'appelle la carte principale du Battle Royale ?",
-      "answers": ["Blackout", "Verdansk", "Isolated", "Alcatraz"],
-      "correct": 2,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 111,
-      "question": "Quel véhicule peut voler dans le Battle Royale ?",
-      "answers": ["Hélicoptère", "Avion", "Tank", "Moto"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 112,
-      "question": "Quelle classe permet de voir les ennemis à travers les murs ?",
-      "answers": ["Scout", "Medic", "Ninja", "Mechanic"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 113,
-      "question": "Le mode Alcatraz se joue avec combien de joueurs maximum ?",
-      "answers": ["40 joueurs", "60 joueurs", "80 joueurs", "100 joueurs"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 114,
-      "question": "Quelle classe permet de se soigner plus rapidement ?",
-      "answers": ["Medic", "Scout", "Defender", "Ninja"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 115,
-      "question": "Dans quel lieu peut-on trouver le meilleur loot généralement ?",
-      "answers": ["Maisons isolées", "Points chauds (hot drops)", "Bord de carte", "Zones de transition"],
-      "correct": 1,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 116,
-      "question": "Quelle classe peut poser des murs défensifs ?",
-      "answers": ["Defender", "Mechanic", "Scout", "Medic"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 117,
-      "question": "Comment s'appelle la zone mortelle qui se rétrécit ?",
-      "answers": ["La tempête", "Le gaz", "La zone", "Le cercle"],
-      "correct": 2,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 118,
-      "question": "Quel véhicule est le plus rapide sur terre ?",
-      "answers": ["Voiture", "Moto", "Tank", "Buggy"],
-      "correct": 1,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 119,
-      "question": "Quelle classe peut réparer les véhicules ?",
-      "answers": ["Mechanic", "Defender", "Scout", "Medic"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 120,
-      "question": "Quel est le niveau d'armure maximum ?",
-      "answers": ["Niveau 2", "Niveau 3", "Niveau 4", "Niveau 5"],
-      "correct": 1,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 121,
-      "question": "Quelle classe permet de se déplacer silencieusement ?",
-      "answers": ["Ninja", "Scout", "Medic", "Airborne"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 122,
-      "question": "Combien de joueurs maximum dans une partie Battle Royale classique ?",
-      "answers": ["80", "100", "120", "150"],
-      "correct": 1,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 123,
-      "question": "Quelle arme est exclusive au Battle Royale ?",
-      "answers": ["War Machine", "Purifier", "Annihilator", "Toutes ces armes"],
-      "correct": 3,
-      "category": "battle-royale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 124,
-      "question": "Comment peut-on revive un coéquipier éliminé ?",
-      "answers": ["Dog tags uniquement", "Station de revive", "Carte de revive", "Les deux dernières"],
-      "correct": 3,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 125,
-      "question": "Quelle classe peut voler temporairement ?",
-      "answers": ["Airborne", "Ninja", "Scout", "Mechanic"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 126,
-      "question": "Quel véhicule peut aller sur l'eau ?",
-      "answers": ["Bateau", "Jet-ski", "Hovercraft", "Tous ces véhicules"],
-      "correct": 3,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 127,
-      "question": "Quelle zone est considérée comme la plus dangereuse pour atterrir ?",
-      "answers": ["Launch Base", "Crash", "Nuketown", "Toutes ces zones"],
-      "correct": 3,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 128,
-      "question": "Combien de temps faut-il pour revive un coéquipier ?",
-      "answers": ["5 secondes", "10 secondes", "15 secondes", "20 secondes"],
-      "correct": 1,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 129,
-      "question": "Quelle classe peut détecter les ennemis proches ?",
-      "answers": ["Scout", "Medic", "Ninja", "Defender"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 130,
-      "question": "Quel objet permet de se soigner instantanément ?",
-      "answers": ["Bandage", "Kit médical", "Adrenaline", "Stimulant"],
-      "correct": 2,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 131,
-      "question": "Comment s'appelle le mode Battle Royale en première personne ?",
-      "answers": ["FPP", "TPP", "Classic", "Pro"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 132,
-      "question": "Quelle classe peut lancer une trappe ?",
-      "answers": ["Trap Master", "Defender", "Scout", "Mechanic"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 133,
-      "question": "Quel véhicule offre la meilleure protection ?",
-      "answers": ["Tank", "Hélicoptère", "Voiture blindée", "Buggy"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 134,
-      "question": "Combien de zones de dégâts existe-t-il ?",
-      "answers": ["5 zones", "6 zones", "7 zones", "8 zones"],
-      "correct": 2,
-      "category": "battle-royale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 135,
-      "question": "Quelle classe permet de refill les munitions ?",
-      "answers": ["Mechanic", "Scout", "Medic", "Defender"],
-      "correct": 0,
-      "category": "battle-royale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 136,
-      "question": "Quel est le temps de respawn en mode Alcatraz ?",
-      "answers": ["10 secondes", "15 secondes", "20 secondes", "Pas de respawn"],
-      "correct": 1,
-      "category": "battle-royale",
-      "difficulty": "difficile"
-    },
-        {
-      "id": 137,
-      "question": "Dans quel mode doit-on éliminer les ennemis avec des armes spécifiques dans un ordre donné ?",
-      "answers": ["Gun Game", "Free for All", "Team Deathmatch", "Kill Confirmed"],
-      "correct": 0,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 138,
-      "question": "Quel mode requiert de collecter les dog tags des ennemis éliminés ?",
-      "answers": ["Team Deathmatch", "Kill Confirmed", "Domination", "Hardpoint"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 139,
-      "question": "Dans le mode Domination, combien de points de capture y a-t-il ?",
-      "answers": ["2 points", "3 points", "4 points", "5 points"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 140,
-      "question": "Quel mode consiste à tenir une zone qui change de position ?",
-      "answers": ["Domination", "Hardpoint", "Headquarters", "Control"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 141,
-      "question": "Dans Search and Destroy, combien de vies a-t-on par round ?",
-      "answers": ["1 vie", "2 vies", "3 vies", "Vies illimitées"],
-      "correct": 0,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 142,
-      "question": "Quel mode se joue en 1v1v1v1... sans équipes ?",
-      "answers": ["Free for All", "Gun Game", "Sticks and Stones", "Tous ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 143,
-      "question": "Dans Capture the Flag, que doit-on faire pour marquer un point ?",
-      "answers": ["Éliminer 10 ennemis", "Capturer le drapeau ennemi", "Tenir une zone", "Planter une bombe"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 144,
-      "question": "Quel mode limite les armes à des couteaux et tomahawks ?",
-      "answers": ["Gun Game", "Sticks and Stones", "One Shot", "Sniper Only"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 145,
-      "question": "Dans quel mode doit-on planter ou désamorcer une bombe ?",
-      "answers": ["Search and Destroy", "Demolition", "Sabotage", "Tous ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 146,
-      "question": "Quel mode propose des parties en 10v10 ?",
-      "answers": ["Ground War", "Team Deathmatch", "Domination", "Tous ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 147,
-      "question": "Dans le mode Hardpoint, combien de temps dure chaque rotation ?",
-      "answers": ["30 secondes", "45 secondes", "60 secondes", "90 secondes"],
-      "correct": 2,
-      "category": "modes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 148,
-      "question": "Quel mode permet uniquement l'utilisation de snipers ?",
-      "answers": ["Sniper Only", "One Shot", "Marksman", "Long Range"],
-      "correct": 0,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 149,
-      "question": "Dans quel mode les éliminations au headshot donnent des points bonus ?",
-      "answers": ["Headshot Only", "Sharp Shooter", "Precision", "Sniper Challenge"],
-      "correct": 0,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 150,
-      "question": "Quel mode se joue en plusieurs rounds avec économie d'achat ?",
-      "answers": ["Search and Destroy", "Cyber Attack", "Bomb Defusal", "Aucun de ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 151,
-      "question": "Dans le mode Zombies, quel est l'objectif principal ?",
-      "answers": ["Éliminer tous les zombies", "Survivre le plus longtemps", "Collecter des objets", "Toutes ces réponses"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 152,
-      "question": "Quel mode propose des respawns rapides et des combats intenses ?",
-      "answers": ["Shipment 24/7", "Nuketown 24/7", "Rust 24/7", "Tous ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 153,
-      "question": "Dans quel mode doit-on escorter un véhicule ?",
-      "answers": ["Escort", "Payload", "Transport", "Aucun de ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 154,
-      "question": "Quel mode permet de jouer avec des loadouts prédéfinis ?",
-      "answers": ["Weapon Master", "Gun Game", "Arsenal", "Loadout Lock"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 155,
-      "question": "Dans le mode Practice vs AI, contre quoi joue-t-on ?",
-      "answers": ["Bots faciles", "Bots moyens", "Bots difficiles", "Selon la sélection"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 156,
-      "question": "Quel mode propose des parties rapides de 3 minutes ?",
-      "answers": ["Speed Mode", "Quick Play", "Blitz", "Rapid Fire"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 157,
-      "question": "Dans quel mode les killstreaks sont-ils désactivés ?",
-      "answers": ["Barebones", "Pure", "Classic", "Aucun mode fixe"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 158,
-      "question": "Quel mode permet de tester les nouvelles armes ?",
-      "answers": ["Training", "Practice Range", "Weapon Test", "Arsenal"],
-      "correct": 1,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 159,
-      "question": "Dans le mode Ranked, quel est le rang le plus élevé ?",
-      "answers": ["Master", "Grandmaster", "Legendary", "Mythic"],
-      "correct": 2,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 160,
-      "question": "Quel mode propose des parties avec des règles spéciales changeantes ?",
-      "answers": ["Featured", "Special Ops", "Weekly Challenge", "Events"],
-      "correct": 0,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 161,
-      "question": "Dans quel mode peut-on utiliser des véhicules en multijoueur ?",
-      "answers": ["Ground War", "Vehicle Combat", "Tank Battle", "Aucun mode régulier"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 162,
-      "question": "Quel mode permet de jouer en équipe contre des joueurs aléatoires ?",
-      "answers": ["Team vs Team", "Squad Match", "All vs All", "Tous les modes équipe"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 163,
-      "question": "Dans le mode Tournament, combien d'équipes participent généralement ?",
-      "answers": ["8 équipes", "16 équipes", "32 équipes", "Variable"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 164,
-      "question": "Quel mode propose des parties avec seulement des armes de mêlée ?",
-      "answers": ["Knife Only", "Melee Mayhem", "Close Combat", "Sticks and Stones"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 165,
-      "question": "Dans quel mode les parties durent-elles le plus longtemps ?",
-      "answers": ["Battle Royale", "Zombies", "Guerre Totale", "Cela dépend"],
-      "correct": 0,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 166,
-      "question": "Quel mode est idéal pour améliorer sa visée ?",
-      "answers": ["Practice Range", "Training", "Target Practice", "Tous ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "facile"
-    },
-    {
-      "id": 167,
-      "question": "Dans quel mode peut-on revive ses coéquipiers ?",
-      "answers": ["Battle Royale", "Alcatraz", "Zombies", "Tous ces modes"],
-      "correct": 3,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 168,
-      "question": "Quel mode propose le plus de variété dans les armes utilisées ?",
-      "answers": ["Gun Game", "Free for All", "Team Deathmatch", "All Random"],
-      "correct": 0,
-      "category": "modes",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 169,
-      "question": "Quel personnage est connu pour porter un masque de crâne ?",
-      "answers": ["Ghost", "Soap", "Price", "Reaper"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "facile"
-    },
-    {
-      "id": 170,
-      "question": "Qui est le capitaine de la Task Force 141 ?",
-      "answers": ["Soap MacTavish", "Captain Price", "Ghost", "Gaz"],
-      "correct": 1,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 171,
-      "question": "Quel personnage est d'origine écossaise ?",
-      "answers": ["Price", "Soap MacTavish", "Ghost", "Gaz"],
-      "correct": 1,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 172,
-      "question": "Qui est le principal antagoniste de la série Modern Warfare ?",
-      "answers": ["Makarov", "Zakhaev", "Shepherd", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 173,
-      "question": "Quel personnage porte toujours un chapeau et une moustache ?",
-      "answers": ["Captain Price", "Soap", "Ghost", "Gaz"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "facile"
-    },
-    {
-      "id": 174,
-      "question": "Qui est connu pour ses compétences en démolition ?",
-      "answers": ["Soap MacTavish", "Ghost", "Price", "Demolitions"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 175,
-      "question": "Quel personnage féminin est membre de l'Spetsnaz ?",
-      "answers": ["Mara", "Outrider", "Artery", "Charly"],
-      "correct": 1,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 176,
-      "question": "Qui est le lieutenant de la Task Force 141 ?",
-      "answers": ["Ghost", "Soap", "Gaz", "Roach"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 177,
-      "question": "Quel personnage est associé aux forces spéciales britanniques SAS ?",
-      "answers": ["Captain Price", "Ghost", "Soap", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 178,
-      "question": "Qui est le personnage principal de Call of Duty: Black Ops ?",
-      "answers": ["Alex Mason", "Frank Woods", "Jason Hudson", "Viktor Reznov"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 179,
-      "question": "Quel personnage est connu pour sa phrase 'Remember, no Russian' ?",
-      "answers": ["Makarov", "Zakhaev", "Shepherd", "Yuri"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 180,
-      "question": "Qui est le sniper légendaire de la série ?",
-      "answers": ["MacMillan", "Price", "Ghost", "Soap"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 181,
-      "question": "Quel personnage porte un masque de hockey ?",
-      "answers": ["Krueger", "Nikto", "Lerch", "Aucun de ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 182,
-      "question": "Qui est l'opérateur féminin le plus populaire dans CODM ?",
-      "answers": ["Mara", "Outrider", "Urban Tracker", "Artery"],
-      "correct": 2,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 183,
-      "question": "Quel personnage est associé au gang des Cinco de Mayo ?",
-      "answers": ["Rosa", "Vazquez", "Santos", "Aucun personnage"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 184,
-      "question": "Qui est le chef des forces Ultranationalists ?",
-      "answers": ["Makarov", "Zakhaev", "Al-Asad", "Shepherd"],
-      "correct": 1,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 185,
-      "question": "Quel personnage est connu pour porter des lunettes de soleil ?",
-      "answers": ["Alex Mason", "Frank Woods", "Jason Hudson", "Viktor Reznov"],
-      "correct": 2,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 186,
-      "question": "Qui est le personnage cyborg de la série ?",
-      "answers": ["Reaper", "Prophet", "Spectre", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 187,
-      "question": "Quel personnage est d'origine russe et aide les héros ?",
-      "answers": ["Nikolai", "Viktor Reznov", "Yuri", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 188,
-      "question": "Qui est le général traître dans Modern Warfare 2 ?",
-      "answers": ["General Shepherd", "General Zakhaev", "General Barkov", "General Makarov"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 189,
-      "question": "Quel personnage est associé aux forces Delta Force ?",
-      "answers": ["Sandman", "Frost", "Grinch", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 190,
-      "question": "Qui est l'agent de la CIA dans Black Ops ?",
-      "answers": ["Jason Hudson", "Alex Mason", "Frank Woods", "Grigori Weaver"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 191,
-      "question": "Quel personnage porte un béret rouge ?",
-      "answers": ["Captain Price", "Soap MacTavish", "Gaz", "MacMillan"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 192,
-      "question": "Qui est le personnage principal de Call of Duty: Ghosts ?",
-      "answers": ["Logan Walker", "David Walker", "Elias Walker", "Gabriel Rorke"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 193,
-      "question": "Quel personnage est connu pour son expertise en infiltration ?",
-      "answers": ["Ghost", "Soap", "Roach", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 194,
-      "question": "Qui est le pilote d'hélicoptère légendaire ?",
-      "answers": ["Nikolai", "Griggs", "Gaz", "Wallcroft"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 195,
-      "question": "Quel personnage porte une armure futuriste ?",
-      "answers": ["Prophet", "Reaper", "Spectre", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 196,
-      "question": "Qui est le commandant des forces mexicaines ?",
-      "answers": ["Alejandro", "General Almagro", "Rosa", "Aucun personnage spécifique"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 197,
-      "question": "Quel personnage est associé aux Blackwater ?",
-      "answers": ["Mace", "Krueger", "Nikto", "Aucun de ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 198,
-      "question": "Qui est le personnage le plus emblématique de Call of Duty ?",
-      "answers": ["Captain Price", "Soap MacTavish", "Ghost", "Tous sont emblématiques"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 199,
-      "question": "Quel personnage est connu pour sa loyauté indéfectible ?",
-      "answers": ["Soap MacTavish", "Ghost", "Gaz", "Tous ces personnages"],
-      "correct": 3,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 200,
-      "question": "Qui est le mentor de Soap MacTavish ?",
-      "answers": ["Captain Price", "Ghost", "MacMillan", "Gaz"],
-      "correct": 0,
-      "category": "personnages",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 201,
-      "question": "Combien de kills sont nécessaires pour obtenir un UAV ?",
-      "answers": ["3 kills", "4 kills", "5 kills", "6 kills"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "facile"
-    },
-    {
-      "id": 202,
-      "question": "Quel scorestreak révèle la position des ennemis sur la mini-map ?",
-      "answers": ["UAV", "Counter-UAV", "Advanced UAV", "UAV et Advanced UAV"],
-      "correct": 3,
-      "category": "scorestreaks",
-      "difficulty": "facile"
-    },
-    {
-      "id": 203,
-      "question": "Combien de kills faut-il pour le Hunter Killer Drone ?",
-      "answers": ["4 kills", "5 kills", "6 kills", "7 kills"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 204,
-      "question": "Quel scorestreak bloque les UAV ennemis ?",
-      "answers": ["Counter-UAV", "EMP", "Jammer", "Anti-Air"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "facile"
-    },
-    {
-      "id": 205,
-      "question": "Combien de kills sont nécessaires pour le Predator Missile ?",
-      "answers": ["4 kills", "5 kills", "6 kills", "7 kills"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 206,
-      "question": "Quel est le scorestreak le plus puissant généralement ?",
-      "answers": ["Chopper Gunner", "AC-130", "Nuclear", "VTOL"],
-      "correct": 2,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 207,
-      "question": "Combien de kills faut-il pour obtenir un Care Package ?",
-      "answers": ["3 kills", "4 kills", "5 kills", "6 kills"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 208,
-      "question": "Quel scorestreak permet de contrôler un drone armé ?",
-      "answers": ["Hunter Killer", "Stealth Chopper", "Attack Helicopter", "Lightning Strike"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 209,
-      "question": "Combien de kills sont nécessaires pour le Chopper Gunner ?",
-      "answers": ["8 kills", "10 kills", "12 kills", "15 kills"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 210,
-      "question": "Quel scorestreak fait apparaître une tourelle automatique ?",
-      "answers": ["Sentry Gun", "Guardian", "Mantis", "Dragonfire"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 211,
-      "question": "Combien de kills faut-il pour le Lightning Strike ?",
-      "answers": ["6 kills", "7 kills", "8 kills", "9 kills"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 212,
-      "question": "Quel scorestreak révèle la direction des ennemis ?",
-      "answers": ["UAV", "Advanced UAV", "Counter-UAV", "Blackbird"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 213,
-      "question": "Combien de kills sont nécessaires pour le VTOL Warship ?",
-      "answers": ["6 kills", "8 kills", "10 kills", "12 kills"],
-      "correct": 2,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 214,
-      "question": "Quel scorestreak peut être détruit le plus facilement ?",
-      "answers": ["UAV", "Care Package", "Counter-UAV", "Hunter Killer"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 215,
-      "question": "Combien de kills faut-il pour obtenir un Cluster Strike ?",
-      "answers": ["5 kills", "6 kills", "7 kills", "8 kills"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 216,
-      "question": "Quel scorestreak donne un scorestreak aléatoire ?",
-      "answers": ["Care Package", "Emergency Airdrop", "Supply Drop", "Mystery Box"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "facile"
-    },
-    {
-      "id": 217,
-      "question": "Combien de kills sont nécessaires pour le Nuclear ?",
-      "answers": ["20 kills", "25 kills", "30 kills", "Variable"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 218,
-      "question": "Quel scorestreak peut être piraté par l'ennemi ?",
-      "answers": ["Care Package", "Sentry Gun", "VTOL", "Tous ces scorestreaks"],
-      "correct": 3,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 219,
-      "question": "Combien de kills faut-il pour l'Advanced UAV ?",
-      "answers": ["6 kills", "7 kills", "8 kills", "9 kills"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 220,
-      "question": "Quel scorestreak permet de faire trois frappes aériennes ?",
-      "answers": ["Lightning Strike", "Cluster Strike", "Precision Airstrike", "Napalm Strike"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 221,
-      "question": "Combien de kills sont nécessaires pour l'EMP Systems ?",
-      "answers": ["6 kills", "8 kills", "10 kills", "12 kills"],
-      "correct": 2,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 222,
-      "question": "Quel scorestreak désactive temporairement tous les équipements ?",
-      "answers": ["EMP", "Counter-UAV", "Jammer", "Blackout"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 223,
-      "question": "Combien de kills faut-il pour le Swarm (essaim de drones) ?",
-      "answers": ["10 kills", "12 kills", "15 kills", "18 kills"],
-      "correct": 2,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 224,
-      "question": "Quel scorestreak peut être appelé plusieurs fois par partie ?",
-      "answers": ["UAV", "Care Package", "Hunter Killer", "Tous ces scorestreaks"],
-      "correct": 3,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 225,
-      "question": "Combien de temps dure généralement un UAV ?",
-      "answers": ["20 secondes", "30 secondes", "45 secondes", "60 secondes"],
-      "correct": 1,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 226,
-      "question": "Quel scorestreak nécessite le plus de kills en général ?",
-      "answers": ["Nuclear", "Swarm", "AC-130", "Chopper Gunner"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "facile"
-    },
-    {
-      "id": 227,
-      "question": "Combien de kills faut-il pour le Stealth Chopper ?",
-      "answers": ["6 kills", "7 kills", "8 kills", "9 kills"],
-      "correct": 2,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 228,
-      "question": "Quel scorestreak ne peut pas être détruit ?",
-      "answers": ["EMP", "Lightning Strike", "Nuclear", "Tous peuvent être contrés"],
-      "correct": 2,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 229,
-      "question": "Combien de kills sont nécessaires pour l'Orbital Laser ?",
-      "answers": ["8 kills", "10 kills", "12 kills", "15 kills"],
-      "correct": 2,
-      "category": "scorestreaks",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 230,
-      "question": "Quel scorestreak est le plus polyvalent ?",
-      "answers": ["UAV", "Care Package", "Hunter Killer", "Lightning Strike"],
-      "correct": 0,
-      "category": "scorestreaks",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 231,
-      "question": "Quel équipement permet de soigner sa vie ?",
-      "answers": ["Medic Bag", "Stim Shot", "Health Pack", "First Aid"],
-      "correct": 1,
-      "category": "equipements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 232,
-      "question": "Quelle grenade explose au contact ?",
-      "answers": ["Frag Grenade", "Semtex", "Thermite", "Sticky Grenade"],
-      "correct": 1,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 233,
-      "question": "Quel équipement révèle les ennemis proches ?",
-      "answers": ["Heartbeat Sensor", "Motion Sensor", "Radar Pulse", "Scanner"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 234,
-      "question": "Quelle grenade aveugle temporairement ?",
-      "answers": ["Flash Grenade", "Stun Grenade", "Concussion", "Toutes ces grenades"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 235,
-      "question": "Quel équipement bloque les projectiles ?",
-      "answers": ["Trophy System", "Shield", "Barrier", "Defense Matrix"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 236,
-      "question": "Quelle grenade fait des dégâts de feu ?",
-      "answers": ["Thermite", "Molotov", "Incendiary", "Toutes ces grenades"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 237,
-      "question": "Quel équipement permet de détecter les mines ?",
-      "answers": ["Engineer", "Hard Wired", "Cold Blooded", "Aucun équipement"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 238,
-      "question": "Quelle grenade fumigène masque la vision ?",
-      "answers": ["Smoke Grenade", "Gas Grenade", "Tear Gas", "Smoke uniquement"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 239,
-      "question": "Quel équipement soigne les coéquipiers ?",
-      "answers": ["Medic Bag", "Health Station", "Healing Drone", "Stim Shot"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 240,
-      "question": "Quelle mine explose au passage ?",
-      "answers": ["Trip Mine", "Proximity Mine", "Bouncing Betty", "Toutes ces mines"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 241,
-      "question": "Quel équipement permet de pirater les scorestreaks ennemis ?",
-      "answers": ["Hacker", "Engineer", "Black Hat", "EMP Grenade"],
-      "correct": 2,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 242,
-      "question": "Quelle grenade empoisonne la zone ?",
-      "answers": ["Gas Grenade", "Poison Grenade", "Nova Gas", "Toxic Grenade"],
-      "correct": 2,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 243,
-      "question": "Quel équipement recharge les munitions ?",
-      "answers": ["Ammo Box", "Supply Crate", "Munitions Pack", "Resupply"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 244,
-      "question": "Quelle grenade fait rebondir les ennemis ?",
-      "answers": ["Concussion", "Gravity Spikes", "Repulsor", "Aucune grenade"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 245,
-      "question": "Quel équipement protège contre les explosifs ?",
-      "answers": ["Flak Jacket", "Blast Shield", "EOD Suit", "Armor Vest"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 246,
-      "question": "Quelle grenade électrifie la zone ?",
-      "answers": ["Shock Charge", "EMP Grenade", "Tesla Grenade", "Electric Grenade"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 247,
-      "question": "Quel équipement améliore la mobilité ?",
-      "answers": ["Lightweight", "Marathon", "Grappling Hook", "Jetpack"],
-      "correct": 2,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 248,
-      "question": "Quelle grenade ralentit les ennemis ?",
-      "answers": ["Cryo Grenade", "Ice Grenade", "Freeze Grenade", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 249,
-      "question": "Quel équipement permet de voir à travers la fumée ?",
-      "answers": ["Thermal Scope", "Night Vision", "Infrared", "Toutes ces options"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 250,
-      "question": "Quelle grenade désactive les équipements électroniques ?",
-      "answers": ["EMP Grenade", "Shock Charge", "Jammer", "Blackout Device"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 251,
-      "question": "Quel équipement permet de grimper aux murs ?",
-      "answers": ["Wall Run", "Grappling Hook", "Climb Gear", "Aucun équipement"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 252,
-      "question": "Quelle grenade explose en plusieurs fragments ?",
-      "answers": ["Frag Grenade", "Cluster Grenade", "Shrapnel Grenade", "Toutes ces grenades"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 253,
-      "question": "Quel équipement rend invisible temporairement ?",
-      "answers": ["Camo", "Cloak", "Stealth", "Aucun équipement permanent"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 254,
-      "question": "Quelle grenade attire les ennemis ?",
-      "answers": ["Decoy Grenade", "Hologram", "Phantom", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 255,
-      "question": "Quel équipement augmente la vitesse de déplacement ?",
-      "answers": ["Speed Boost", "Adrenaline", "Lightweight", "Toutes ces options"],
-      "correct": 2,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 256,
-      "question": "Quelle grenade fait du bruit pour distraire ?",
-      "answers": ["Decoy Grenade", "Sound Grenade", "Distraction", "Aucune grenade"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 257,
-      "question": "Quel équipement protège contre les grenades ?",
-      "answers": ["Trophy System", "Flak Jacket", "Blast Shield", "Toutes ces options"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 258,
-      "question": "Quelle grenade suit les ennemis ?",
-      "answers": ["Seeking Grenade", "Smart Grenade", "Homing Grenade", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 259,
-      "question": "Quel équipement révèle les pièges ennemis ?",
-      "answers": ["Engineer", "Sixth Sense", "Paranoia", "Toutes ces options"],
-      "correct": 0,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 260,
-      "question": "Quelle grenade crée un mur temporaire ?",
-      "answers": ["Barrier Grenade", "Wall Grenade", "Shield Grenade", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 261,
-      "question": "Quel équipement améliore la précision ?",
-      "answers": ["Steady Aim", "Focus", "Precision", "Toutes ces options"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 262,
-      "question": "Quelle grenade téléporte le lanceur ?",
-      "answers": ["Teleport Grenade", "Phase Grenade", "Warp Grenade", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 263,
-      "question": "Quel équipement réduit le recul des armes ?",
-      "answers": ["Grip", "Recoil Control", "Stability", "Toutes ces options"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 264,
-      "question": "Quelle grenade clone le lanceur ?",
-      "answers": ["Clone Grenade", "Duplicate", "Mirror Grenade", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 265,
-      "question": "Quel équipement permet de courir plus longtemps ?",
-      "answers": ["Marathon", "Endurance", "Stamina", "Toutes ces options"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 266,
-      "question": "Quelle grenade aspire les ennemis ?",
-      "answers": ["Gravity Grenade", "Vacuum Grenade", "Suction Grenade", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 267,
-      "question": "Quel équipement réduit les dégâts reçus ?",
-      "answers": ["Armor", "Damage Reduction", "Toughness", "Toutes ces options"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 268,
-      "question": "Quelle grenade transforme les ennemis ?",
-      "answers": ["Transform Grenade", "Morph Grenade", "Change Grenade", "Aucune grenade standard"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 269,
-      "question": "Quel équipement le plus utile en général ?",
-      "answers": ["Stim Shot", "Trophy System", "Frag Grenade", "Selon la situation"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 270,
-      "question": "Quelle combinaison d'équipements est la plus populaire ?",
-      "answers": ["Frag + Stim", "Semtex + Trophy", "Thermite + Medic", "Selon le mode"],
-      "correct": 3,
-      "category": "equipements",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 271,
-      "question": "Quel événement a introduit le premier Battle Pass ?",
-      "answers": ["Season 1", "Beta Launch", "Global Launch", "Season 2"],
-      "correct": 0,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 272,
-      "question": "Combien de saisons ont été lancées depuis le début ?",
-      "answers": ["Plus de 10", "Plus de 15", "Plus de 20", "Variable selon la date"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 273,
-      "question": "Quel événement a introduit le mode Zombies ?",
-      "answers": ["Halloween Event", "Season 6", "Undead Siege", "Launch"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 274,
-      "question": "Quand Call of Duty Mobile a-t-il été lancé globalement ?",
-      "answers": ["Septembre 2019", "Octobre 2019", "Novembre 2019", "Décembre 2019"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 275,
-      "question": "Quel événement célèbre généralement Noël ?",
-      "answers": ["Winter Event", "Holiday Celebration", "Christmas Special", "Toutes ces dénominations"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 276,
-      "question": "Quelle collaboration a introduit des personnages d'anime ?",
-      "answers": ["Attack on Titan", "Demon Slayer", "Jujutsu Kaisen", "Toutes ces collaborations"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 277,
-      "question": "Quel événement a introduit le mode Alcatraz ?",
-      "answers": ["Season 3", "Season 4", "Prison Break Event", "Battle Royale Update"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 278,
-      "question": "Combien de temps dure généralement un Battle Pass ?",
-      "answers": ["1 mois", "2 mois", "3 mois", "Variable"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 279,
-      "question": "Quel événement a introduit le premier personnage mythique ?",
-      "answers": ["Season 8", "Season 9", "Mythic Launch", "Anniversary Event"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 280,
-      "question": "Quelle collaboration a introduit Rambo ?",
-      "answers": ["Action Heroes", "80s Event", "Movie Legends", "Season 4 2021"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 281,
-      "question": "Quel événement célèbre l'anniversaire du jeu ?",
-      "answers": ["Anniversary Event", "Birthday Celebration", "Special Anniversary", "Toutes ces dénominations"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 282,
-      "question": "Quelle saison a introduit les armes mythiques ?",
-      "answers": ["Season 8", "Season 9", "Season 10", "Season 11"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 283,
-      "question": "Quel événement a introduit le mode Blackout ?",
-      "answers": ["Battle Royale Launch", "Season 1", "Beta Test", "N'existe pas dans CODM"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 284,
-      "question": "Combien de niveaux contient généralement un Battle Pass ?",
-      "answers": ["50 niveaux", "100 niveaux", "150 niveaux", "Variable"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 285,
-      "question": "Quel événement a introduit le Clan Wars ?",
-      "answers": ["Season 6 2021", "Season 7 2021", "Season 8 2021", "Season 9 2021"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 286,
-      "question": "Quelle collaboration a introduit des skins de véhicules spéciaux ?",
-      "answers": ["Fast & Furious", "Transformers", "Mad Max", "Toutes ces collaborations"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 287,
-      "question": "Quel événement a introduit le système de Clan ?",
-      "answers": ["Season 3", "Season 4", "Season 5", "Season 6"],
-      "correct": 2,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 288,
-      "question": "Combien de CP coûte généralement un Battle Pass premium ?",
-      "answers": ["320 CP", "560 CP", "800 CP", "Variable"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 289,
-      "question": "Quel événement a introduit les premiers Lucky Draws ?",
-      "answers": ["Season 1", "Season 2", "Season 3", "Beta"],
-      "correct": 0,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 290,
-      "question": "Quelle saison a introduit le mode Undead Siege ?",
-      "answers": ["Season 5 2021", "Season 6 2021", "Season 7 2021", "Season 8 2021"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 291,
-      "question": "Quel événement célèbre généralement Halloween ?",
-      "answers": ["Spooky Event", "Halloween Special", "Nightmare Event", "Toutes ces dénominations"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 292,
-      "question": "Combien de récompenses gratuites y a-t-il dans un Battle Pass ?",
-      "answers": ["25 récompenses", "50 récompenses", "75 récompenses", "Variable"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 293,
-      "question": "Quel événement a introduit le premier skin d'arme légendaire ?",
-      "answers": ["Season 1", "Season 2", "Season 3", "Lucky Draw Launch"],
-      "correct": 0,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 294,
-      "question": "Quelle collaboration a duré le plus longtemps ?",
-      "answers": ["Rambo", "Attack on Titan", "Demon Slayer", "Variable selon les événements"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 295,
-      "question": "Quel événement a introduit les Credit Store rotations ?",
-      "answers": ["Season 2", "Season 3", "Season 4", "Season 5"],
-      "correct": 1,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 296,
-      "question": "Combien de jours dure généralement un événement spécial ?",
-      "answers": ["7 jours", "14 jours", "21 jours", "Variable"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 297,
-      "question": "Quel événement a introduit les Seasonal Challenges ?",
-      "answers": ["Season 1", "Season 2", "Season 3", "Depuis le début"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 298,
-      "question": "Quelle saison a eu le plus de contenu ajouté ?",
-      "answers": ["Anniversary Season", "Season 9", "Season 6 2021", "Variable selon l'opinion"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 299,
-      "question": "Quel événement a introduit le premier mode temporaire ?",
-      "answers": ["Season 1", "Beta Test", "Launch Event", "Gun Game"],
-      "correct": 0,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 300,
-      "question": "Combien d'événements simultanés peuvent être actifs ?",
-      "answers": ["2-3 événements", "4-5 événements", "6+ événements", "Pas de limite fixe"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 301,
-      "question": "Quel événement a introduit les Daily Login Rewards ?",
-      "answers": ["Season 1", "Beta", "Launch", "Présent depuis le début"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 302,
-      "question": "Quelle collaboration a introduit le plus de contenu ?",
-      "answers": ["Attack on Titan", "Rambo", "Terminator", "Toutes égales"],
-      "correct": 0,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 303,
-      "question": "Quel événement a introduit les World Championship ?",
-      "answers": ["2020", "2021", "2022", "Annuel depuis 2020"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 304,
-      "question": "Combien de CP peut-on gagner dans un Battle Pass gratuit ?",
-      "answers": ["0 CP", "50 CP", "100 CP", "Variable"],
-      "correct": 0,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 305,
-      "question": "Quel événement a introduit les Crate Openings ?",
-      "answers": ["Season 1", "Beta", "Launch", "Présent depuis le début"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "facile"
-    },
-    {
-      "id": 306,
-      "question": "Quelle saison a eu les meilleures récompenses selon la communauté ?",
-      "answers": ["Season 6", "Season 9", "Anniversary", "Opinion subjective"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 307,
-      "question": "Quel événement a introduit les Featured Events ?",
-      "answers": ["Season 2", "Season 3", "Season 4", "Présent depuis le début"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 308,
-      "question": "Combien de fois peut-on compléter un événement quotidien ?",
-      "answers": ["1 fois", "Illimité", "3 fois", "Selon l'événement"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 309,
-      "question": "Quel événement a le plus marqué la communauté ?",
-      "answers": ["Zombies Return", "Anniversary", "First Mythic", "Opinion subjective"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 310,
-      "question": "Quelle récompense est la plus attendue dans les événements ?",
-      "answers": ["Skins d'armes", "Personnages", "Emotes", "Selon les préférences"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 311,
-      "question": "Quel événement a introduit les Community Events ?",
-      "answers": ["Season 3", "Season 4", "Season 5", "Évolution progressive"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 312,
-      "question": "Combien d'XP Battle Pass gagne-t-on par partie en moyenne ?",
-      "answers": ["500-1000 XP", "1000-2000 XP", "2000+ XP", "Variable selon performance"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 313,
-      "question": "Quel événement a introduit les Cross-Platform rewards ?",
-      "answers": ["Warzone Integration", "Season 8", "N'existe pas", "Black Ops Integration"],
-      "correct": 2,
-      "category": "evenements",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 314,
-      "question": "Quelle est la durée maximale d'un événement spécial ?",
-      "answers": ["1 mois", "2 mois", "Toute la saison", "Variable"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 315,
-      "question": "Quel événement a introduit les Leaderboard Rewards ?",
-      "answers": ["Season 1", "Season 2", "Clan Wars", "Présent depuis le début"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 316,
-      "question": "Combien de récompenses peuvent être gagnées par événement ?",
-      "answers": ["5-10 récompenses", "10-20 récompenses", "20+ récompenses", "Variable"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 317,
-      "question": "Quel type d'événement est le plus populaire ?",
-      "answers": ["Battle Pass", "Lucky Draw", "Featured Events", "Selon les préférences"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 318,
-      "question": "Quel événement a introduit les Double XP weekends ?",
-      "answers": ["Season 2", "Season 3", "Présent depuis tôt", "Irrégulier"],
-      "correct": 2,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 319,
-      "question": "Quelle est la récompense la plus rare dans les événements ?",
-      "answers": ["Armes mythiques", "Personnages légendaires", "Emotes spéciales", "Variable"],
-      "correct": 0,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 320,
-      "question": "Quel événement nécessite le plus de temps pour être complété ?",
-      "answers": ["Battle Pass", "Seasonal Challenges", "Clan Wars", "Variable selon l'événement"],
-      "correct": 3,
-      "category": "evenements",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 321,
-      "question": "Quelle est l'arme la plus populaire en ranked actuellement ?",
-      "answers": ["AK-47", "M4", "AK-117", "Variable selon la meta"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 322,
-      "question": "Quel loadout est considéré comme meta en Search and Destroy ?",
-      "answers": ["SMG aggressive", "AR polyvalent", "Sniper + SMG", "Selon la carte"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 323,
-      "question": "Quelle sensibilité est recommandée pour les débutants ?",
-      "answers": ["Élevée", "Moyenne", "Faible", "Selon les préférences"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 324,
-      "question": "Quel HUD layout est le plus populaire ?",
-      "answers": ["Default", "4 doigts", "6 doigts", "Personnalisé"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 325,
-      "question": "Quelle stratégie est meta en Battle Royale ?",
-      "answers": ["Hot drop", "Edge play", "Rotation early", "Selon le style"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 326,
-      "question": "Quel ping est considéré comme acceptable ?",
-      "answers": ["<20ms", "<50ms", "<100ms", "<150ms"],
-      "correct": 1,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 327,
-      "question": "Quelle résolution est optimale pour la compétition ?",
-      "answers": ["720p", "1080p", "1440p", "Selon l'appareil"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 328,
-      "question": "Combien de FPS sont recommandés pour le competitive ?",
-      "answers": ["30 FPS", "60 FPS", "90+ FPS", "120+ FPS"],
-      "correct": 2,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 329,
-      "question": "Quel scope est meta pour les AR en ranked ?",
-      "answers": ["Red Dot", "Holographic", "ACOG", "Iron Sights"],
-      "correct": 0,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 330,
-      "question": "Quelle classe BR est meta actuellement ?",
-      "answers": ["Ninja", "Scout", "Medic", "Variable selon l'update"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 331,
-      "question": "Quel attachement est indispensable sur les SMG ?",
-      "answers": ["Extended Mag", "Laser", "Stock", "Selon l'arme"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 332,
-      "question": "Quelle perk est meta en ranked MP ?",
-      "answers": ["Ghost", "Flak Jacket", "Lightweight", "Toutes importantes"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 333,
-      "question": "Combien de loadouts faut-il préparer pour ranked ?",
-      "answers": ["3 loadouts", "5 loadouts", "10 loadouts", "Selon les modes"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 334,
-      "question": "Quel throwable est meta en SnD ?",
-      "answers": ["Frag", "Semtex", "Thermite", "Trophy System"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 335,
-      "question": "Quelle tactique est meta en Hardpoint ?",
-      "answers": ["Rush point", "Setup early", "Rotate tôt", "Toutes ces tactiques"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 336,
-      "question": "Quel mode d'entraînement est le plus efficace ?",
-      "answers": ["Aim Training", "1v1", "Ranked", "Practice Range"],
-      "correct": 2,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 337,
-      "question": "Quelle position de doigts est optimale ?",
-      "answers": ["2 doigts", "3 doigts", "4 doigts", "Selon le confort"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 338,
-      "question": "Quel crosshair placement est correct ?",
-      "answers": ["Au sol", "Niveau tête", "Niveau corps", "Variable"],
-      "correct": 1,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 339,
-      "question": "Quelle communication est essentielle en équipe ?",
-      "answers": ["Position ennemie", "Rotation", "Loadout ennemi", "Toutes ces infos"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 340,
-      "question": "Quel timing est crucial en ranked ?",
-      "answers": ["Rotation maps", "Reload timing", "Peek timing", "Tous ces timings"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 341,
-      "question": "Quelle erreur est la plus commune chez les débutants ?",
-      "answers": ["Mauvais aim", "Positionnement", "Game sense", "Toutes ces erreurs"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 342,
-      "question": "Quel aspect améliorer en priorité ?",
-      "answers": ["Aim", "Movement", "Game sense", "Selon le niveau"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 343,
-      "question": "Quelle mentalité adopter en ranked ?",
-      "answers": ["Agressive", "Défensive", "Adaptative", "Positive"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 344,
-      "question": "Combien d'heures d'entraînement par jour ?",
-      "answers": ["1 heure", "2-3 heures", "4+ heures", "Selon disponibilité"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 345,
-      "question": "Quel équipement hardware est important ?",
-      "answers": ["Bon téléphone", "Écouteurs", "Manette", "Tous selon budget"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 346,
-      "question": "Quelle analyse post-game faire ?",
-      "answers": ["KD ratio", "Objectifs", "Erreurs", "Tout analyser"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 347,
-      "question": "Quel rôle adopter en équipe ranked ?",
-      "answers": ["Fragger", "Support", "IGL", "Selon les besoins"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 348,
-      "question": "Quelle adaptation faire selon la meta ?",
-      "answers": ["Loadouts", "Stratégie", "Playstyle", "Tout adapter"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 349,
-      "question": "Quel facteur influence le plus la performance ?",
-      "answers": ["Skill", "Équipe", "Hardware", "Mentalité"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 350,
-      "question": "Quelle est la clé du succès en CODM competitive ?",
-      "answers": ["Talent naturel", "Entraînement", "Équipe", "Tous ces facteurs"],
-      "correct": 3,
-      "category": "meta",
-      "difficulty": "moyen"
-    },
-        {
-      "id": 351,
-      "question": "En quelle année Call of Duty Mobile a-t-il été lancé ?",
-      "answers": ["2018", "2019", "2020", "2021"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 352,
-      "question": "Quel studio a développé Call of Duty Mobile ?",
-      "answers": ["Activision", "TiMi Studios", "Tencent", "TiMi Studios et Activision"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 353,
-      "question": "Sur quelles plateformes CODM est-il disponible ?",
-      "answers": ["iOS uniquement", "Android uniquement", "iOS et Android", "Toutes plateformes"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 354,
-      "question": "Combien de joueurs peuvent jouer simultanément en Battle Royale ?",
-      "answers": ["80", "100", "120", "Variable"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 355,
-      "question": "Quel est le niveau maximum dans CODM ?",
-      "answers": ["100", "150", "200", "Pas de limite"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 356,
-      "question": "Combien de loadouts peut-on créer ?",
-      "answers": ["5", "10", "15", "20"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 357,
-      "question": "Quelle est la monnaie premium du jeu ?",
-      "answers": ["Credits", "CP (COD Points)", "Battle Points", "Gems"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 358,
-      "question": "Combien de modes de jeu principaux y a-t-il ?",
-      "answers": ["2 (MP et BR)", "3 (MP, BR, Zombies)", "4 modes", "Plus de 5"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 359,
-      "question": "Quel est l'espace de stockage minimum requis ?",
-      "answers": ["2 GB", "4 GB", "6 GB", "8 GB+"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 360,
-      "question": "CODM est-il gratuit ?",
-      "answers": ["Payant", "Freemium", "Gratuit avec achats", "Abonnement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 361,
-      "question": "Combien de régions serveur existent ?",
-      "answers": ["3 régions", "5 régions", "10+ régions", "Variable"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 362,
-      "question": "Peut-on jouer hors ligne ?",
-      "answers": ["Oui, tous modes", "Partiellement", "Training uniquement", "Non, connexion requise"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 363,
-      "question": "CODM supporte-t-il les manettes ?",
-      "answers": ["Oui", "Non", "Partiellement", "Selon l'appareil"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 364,
-      "question": "Y a-t-il du cross-platform avec les autres COD ?",
-      "answers": ["Oui, tous", "Avec Warzone", "Avec Warzone Mobile", "Non"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 365,
-      "question": "Combien de slots d'amis peut-on avoir ?",
-      "answers": ["50", "100", "200", "500+"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 366,
-      "question": "CODM a-t-il un système anti-cheat ?",
-      "answers": ["Oui", "Non", "Partiellement", "En développement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 367,
-      "question": "Peut-on transférer les données entre appareils ?",
-      "answers": ["Oui, facilement", "Avec compte lié", "Non", "Partiellement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 368,
-      "question": "CODM supporte-t-il le 120 FPS ?",
-      "answers": ["Oui, tous appareils", "Appareils compatibles", "Non", "En beta"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 369,
-      "question": "Y a-t-il un mode spectateur ?",
-      "answers": ["Oui", "Non", "En développement", "Uniquement ranked"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 370,
-      "question": "Combien de langues CODM supporte-t-il ?",
-      "answers": ["5 langues", "10 langues", "15+ langues", "Variable"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 371,
-      "question": "CODM a-t-il un système de replay ?",
-      "answers": ["Oui, complet", "Partiellement", "Non", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 372,
-      "question": "Peut-on personnaliser entièrement le HUD ?",
-      "answers": ["Oui", "Partiellement", "Non", "Selon le mode"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 373,
-      "question": "CODM supporte-t-il le chat vocal ?",
-      "answers": ["Oui", "Non", "En équipe seulement", "Avec restrictions"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 374,
-      "question": "Y a-t-il des tournois officiels ?",
-      "answers": ["Oui, réguliers", "Annuels seulement", "Non", "Selon les régions"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 375,
-      "question": "CODM a-t-il un système de classement global ?",
-      "answers": ["Oui", "Par région", "Non", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 376,
-      "question": "Peut-on jouer en mode paysage et portrait ?",
-      "answers": ["Paysage uniquement", "Portrait uniquement", "Les deux", "Selon le mode"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 377,
-      "question": "CODM supporte-t-il les notifications push ?",
-      "answers": ["Oui", "Non", "Optionnelles", "Selon l'OS"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 378,
-      "question": "Y a-t-il un système de parrainage ?",
-      "answers": ["Oui", "Non", "En développement", "Selon les régions"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 379,
-      "question": "CODM a-t-il un mode d'entraînement complet ?",
-      "answers": ["Oui", "Basique", "Non", "En développement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 380,
-      "question": "Peut-on streamer directement depuis CODM ?",
-      "answers": ["Oui", "Avec apps tierces", "Non", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 381,
-      "question": "CODM supporte-t-il les achievements/trophées ?",
-      "answers": ["Oui", "Non", "Partiellement", "Selon la plateforme"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 382,
-      "question": "Y a-t-il un système de mentoring ?",
-      "answers": ["Oui", "Non", "En développement", "Communautaire"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 383,
-      "question": "CODM a-t-il des easter eggs ?",
-      "answers": ["Oui, nombreux", "Quelques-uns", "Non", "En développement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 384,
-      "question": "Peut-on modifier les commandes ?",
-      "answers": ["Oui, entièrement", "Partiellement", "Non", "Selon le mode"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 385,
-      "question": "CODM supporte-t-il le HDR ?",
-      "answers": ["Oui", "Selon l'appareil", "Non", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 386,
-      "question": "Y a-t-il un mode daltonien ?",
-      "answers": ["Oui", "Non", "En développement", "Partiellement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 387,
-      "question": "CODM a-t-il un système de rapport de bugs ?",
-      "answers": ["Oui", "Non", "Via support", "Communautaire"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 388,
-      "question": "Peut-on sauvegarder plusieurs profils ?",
-      "answers": ["Oui", "Un seul", "Avec comptes multiples", "Non"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 389,
-      "question": "CODM supporte-t-il le cloud gaming ?",
-      "answers": ["Oui", "En développement", "Non", "Selon la région"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 390,
-      "question": "Y a-t-il une API publique pour CODM ?",
-      "answers": ["Oui", "Non", "En développement", "Pour partenaires"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 391,
-      "question": "CODM a-t-il un système de modération automatique ?",
-      "answers": ["Oui", "Partiellement", "Non", "En développement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 392,
-      "question": "Peut-on créer des parties privées ?",
-      "answers": ["Oui", "Non", "Avec limitations", "Mode ranked seulement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 393,
-      "question": "CODM supporte-t-il les mods ?",
-      "answers": ["Oui, officiels", "Non", "Communautaires", "Interdits"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 394,
-      "question": "Y a-t-il un système de backup automatique ?",
-      "answers": ["Oui", "Avec compte lié", "Non", "Optionnel"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 395,
-      "question": "CODM a-t-il un dark mode ?",
-      "answers": ["Oui", "Non", "En développement", "Selon l'OS"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 396,
-      "question": "Peut-on désactiver les animations ?",
-      "answers": ["Oui, toutes", "Partiellement", "Non", "Mode performance"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 397,
-      "question": "CODM supporte-t-il la VR ?",
-      "answers": ["Oui", "En développement", "Non", "Expérimental"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 398,
-      "question": "Y a-t-il un mode accessibilité ?",
-      "answers": ["Oui, complet", "Basique", "Non", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 399,
-      "question": "CODM a-t-il un système de récompenses quotidiennes ?",
-      "answers": ["Oui", "Non", "Hebdomadaires", "Événementielles"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 400,
-      "question": "Peut-on transférer des achats entre comptes ?",
-      "answers": ["Oui", "Non", "Avec support", "Partiellement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 401,
-      "question": "Quelle est la fréquence des mises à jour majeures ?",
-      "answers": ["Mensuelle", "Bimestrielle", "Selon les saisons", "Irrégulière"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 402,
-      "question": "CODM supporte-t-il le streaming audio ?",
-      "answers": ["Oui", "Non", "Avec apps tierces", "En développement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 403,
-      "question": "Y a-t-il une limite d'âge pour jouer ?",
-      "answers": ["12+", "16+", "18+", "Selon la région"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 404,
-      "question": "CODM a-t-il un système de feedback joueurs ?",
-      "answers": ["Oui", "Non", "Via support", "Communautaire"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 405,
-      "question": "Peut-on jouer sans créer de compte ?",
-      "answers": ["Oui, mode invité", "Non", "Avec limitations", "Temporairement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 406,
-      "question": "CODM supporte-t-il les widgets ?",
-      "answers": ["Oui", "iOS seulement", "Android seulement", "Non"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 407,
-      "question": "Y a-t-il un système de karma/réputation ?",
-      "answers": ["Oui", "Non", "En développement", "Informel"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 408,
-      "question": "CODM a-t-il des limites de temps de jeu ?",
-      "answers": ["Oui, pour mineurs", "Non", "Optionnelles", "Selon la région"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 409,
-      "question": "Peut-on exporter ses statistiques ?",
-      "answers": ["Oui", "Non", "Apps tierces", "Partiellement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 410,
-      "question": "CODM supporte-t-il les raccourcis Siri/Google ?",
-      "answers": ["Oui", "iOS seulement", "Android seulement", "Non"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 411,
-      "question": "Quelle est la taille moyenne d'une mise à jour ?",
-      "answers": ["100 MB", "500 MB", "1 GB", "Variable"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 412,
-      "question": "CODM a-t-il un mode économie de batterie ?",
-      "answers": ["Oui", "Non", "Automatique", "Via OS"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 413,
-      "question": "Y a-t-il des restrictions géographiques ?",
-      "answers": ["Oui, certains pays", "Non", "Pour le contenu", "Variable"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 414,
-      "question": "CODM supporte-t-il le multitâche ?",
-      "answers": ["Oui", "Partiellement", "Non", "Selon l'appareil"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 415,
-      "question": "Peut-on personnaliser les sons ?",
-      "answers": ["Oui, entièrement", "Volume seulement", "Non", "Partiellement"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 416,
-      "question": "CODM a-t-il un système de protection parentale ?",
-      "answers": ["Oui", "Via OS", "Non", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 417,
-      "question": "Y a-t-il une version PC officielle ?",
-      "answers": ["Oui", "En développement", "Via émulateur", "Non"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 418,
-      "question": "CODM supporte-t-il les gestes avancés ?",
-      "answers": ["Oui", "Partiellement", "Non", "Selon l'appareil"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 419,
-      "question": "Peut-on bloquer des joueurs ?",
-      "answers": ["Oui", "Non", "Temporairement", "Avec limitations"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 420,
-      "question": "CODM a-t-il un système de mentorship ?",
-      "answers": ["Oui, officiel", "Communautaire", "Non", "En développement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 421,
-      "question": "Combien de serveurs dédiés CODM possède-t-il ?",
-      "answers": ["50+", "100+", "500+", "Information confidentielle"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 422,
-      "question": "CODM supporte-t-il le ray tracing ?",
-      "answers": ["Oui", "En développement", "Non", "Selon l'appareil"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 423,
-      "question": "Y a-t-il un système de coaching intégré ?",
-      "answers": ["Oui", "Non", "Tips seulement", "Communautaire"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 424,
-      "question": "CODM a-t-il des partenariats esports ?",
-      "answers": ["Oui, nombreux", "Quelques-uns", "Non", "En développement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 425,
-      "question": "Peut-on créer des tournois privés ?",
-      "answers": ["Oui", "Avec autorisation", "Non", "En développement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 426,
-      "question": "CODM supporte-t-il l'authentification biométrique ?",
-      "answers": ["Oui", "Selon l'appareil", "Non", "Optionnelle"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 427,
-      "question": "Y a-t-il une limite au nombre de parties par jour ?",
-      "answers": ["Oui", "Pour les mineurs", "Non", "Selon la région"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 428,
-      "question": "CODM a-t-il un système de récompenses de fidélité ?",
-      "answers": ["Oui", "Non", "Via events", "En développement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 429,
-      "question": "Peut-on synchroniser avec d'autres jeux Activision ?",
-      "answers": ["Oui", "Partiellement", "Non", "En développement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 430,
-      "question": "CODM supporte-t-il la capture d'écran automatique ?",
-      "answers": ["Oui", "Non", "Via OS", "Partiellement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 431,
-      "question": "Quelle est la résolution maximale supportée ?",
-      "answers": ["1080p", "1440p", "4K", "Selon l'appareil"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 432,
-      "question": "CODM a-t-il un mode démo ?",
-      "answers": ["Oui", "Non", "Training mode", "Tutorial"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 433,
-      "question": "Y a-t-il des restrictions sur les achats in-app ?",
-      "answers": ["Oui, pour mineurs", "Non", "Selon la région", "Optionnelles"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 434,
-      "question": "CODM supporte-t-il les notifications contextuelles ?",
-      "answers": ["Oui", "Non", "Partiellement", "Selon l'OS"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 435,
-      "question": "Peut-on importer des paramètres depuis d'autres COD ?",
-      "answers": ["Oui", "Non", "Partiellement", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 436,
-      "question": "CODM a-t-il un système de progression croisée ?",
-      "answers": ["Oui", "Avec Warzone", "Non", "En développement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 437,
-      "question": "Y a-t-il des événements saisonniers automatiques ?",
-      "answers": ["Oui", "Non", "Selon les fêtes", "Manuels"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 438,
-      "question": "CODM supporte-t-il l'enregistrement de gameplay ?",
-      "answers": ["Oui, natif", "Via OS", "Non", "Apps tierces"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 439,
-      "question": "Peut-on créer des clans avec des non-amis ?",
-      "answers": ["Oui", "Non", "Avec invitation", "Partiellement"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "facile"
-    },
-    {
-      "id": 440,
-      "question": "CODM a-t-il un système de prédiction de lag ?",
-      "answers": ["Oui", "Non", "Compensation", "En développement"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "difficile"
-    },
-    {
-      "id": 441,
-      "question": "Quelle est la durée de vie moyenne d'une saison ?",
-      "answers": ["1 mois", "2 mois", "3 mois", "Variable"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 442,
-      "question": "CODM supporte-t-il les raccourcis personnalisés ?",
-      "answers": ["Oui", "Non", "Partiellement", "Selon l'OS"],
-      "correct": 2,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 443,
-      "question": "Y a-t-il une protection contre le spam ?",
-      "answers": ["Oui", "Non", "Partiellement", "Manuelle"],
-      "correct": 0,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 444,
-      "question": "CODM a-t-il un mode spectateur avancé ?",
-      "answers": ["Oui", "Basique", "Non", "En développement"],
-      "correct": 1,
-      "category": "generale",
-      "difficulty": "moyen"
-    },
-    {
-      "id": 445,
-      "question": "Peut-on personnaliser l'interface utilisateur ?",
-      "answers": ["Oui, entièrement", "Partiellement", "Non", "HUD seulement"],
-      "correct": 3,
-      "category": "generale",
-      "difficulty": "facile"
+// ===== STORAGE.JS - GESTION LOCALSTORAGE QUIZ CODM =====
+
+// ===== CONSTANTES DE STOCKAGE =====
+const STORAGE_KEYS = {
+    USER_DATA: 'quizCODM_userData',
+    QUIZ_HISTORY: 'quizCODM_quizHistory',
+    LEADERBOARD: 'quizCODM_leaderboard',
+    REFERRALS: 'quizCODM_referrals',
+    SETTINGS: 'quizCODM_settings',
+    PARTICIPATION: 'quizCODM_participation',
+    ANALYTICS: 'quizCODM_analytics'
+};
+
+// Limites de stockage
+const STORAGE_LIMITS = {
+    MAX_QUIZ_HISTORY: 100,
+    MAX_LEADERBOARD_ENTRIES: 50,
+    MAX_REFERRALS: 1000,
+    MAX_STORAGE_SIZE: 5 * 1024 * 1024 // 5MB
+};
+
+// ===== CLASSE PRINCIPALE DE GESTION DU STOCKAGE =====
+class QuizStorage {
+    constructor() {
+        this.isSupported = this.checkStorageSupport();
+        this.version = '1.0.0';
+        this.initializeStorage();
     }
+
+    // ===== VÉRIFICATION DU SUPPORT =====
+    checkStorageSupport() {
+        try {
+            const test = '__storage_test__';
+            localStorage.setItem(test, test);
+            localStorage.removeItem(test);
+            return true;
+        } catch (error) {
+            console.error('❌ localStorage non supporté:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
+            return false;
+        }
+    }
+
+    // ===== INITIALISATION =====
+    initializeStorage() {
+        if (!this.isSupported) {
+            console.warn('⚠️ Stockage local non disponible - Mode dégradé');
+            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
+            return;
+        }
+
+        try {
+            // Migration des données si nécessaire
+            this.migrateData();
+            // Initialisation des structures de base
+            this.ensureDataStructures();
+            // Nettoyage périodique
+            this.performMaintenance();
+            console.log('✅ Système de stockage initialisé');
+        } catch (error) {
+            console.error('❌ Erreur initialisation stockage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
+    }
+
+    // ===== GESTION DES DONNÉES UTILISATEUR =====
     
-  ]
+    /**
+     * Initialise les données utilisateur par défaut
+     * @returns {Object} Données utilisateur par défaut
+     */
+    createDefaultUserData() {
+        const now = new Date();
+        return {
+            // Identité
+            userId: this.generateUserId(),
+            username: null,
+            email: null,
+            createdAt: now.toISOString(),
+            lastActiveDate: now.toISOString(),
+            
+            // Quiz
+            lastPlayDate: null,
+            todayScore: 0,
+            totalQuizzes: 0,
+            bestScore: 0,
+            averageScore: 0,
+            perfectScores: 0,
+            
+            // Système de tickets
+            totalTickets: 0,
+            ticketsEarned: 0,
+            ticketsFromShares: 0,
+            ticketsFromReferrals: 0,
+            
+            // Participation
+            hasParticipated: false,
+            participationDate: null,
+            monthlyParticipations: 0,
+            
+            // Parrainage
+            referralCode: this.generateReferralCode(),
+            referralsCount: 0,
+            referredBy: null,
+            
+            // Préférences
+            settings: this.createDefaultSettings(),
+            
+            // Version des données
+            dataVersion: this.version
+        };
+    }
+
+    /**
+     * Sauvegarde les données utilisateur
+     * @param {Object} userData - Données utilisateur à sauvegarder
+     * @returns {boolean} Succès de la sauvegarde
+     */
+    saveUserData(userData) {
+        try {
+            if (!userData) return false;
+
+            // Validation des données
+            const validatedData = this.validateUserData(userData);
+            
+            // Mise à jour de la date de dernière activité
+            validatedData.lastActiveDate = new Date().toISOString();
+            
+            // Sauvegarde sécurisée
+            return this.secureSet(STORAGE_KEYS.USER_DATA, validatedData);
+        } catch (error) {
+            console.error('❌ Erreur sauvegarde données utilisateur:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Charge les données utilisateur
+     * @returns {Object} Données utilisateur ou données par défaut
+     */
+    loadUserData() {
+        try {
+            const userData = this.secureGet(STORAGE_KEYS.USER_DATA);
+            
+            if (!userData) {
+                const defaultData = this.createDefaultUserData();
+                this.saveUserData(defaultData);
+                return defaultData;
+            }
+
+            // Vérification de la migration nécessaire
+            if (userData.dataVersion !== this.version) {
+                return this.migrateUserData(userData);
+            }
+
+            return userData;
+        } catch (error) {
+            console.error('❌ Erreur chargement données utilisateur:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return this.createDefaultUserData();
+        }
+    }
+
+    // ===== HISTORIQUE DES QUIZ =====
+    
+    /**
+     * Sauvegarde un résultat de quiz
+     * @param {Object} quizResult - Résultat du quiz
+     * @returns {boolean} Succès de la sauvegarde
+     */
+    saveQuizResult(quizResult) {
+        try {
+            const history = this.getQuizHistory();
+            const result = {
+                id: this.generateId(),
+                date: new Date().toISOString(),
+                score: quizResult.score,
+                totalQuestions: quizResult.totalQuestions,
+                timeSpent: quizResult.timeSpent || null,
+                questions: quizResult.questions || [],
+                answers: quizResult.answers || [],
+                difficulty: quizResult.difficulty || 'mixed'
+            };
+
+            // Ajout au début de l'historique
+            history.unshift(result);
+            
+            // Limitation du nombre d'entrées
+            if (history.length > STORAGE_LIMITS.MAX_QUIZ_HISTORY) {
+                history.splice(STORAGE_LIMITS.MAX_QUIZ_HISTORY);
+            }
+
+            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, history);
+            
+            // Mise à jour des statistiques utilisateur
+            this.updateUserStats(result);
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur sauvegarde résultat quiz:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère l'historique des quiz
+     * @param {number} limit - Nombre de résultats à retourner
+     * @returns {Array} Historique des quiz
+     */
+    getQuizHistory(limit = null) {
+        const history = this.secureGet(STORAGE_KEYS.QUIZ_HISTORY) || [];
+        return limit ? history.slice(0, limit) : history;
+    }
+
+    // ===== SYSTÈME DE TICKETS =====
+    
+    /**
+     * Ajoute des tickets à l'utilisateur
+     * @param {number} amount - Nombre de tickets à ajouter
+     * @param {string} source - Source des tickets (quiz, share, referral)
+     * @returns {number} Nombre total de tickets
+     */
+    addTickets(amount, source = 'quiz') {
+        if (!Number.isInteger(amount) || amount <= 0) {
+            console.warn('⚠️ Ajout de tickets invalide:', amount);
+            return this.getTickets(); // Retourne le nombre actuel de tickets
+        }
+
+        try {
+            const userData = this.loadUserData();
+            
+            userData.totalTickets += amount;
+            userData.ticketsEarned += amount;
+            
+            // Suivi par source
+            switch (source) {
+                case 'share':
+                    userData.ticketsFromShares += amount;
+                    break;
+                case 'referral':
+                    userData.ticketsFromReferrals += amount;
+                    break;
+                default:
+                    console.warn('⚠️ Source de tickets inconnue:', source);
+                    break;
+            }
+
+            this.saveUserData(userData);
+            
+            // Log de l'activité
+            this.logActivity('tickets_earned', { amount, source });
+            
+            return userData.totalTickets;
+        } catch (error) {
+            console.error('❌ Erreur ajout tickets:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return this.getTickets(); // Retourne le nombre actuel de tickets
+        }
+    }
+
+    /**
+     * Récupère le nombre de tickets de l'utilisateur
+     * @returns {number} Nombre de tickets
+     */
+    getTickets() {
+        const userData = this.loadUserData();
+        return userData.totalTickets || 0;
+    }
+
+    // ===== SYSTÈME DE PARRAINAGE =====
+    
+    /**
+     * Enregistre un nouveau parrainage
+     * @param {string} referrerCode - Code du parrain
+     * @param {string} newUserCode - Code du nouveau utilisateur
+     * @returns {boolean} Succès de l'enregistrement du parrainage
+     */
+    recordReferral(referrerCode, newUserCode) {
+        if (!referrerCode || !newUserCode) {
+            console.warn('⚠️ Codes de parrainage invalides');
+            return false;
+        }
+
+        try {
+            const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
+
+            // Vérification si le parrainage existe déjà
+            if (referrals.some(ref => ref.referrerCode === referrerCode && ref.newUserCode === newUserCode)) {
+                console.warn('⚠️ Ce parrainage existe déjà');
+                return false;
+            }
+            
+            const referral = {
+                id: this.generateId(),
+                referrerCode,
+                newUserCode,
+                date: new Date().toISOString(),
+                status: 'completed'
+            };
+
+            referrals.push(referral);
+            
+            // Limitation du nombre de parrainages
+            if (referrals.length > STORAGE_LIMITS.MAX_REFERRALS) {
+                referrals.shift();
+            }
+
+            this.secureSet(STORAGE_KEYS.REFERRALS, referrals);
+            
+            // Ajout des tickets bonus au parrain si c'est l'utilisateur actuel
+            const userData = this.loadUserData();
+            if (userData.referralCode === referrerCode) {
+                this.addTickets(1, 'referral');
+                userData.referralsCount++;
+                this.saveUserData(userData);
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur enregistrement parrainage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère les parrainages de l'utilisateur
+     * @returns {Array} Liste des parrainages
+     */
+    getUserReferrals() {
+        const userData = this.loadUserData();
+        const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
+        
+        return referrals.filter(ref => ref.referrerCode === userData.referralCode);
+    }
+
+    // ===== CLASSEMENT =====
+    
+    /**
+     * Met à jour le classement avec un nouveau score
+     * @param {Object} scoreData - Données du score
+     * @returns {boolean} Succès de la mise à jour du classement
+     */
+    updateLeaderboard(scoreData) {
+        if (!scoreData || !Number.isInteger(scoreData.score)) {
+            console.warn('⚠️ Données de score invalides pour le classement');
+            return false;
+        }
+
+        try {
+            const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
+            const userData = this.loadUserData();
+            
+            const entry = {
+                id: userData.userId,
+                username: userData.username || 'Joueur anonyme',
+                score: scoreData.score,
+                totalQuestions: scoreData.totalQuestions,
+                date: new Date().toISOString(),
+                month: new Date().toISOString().substring(0, 7) // YYYY-MM
+            };
+
+            // Recherche d'une entrée existante pour ce mois
+            const currentMonth = new Date().toISOString().substring(0, 7);
+            const existingIndex = leaderboard.findIndex(
+                item => item.id === userData.userId && item.month === currentMonth
+            );
+
+            if (existingIndex >= 0) {
+                // Mise à jour si meilleur score
+                if (scoreData.score > leaderboard[existingIndex].score) {
+                    leaderboard[existingIndex] = entry;
+                } else {
+                    return false; // Pas de mise à jour car le score n'est pas meilleur
+                }
+            } else {
+                // Nouvelle entrée
+                leaderboard.push(entry);
+            }
+
+            // Tri par score décroissant
+            leaderboard.sort((a, b) => b.score - a.score);
+            
+            // Limitation du nombre d'entrées
+            if (leaderboard.length > STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES) {
+                leaderboard.splice(STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES);
+            }
+
+            this.secureSet(STORAGE_KEYS.LEADERBOARD, leaderboard);
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur mise à jour classement:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère le classement mensuel
+     * @param {number} limit - Nombre d'entrées à retourner
+     * @returns {Array} Classement mensuel
+     */
+    getMonthlyLeaderboard(limit = 10) {
+        const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
+        const currentMonth = new Date().toISOString().substring(0, 7);
+        
+        return leaderboard
+            .filter(entry => entry.month === currentMonth)
+            .slice(0, limit);
+    }
+
+    // ===== PARTICIPATION AU TIRAGE =====
+    
+    /**
+     * Enregistre la participation au tirage mensuel
+     * @param {Object} participationData - Données de participation
+     * @returns {boolean} Succès de l'enregistrement de la participation
+     */
+    recordParticipation(participationData) {
+        if (!participationData || !participationData.username || !participationData.email) {
+            console.warn('⚠️ Données de participation incomplètes');
+            return false;
+        }
+
+        try {
+            const userData = this.loadUserData();
+
+            // Vérification si l'utilisateur a déjà participé ce mois-ci
+            if (userData.hasParticipated && userData.participationDate &&
+                userData.participationDate.substring(0, 7) === new Date().toISOString().substring(0, 7)) {
+                console.warn('⚠️ L\'utilisateur a déjà participé ce mois-ci');
+                return false;
+            }
+
+            const participation = {
+                id: this.generateId(),
+                userId: userData.userId,
+                username: participationData.username,
+                email: participationData.email,
+                date: new Date().toISOString(),
+                month: new Date().toISOString().substring(0, 7),
+                tickets: userData.totalTickets,
+                gdprConsent: true
+            };
+
+            // Sauvegarde des données de participation
+            this.secureSet(STORAGE_KEYS.PARTICIPATION, participation);
+            
+            // Mise à jour des données utilisateur
+            userData.hasParticipated = true;
+            userData.participationDate = participation.date;
+            userData.monthlyParticipations++;
+            userData.username = participationData.username;
+            userData.email = participationData.email;
+            
+            this.saveUserData(userData);
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur enregistrement participation:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Récupère les données de participation
+     * @returns {Object|null} Données de participation
+     */
+    getParticipation() {
+        return this.secureGet(STORAGE_KEYS.PARTICIPATION);
+    }
+
+    // ===== ANALYTICS ET STATISTIQUES =====
+    
+    /**
+     * Enregistre une activité utilisateur
+     * @param {string} action - Type d'action
+     * @param {Object} data - Données associées
+     */
+    logActivity(action, data = {}) {
+        if (!action) {
+            console.warn('⚠️ Action d\'activité non spécifiée');
+            return;
+        }
+
+        try {
+            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
+            
+            const activity = {
+                id: this.generateId(),
+                action,
+                data,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent.substring(0, 100) // Limité pour la vie privée
+            };
+
+            analytics.push(activity);
+            
+            // Limitation de l'historique (30 derniers jours)
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            
+            const filteredAnalytics = analytics.filter(
+                item => new Date(item.timestamp) > thirtyDaysAgo
+            );
+
+            this.secureSet(STORAGE_KEYS.ANALYTICS, filteredAnalytics);
+        } catch (error) {
+            console.error('❌ Erreur log activité:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
+    }
+
+    /**
+     * Récupère les statistiques d'utilisation
+     * @returns {Object} Statistiques
+     */
+    getAnalytics() {
+        try {
+            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
+            const userData = this.loadUserData();
+            const quizHistory = this.getQuizHistory();
+            
+            const totalScores = quizHistory.reduce((acc, quiz) => acc + quiz.score, 0);
+            const averageScore = quizHistory.length > 0 ? totalScores / quizHistory.length : 0;
+
+            return {
+                totalActivities: analytics.length,
+                totalQuizzes: userData.totalQuizzes,
+                bestScore: userData.bestScore,
+                averageScore: averageScore,
+                perfectScores: userData.perfectScores,
+                totalTickets: userData.totalTickets,
+                referralsCount: userData.referralsCount,
+                accountAge: this.calculateAccountAge(userData.createdAt),
+                lastActivity: userData.lastActiveDate
+            };
+        } catch (error) {
+            console.error('❌ Erreur lors de la récupération des analytics:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return {
+                totalActivities: 0,
+                totalQuizzes: 0,
+                bestScore: 0,
+                averageScore: 0,
+                perfectScores: 0,
+                totalTickets: 0,
+                referralsCount: 0,
+                accountAge: 0,
+                lastActivity: null
+            };
+        }
+    }
+
+    // ===== FONCTIONS UTILITAIRES =====
+    
+    /**
+     * Sauvegarde sécurisée avec gestion d'erreurs
+     * @param {string} key - Clé de stockage
+     * @param {*} data - Données à sauvegarder
+     * @returns {boolean} Succès de la sauvegarde
+     */
+    secureSet(key, data) {
+        if (!this.isSupported) return false;
+        
+        try {
+            const serializedData = JSON.stringify(data);
+            
+            // Vérification de la taille
+            if (serializedData.length > STORAGE_LIMITS.MAX_STORAGE_SIZE) {
+                console.warn('⚠️ Données trop volumineuses pour le stockage');
+                showStorageErrorNotification(STORAGE_MESSAGES.quota);
+                return false;
+            }
+            
+            localStorage.setItem(key, serializedData);
+            return true;
+        } catch (error) {
+            if (error.name === 'QuotaExceededError') {
+                console.warn('⚠️ Quota de stockage dépassé - Nettoyage en cours...');
+                this.performCleanup();
+                // Nouvelle tentative après nettoyage
+                try {
+                    localStorage.setItem(key, JSON.stringify(data));
+                    return true;
+                } catch (retryError) {
+                    console.error('❌ Impossible de sauvegarder après nettoyage:', retryError);
+                    showStorageErrorNotification(STORAGE_MESSAGES.error);
+                    return false;
+                }
+            }
+            console.error('❌ Erreur sauvegarde sécurisée:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    /**
+     * Chargement sécurisé avec gestion d'erreurs
+     * @param {string} key - Clé de stockage
+     * @returns {*} Données chargées ou null
+     */
+    secureGet(key) {
+        if (!this.isSupported) return null;
+        
+        try {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('❌ Erreur chargement sécurisé:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return null;
+        }
+    }
+
+    /**
+     * Suppression sécurisée
+     * @param {string} key - Clé de stockage
+     * @returns {boolean} Succès de la suppression
+     */
+    secureRemove(key) {
+        if (!this.isSupported) return false;
+        
+        try {
+            localStorage.removeItem(key);
+            return true;
+        } catch (error) {
+            console.error('❌ Erreur suppression sécurisée:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+            return false;
+        }
+    }
+
+    // ===== GÉNÉRATION D'IDENTIFIANTS =====
+    
+    /**
+     * Génère un ID utilisateur unique
+     * @returns {string} ID utilisateur
+     */
+    generateUserId() {
+        const timestamp = Date.now().toString();
+        const random = Math.random().toString(36).substring(2, 8);
+        return `user_${timestamp}_${random}`;
+    }
+
+    /**
+     * Génère un code de parrainage
+     * @returns {string} Code de parrainage
+     */
+    generateReferralCode() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = '';
+        for (let i = 0; i < 8; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+    /**
+     * Génère un ID générique
+     * @returns {string} ID unique
+     */
+    generateId() {
+        return Date.now().toString(36) + Math.random().toString(36).substring(2);
+    }
+
+    // ===== VALIDATION ET MIGRATION =====
+    
+    /**
+     * Valide les données utilisateur
+     * @param {Object} userData - Données à valider
+     * @returns {Object} Données validées
+     */
+    validateUserData(userData) {
+        const validated = { ...userData };
+        
+        // Validation des champs critiques
+        validated.totalTickets = Math.max(0, parseInt(validated.totalTickets) || 0);
+        validated.totalQuizzes = Math.max(0, parseInt(validated.totalQuizzes) || 0);
+        validated.bestScore = Math.max(0, parseInt(validated.bestScore) || 0);
+        validated.referralsCount = Math.max(0, parseInt(validated.referralsCount) || 0);
+        
+        // Validation des chaînes
+        if (validated.username && typeof validated.username === 'string') {
+            validated.username = validated.username.trim().substring(0, 50);
+        }
+        
+        if (validated.email && typeof validated.email === 'string') {
+            validated.email = validated.email.trim().toLowerCase();
+        }
+        
+        return validated;
+    }
+
+    /**
+     * Migre les données vers une nouvelle version
+     * @param {Object} oldData - Anciennes données
+     * @returns {Object} Données migrées
+     */
+    migrateUserData(oldData) {
+        console.log('🔄 Migration des données utilisateur...');
+        
+        const defaultData = this.createDefaultUserData();
+        const migratedData = { ...defaultData, ...oldData };
+        
+        // Mise à jour de la version
+        migratedData.dataVersion = this.version;
+        
+        // Sauvegarde des données migrées
+        this.saveUserData(migratedData);
+        
+        console.log('✅ Migration terminée');
+        return migratedData;
+    }
+
+    // ===== MAINTENANCE ET NETTOYAGE =====
+    
+    /**
+     * Effectue la maintenance périodique
+     */
+    performMaintenance() {
+        try {
+            // Nettoyage des données obsolètes
+            this.cleanupOldData();
+            
+            // Vérification de l'intégrité
+            this.validateDataIntegrity();
+            
+            // Optimisation de l'espace
+            this.optimizeStorage();
+            
+            console.log('🧹 Maintenance du stockage terminée');
+        } catch (error) {
+            console.error('❌ Erreur durant la maintenance:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
+    }
+
+    /**
+     * Nettoyage d'urgence en cas de quota dépassé
+     */
+    performCleanup() {
+        try {
+            console.log('🧹 Nettoyage d\'urgence du stockage...');
+            
+            // Suppression des anciennes analytics
+            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
+            const recentAnalytics = analytics.slice(-50); // Garde seulement les 50 dernières
+            this.secureSet(STORAGE_KEYS.ANALYTICS, recentAnalytics);
+            
+            // Nettoyage de l'historique
+            const history = this.getQuizHistory();
+            const recentHistory = history.slice(0, 50); // Garde seulement les 50 derniers
+            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, recentHistory);
+            
+            console.log('✅ Nettoyage d\'urgence terminé');
+        } catch (error) {
+            console.error('❌ Erreur durant le nettoyage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
+    }
+
+    // ===== FONCTIONS PRIVÉES SUPPLÉMENTAIRES =====
+    
+    createDefaultSettings() {
+        return {
+            notifications: true,
+            soundEffects: true,
+            animations: true,
+            theme: 'default',
+            language: 'fr'
+        };
+    }
+
+    ensureDataStructures() {
+        // Vérifie et initialise les structures de données nécessaires
+        const keys = [
+            STORAGE_KEYS.USER_DATA,
+            STORAGE_KEYS.QUIZ_HISTORY,
+            STORAGE_KEYS.LEADERBOARD,
+            STORAGE_KEYS.REFERRALS,
+            STORAGE_KEYS.ANALYTICS
+        ];
+
+        keys.forEach(key => {
+            if (!this.secureGet(key)) {
+                const defaultValue = key === STORAGE_KEYS.USER_DATA ? 
+                    this.createDefaultUserData() : [];
+                this.secureSet(key, defaultValue);
+            }
+        });
+    }
+
+    updateUserStats(quizResult) {
+        const userData = this.loadUserData();
+        
+        // Mise à jour des statistiques
+        userData.totalQuizzes++;
+        userData.bestScore = Math.max(userData.bestScore, quizResult.score);
+        
+        if (quizResult.score === quizResult.totalQuestions) {
+            userData.perfectScores++;
+        }
+        
+        // Calcul de la moyenne
+        userData.averageScore = this.calculateAverageScore();
+        
+        this.saveUserData(userData);
+    }
+
+    calculateAverageScore() {
+        const history = this.getQuizHistory();
+        if (history.length === 0) return 0;
+        
+        const totalScore = history.reduce((sum, quiz) => sum + quiz.score, 0);
+        return Math.round((totalScore / history.length) * 100) / 100;
+    }
+
+    calculateAccountAge(createdAt) {
+        const created = new Date(createdAt);
+        const now = new Date();
+        const diffTime = Math.abs(now - created);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Jours
+    }
+
+    migrateData() {
+        // Logique de migration pour les futures versions
+    }
+
+    cleanupOldData() {
+        // Suppression des données obsolètes (plus de 6 mois)
+    }
+
+    validateDataIntegrity() {
+        // Vérification de l'intégrité des données
+    }
+
+    optimizeStorage() {
+        // Optimisation de l'espace de stockage
+    }
 }
+
+// ===== MESSAGES D'ERREUR CENTRALISÉS =====
+const STORAGE_MESSAGES = {
+    error: "Erreur de stockage : vos données ne peuvent pas être enregistrées. Certaines fonctionnalités sont limitées.",
+    unavailable: "Le stockage local est désactivé ou indisponible. Certaines fonctionnalités sont limitées.",
+    quota: "Espace de stockage insuffisant. Veuillez libérer de l'espace pour continuer à utiliser le quiz."
+};
+
+// ===== NOTIFICATION ACCESSIBLE ERREUR STOCKAGE =====
+function showStorageErrorNotification(message) {
+    let notif = document.getElementById('storageErrorNotification');
+    if (!notif) {
+        notif = document.createElement('div');
+        notif.id = 'storageErrorNotification';
+        notif.className = 'storage-error-notification';
+        notif.setAttribute('role', 'alert');
+        notif.setAttribute('aria-live', 'assertive');
+        notif.setAttribute('tabindex', '-1');
+        document.body.appendChild(notif);
+    }
+    notif.innerHTML = `
+        <span>${message}</span>
+        <button class="close-storage-error" aria-label="Fermer la notification">&times;</button>
+    `;
+    notif.classList.add('active');
+    notif.focus();
+    function handleEscClose(e) {
+        if (e.key === 'Escape') {
+            notif.classList.remove('active');
+            document.removeEventListener('keydown', handleEscClose);
+        }
+    }
+    document.addEventListener('keydown', handleEscClose);
+    const closeBtn = notif.querySelector('.close-storage-error');
+    if (closeBtn) closeBtn.onclick = () => notif.classList.remove('active');
+    setTimeout(() => {
+        notif.classList.remove('active');
+    }, 8000);
+}
+
+// ===== INSTANCE GLOBALE =====
+const quizStorage = new QuizStorage();
+
+// ===== EXPORT POUR UTILISATION =====
+window.QuizStorage = {
+    // Instance principale
+    storage: quizStorage,
+    
+    // Méthodes rapides pour l'app
+    saveUser: (data) => quizStorage.saveUserData(data),
+    loadUser: () => quizStorage.loadUserData(),
+    saveQuiz: (result) => quizStorage.saveQuizResult(result),
+    addTickets: (amount, source) => quizStorage.addTickets(amount, source),
+    getTickets: () => quizStorage.getTickets(),
+    participate: (data) => quizStorage.recordParticipation(data),
+    referral: (referrer, newUser) => quizStorage.recordReferral(referrer, newUser),
+    leaderboard: (scoreData) => quizStorage.updateLeaderboard(scoreData),
+    getLeaderboard: (limit) => quizStorage.getMonthlyLeaderboard(limit),
+    analytics: () => quizStorage.getAnalytics(),
+    
+    // Utilitaires
+    isSupported: () => quizStorage.isSupported,
+    cleanup: () => quizStorage.performCleanup(),
+    
+    // Pour debug
+    keys: STORAGE_KEYS,
+    limits: STORAGE_LIMITS
+};
+
+console.log('💾 Storage.js chargé! Système de persistance prêt');
