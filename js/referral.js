@@ -455,8 +455,26 @@ class ReferralManager {
 
     // ===== GÉNÉRATION DE L'URL DE PARRAINAGE =====
     generateReferralUrl() {
+        // Utilise le même identifiant unique que le partage social
+        function getOrCreateUserId() {
+            const KEY = "quizcodm_user_id";
+            let id = localStorage.getItem(KEY);
+            if (!id) {
+                if (window.crypto && window.crypto.randomUUID) {
+                    id = crypto.randomUUID();
+                } else {
+                    id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                        return v.toString(16);
+                    });
+                }
+                localStorage.setItem(KEY, id);
+            }
+            return id;
+        }
+        const userUniqueId = getOrCreateUserId();
         const baseUrl = window.location.origin + window.location.pathname;
-        return `${baseUrl}?ref=${this.currentUserCode}`;
+        return `${baseUrl}?ref=${userUniqueId}`;
     }
 
     // ===== COPIE FALLBACK =====
@@ -554,12 +572,28 @@ class ReferralManager {
             notification = document.createElement('div');
             notification.id = 'referralNotification';
             notification.className = 'referral-notification';
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            notification.setAttribute('tabindex', '-1');
             document.body.appendChild(notification);
         }
-
         notification.className = `referral-notification ${type} active`;
-        notification.innerHTML = message;
-
+        notification.innerHTML = `
+            <span>${message}</span>
+            <button class="close-referral" aria-label="Fermer la notification">&times;</button>
+        `;
+        notification.focus();
+        // Fermeture clavier (ESC)
+        function handleEscClose(e) {
+            if (e.key === 'Escape') {
+                notification.classList.remove('active');
+                document.removeEventListener('keydown', handleEscClose);
+            }
+        }
+        document.addEventListener('keydown', handleEscClose);
+        // Fermeture bouton
+        const closeBtn = notification.querySelector('.close-referral');
+        if (closeBtn) closeBtn.onclick = () => notification.classList.remove('active');
         setTimeout(() => {
             notification.classList.remove('active');
         }, 6000);
