@@ -36,6 +36,7 @@ class QuizStorage {
             return true;
         } catch (error) {
             console.error('❌ localStorage non supporté:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
             return false;
         }
     }
@@ -44,19 +45,22 @@ class QuizStorage {
     initializeStorage() {
         if (!this.isSupported) {
             console.warn('⚠️ Stockage local non disponible - Mode dégradé');
+            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
             return;
         }
 
-        // Migration des données si nécessaire
-        this.migrateData();
-        
-        // Initialisation des structures de base
-        this.ensureDataStructures();
-        
-        // Nettoyage périodique
-        this.performMaintenance();
-        
-        console.log('✅ Système de stockage initialisé');
+        try {
+            // Migration des données si nécessaire
+            this.migrateData();
+            // Initialisation des structures de base
+            this.ensureDataStructures();
+            // Nettoyage périodique
+            this.performMaintenance();
+            console.log('✅ Système de stockage initialisé');
+        } catch (error) {
+            console.error('❌ Erreur initialisation stockage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
+        }
     }
 
     // ===== GESTION DES DONNÉES UTILISATEUR =====
@@ -126,6 +130,7 @@ class QuizStorage {
             return this.secureSet(STORAGE_KEYS.USER_DATA, validatedData);
         } catch (error) {
             console.error('❌ Erreur sauvegarde données utilisateur:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return false;
         }
     }
@@ -152,6 +157,7 @@ class QuizStorage {
             return userData;
         } catch (error) {
             console.error('❌ Erreur chargement données utilisateur:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return this.createDefaultUserData();
         }
     }
@@ -193,6 +199,7 @@ class QuizStorage {
             return true;
         } catch (error) {
             console.error('❌ Erreur sauvegarde résultat quiz:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return false;
         }
     }
@@ -248,10 +255,10 @@ class QuizStorage {
             return userData.totalTickets;
         } catch (error) {
             console.error('❌ Erreur ajout tickets:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return this.getTickets(); // Retourne le nombre actuel de tickets
         }
     }
-
 
     /**
      * Récupère le nombre de tickets de l'utilisateur
@@ -264,7 +271,7 @@ class QuizStorage {
 
     // ===== SYSTÈME DE PARRAINAGE =====
     
-   /**
+    /**
      * Enregistre un nouveau parrainage
      * @param {string} referrerCode - Code du parrain
      * @param {string} newUserCode - Code du nouveau utilisateur
@@ -313,6 +320,7 @@ class QuizStorage {
             return true;
         } catch (error) {
             console.error('❌ Erreur enregistrement parrainage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return false;
         }
     }
@@ -384,10 +392,10 @@ class QuizStorage {
             return true;
         } catch (error) {
             console.error('❌ Erreur mise à jour classement:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return false;
         }
     }
-
 
     /**
      * Récupère le classement mensuel
@@ -452,10 +460,10 @@ class QuizStorage {
             return true;
         } catch (error) {
             console.error('❌ Erreur enregistrement participation:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return false;
         }
     }
-
 
     /**
      * Récupère les données de participation
@@ -502,6 +510,7 @@ class QuizStorage {
             this.secureSet(STORAGE_KEYS.ANALYTICS, filteredAnalytics);
         } catch (error) {
             console.error('❌ Erreur log activité:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
         }
     }
 
@@ -531,6 +540,7 @@ class QuizStorage {
             };
         } catch (error) {
             console.error('❌ Erreur lors de la récupération des analytics:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return {
                 totalActivities: 0,
                 totalQuizzes: 0,
@@ -544,7 +554,6 @@ class QuizStorage {
             };
         }
     }
-
 
     // ===== FONCTIONS UTILITAIRES =====
     
@@ -563,6 +572,7 @@ class QuizStorage {
             // Vérification de la taille
             if (serializedData.length > STORAGE_LIMITS.MAX_STORAGE_SIZE) {
                 console.warn('⚠️ Données trop volumineuses pour le stockage');
+                showStorageErrorNotification(STORAGE_MESSAGES.quota);
                 return false;
             }
             
@@ -578,10 +588,12 @@ class QuizStorage {
                     return true;
                 } catch (retryError) {
                     console.error('❌ Impossible de sauvegarder après nettoyage:', retryError);
+                    showStorageErrorNotification(STORAGE_MESSAGES.error);
                     return false;
                 }
             }
             console.error('❌ Erreur sauvegarde sécurisée:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return false;
         }
     }
@@ -599,6 +611,7 @@ class QuizStorage {
             return data ? JSON.parse(data) : null;
         } catch (error) {
             console.error('❌ Erreur chargement sécurisé:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return null;
         }
     }
@@ -616,6 +629,7 @@ class QuizStorage {
             return true;
         } catch (error) {
             console.error('❌ Erreur suppression sécurisée:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
             return false;
         }
     }
@@ -721,6 +735,7 @@ class QuizStorage {
             console.log('🧹 Maintenance du stockage terminée');
         } catch (error) {
             console.error('❌ Erreur durant la maintenance:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
         }
     }
 
@@ -744,6 +759,7 @@ class QuizStorage {
             console.log('✅ Nettoyage d\'urgence terminé');
         } catch (error) {
             console.error('❌ Erreur durant le nettoyage:', error);
+            showStorageErrorNotification(STORAGE_MESSAGES.error);
         }
     }
 
@@ -825,6 +841,45 @@ class QuizStorage {
     optimizeStorage() {
         // Optimisation de l'espace de stockage
     }
+}
+
+// ===== MESSAGES D'ERREUR CENTRALISÉS =====
+const STORAGE_MESSAGES = {
+    error: "Erreur de stockage : vos données ne peuvent pas être enregistrées. Certaines fonctionnalités sont limitées.",
+    unavailable: "Le stockage local est désactivé ou indisponible. Certaines fonctionnalités sont limitées.",
+    quota: "Espace de stockage insuffisant. Veuillez libérer de l'espace pour continuer à utiliser le quiz."
+};
+
+// ===== NOTIFICATION ACCESSIBLE ERREUR STOCKAGE =====
+function showStorageErrorNotification(message) {
+    let notif = document.getElementById('storageErrorNotification');
+    if (!notif) {
+        notif = document.createElement('div');
+        notif.id = 'storageErrorNotification';
+        notif.className = 'storage-error-notification';
+        notif.setAttribute('role', 'alert');
+        notif.setAttribute('aria-live', 'assertive');
+        notif.setAttribute('tabindex', '-1');
+        document.body.appendChild(notif);
+    }
+    notif.innerHTML = `
+        <span>${message}</span>
+        <button class="close-storage-error" aria-label="Fermer la notification">&times;</button>
+    `;
+    notif.classList.add('active');
+    notif.focus();
+    function handleEscClose(e) {
+        if (e.key === 'Escape') {
+            notif.classList.remove('active');
+            document.removeEventListener('keydown', handleEscClose);
+        }
+    }
+    document.addEventListener('keydown', handleEscClose);
+    const closeBtn = notif.querySelector('.close-storage-error');
+    if (closeBtn) closeBtn.onclick = () => notif.classList.remove('active');
+    setTimeout(() => {
+        notif.classList.remove('active');
+    }, 8000);
 }
 
 // ===== INSTANCE GLOBALE =====
