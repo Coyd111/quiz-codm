@@ -13,7 +13,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://coyd111.github.io/quiz-codm">
     <meta property="og:title" content="Quiz CODM - Teste tes connaissances Call of Duty Mobile">
-    <meta property="og:description" content="Quiz quotidien Call of Duty Mobile. Teste tes connaissances et gagne des cartes cadeaux ! 10 gagnants par mois.">
+    <meta property="og:description" content="Quiz quotidien Call of Duty Mobile. Teste tes connaissances et gagne des cartes cadeaux ! 11 gagnants par mois.">
     <meta property="og:image" content="https://img.freepik.com/vecteurs-libre/design-arriere-plan-symbole-faq-moderne-elegant-pour-resoudre-problemes_1017-58258.jpg?semt=ais_hybrid&w=740">
 
     <!-- Twitter -->
@@ -43,8 +43,53 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <style>
+    /* Styles additionnels pour accessibilité et badges */
+    .accessible-notification {
+        position: fixed;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 260px;
+        max-width: 90vw;
+        background: #181818;
+        color: #fff;
+        font-size: 1.1em;
+        border-radius: 8px;
+        box-shadow: 0 4px 14px #000b,0 0 0 2px #ffe600;
+        z-index: 2000;
+        padding: 16px 32px 16px 24px;
+        outline: none;
+        display: none;
+        opacity: 0.98;
+        transition: opacity 0.3s;
+    }
+    .confirmation-message {
+        background: #0a3c1b;
+        color: #fff;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        padding: 10px 18px;
+        font-weight: 500;
+        box-shadow: 0 2px 8px #0003;
+        display: none;
+    }
+    @media (max-width: 600px) {
+        .user-stats-header {
+            font-size: 0.95em;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .accessible-notification {
+            padding: 10px 12px;
+            font-size: 1em;
+        }
+    }
+    </style>
 </head>
 <body>
+    <!-- Zone de notification accessible -->
+    <div id="globalNotification" class="accessible-notification" role="alert" aria-live="assertive" tabindex="-1" style="display:none"></div>
     <!-- Accessibility Skip Link -->
     <a href="#main" class="skip-link">Aller au contenu principal</a>
 
@@ -52,21 +97,32 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href="/" class="logo">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Quiz CODM</span>
-                </a>
-                <button class="burger-menu" aria-label="Ouvrir le menu" aria-expanded="false" data-target="mobileNav">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                </button>
-                <nav class="nav">
-                    <a href="#quiz" class="nav-link">Quiz</a>
-                    <a href="#leaderboard" class="nav-link">Classement</a>
-                    <a href="#prizes" class="nav-link">Tirages</a>
-                </nav>
-            </div>
+    <a href="/" class="logo">
+        <i class="fas fa-gamepad"></i>
+        <span>Quiz CODM</span>
+    </a>
+    <div class="user-stats-header" style="z-index:1002; position:relative;">
+    <!-- Styles renforcés pour badges -->
+        <span class="score-badge" title="Score du jour" style="color:#fff; text-shadow:0 0 8px #ffe600,0 0 4px #fff; font-weight:700; font-size:1.2em; background:rgba(0,0,0,0.65); border-radius:6px; padding:3px 9px; margin-right:8px;">
+    <i class="fas fa-star"></i>
+    <span id="todayScoreHeader">0/10</span>
+</span>
+<span class="tickets-badge" title="Tickets cumulés pour le tirage" style="color:#fff; text-shadow:0 0 8px #00ffb0,0 0 4px #fff; font-weight:700; font-size:1.2em; background:rgba(0,0,0,0.65); border-radius:6px; padding:3px 9px;">
+    <i class="fas fa-ticket-alt"></i>
+    <span id="totalTicketsHeader">0</span>
+</span>
+    </div>
+    <button class="burger-menu" aria-label="Ouvrir le menu" aria-expanded="false" data-target="mobileNav">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+    </button>
+    <nav class="nav">
+        <a href="#quiz" class="nav-link">Quiz</a>
+        <a href="#leaderboard" class="nav-link">Classement</a>
+        <a href="#prizes" class="nav-link">Tirages</a>
+    </nav>
+</div>
         </div>
         <!-- Mobile Navigation -->
         <div class="mobile-overlay" data-target="mobileNav"></div>
@@ -84,15 +140,7 @@
         </nav>
     </header>
 
-    <!-- Ad Banner Top -->
-    <div class="ad-banner ad-top">
-        <div class="container">
-            <div class="ad-placeholder">
-                <!-- Google AdSense ou Carbon Ads -->
-                <span class="ad-label">Publicité</span>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Main Content -->
     <main class="main" id="main">
@@ -151,7 +199,7 @@
                                     <span>Tickets gratuits</span>
                                 </div>
                             </div>
-                            <button class="btn btn-primary btn-large" id="startQuizBtn">
+                            <button class="btn btn-primary btn-large" id="startQuizBtn" aria-label="Commencer le quiz quotidien" tabindex="0">
                                 <i class="fas fa-play"></i>
                                 Commencer le Quiz
                             </button>
@@ -196,11 +244,11 @@
                             </div>
                             
                             <div class="results-actions">
-                                <button class="btn btn-primary" id="participateBtn">
+                                <button class="btn btn-primary" id="participateBtn" aria-label="Participer au tirage mensuel" tabindex="0">
                                     <i class="fas fa-ticket-alt"></i>
                                     Participer au Tirage
                                 </button>
-                                <button class="btn btn-secondary" id="shareScoreBtn">
+                                <button class="btn btn-secondary" id="shareScoreBtn" aria-label="Partager mon score" tabindex="0">
                                     <i class="fas fa-share"></i>
                                     Partager mon Score
                                 </button>
@@ -225,7 +273,7 @@
                                         <span class="stat-label">Tes tickets</span>
                                     </div>
                                 </div>
-                                <button class="btn btn-secondary" id="shareBtn">
+                                <button class="btn btn-secondary" id="shareBtn" aria-label="Partager et gagner des tickets" tabindex="0">
                                     <i class="fas fa-share"></i>
                                     Partager & Gagner des Tickets
                                 </button>
@@ -242,9 +290,25 @@
                         <h3><i class="fas fa-ticket-alt"></i> Participer au Tirage</h3>
                         <button class="modal-close" id="closeModal" aria-label="Fermer la fenêtre de participation">
                             <i class="fas fa-times"></i>
+                        </div>
+                        <div class="quiz-info">
                         </button>
                     </div>
                     <form class="participation-form" id="participationForm" action="https://formspree.io/f/mwpqlbvv" method="POST">
+    <!-- Message de confirmation après participation -->
+    <div id="participationConfirmation" class="confirmation-message" role="status" aria-live="polite" style="display:none;"></div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>1 quiz par jour</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-question-circle"></i>
+                            <span>10 questions</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-gift"></i>
+                            <span>Tickets gratuits</span>
+                        </div>
                         <div class="form-group">
                             <label for="username">Pseudo :</label>
                             <input type="text" id="username" name="username" required 
@@ -257,7 +321,7 @@
                         </div>
                         <div class="form-group checkbox-group">
                             <label class="checkbox-label">
-                                <input type="checkbox" id="rgpdConsent" required>
+                                <input type="checkbox" id="rgpdConsent" name="rgpdConsent" required>
                                 <span class="checkmark"></span>
                                 J'accepte le traitement de mes données personnelles 
                                 <a href="pages/politique-confidentialite.html" target="_blank">
@@ -296,19 +360,19 @@
                         </p>
                         
                         <div class="share-buttons">
-                            <button class="share-btn whatsapp" id="shareWhatsApp">
+                            <button class="share-btn whatsapp" id="shareWhatsApp" data-platform="whatsapp">
                                 <i class="fab fa-whatsapp"></i>
                                 WhatsApp
                             </button>
-                            <button class="share-btn facebook" id="shareFacebook">
+                            <button class="share-btn facebook" id="shareFacebook" data-platform="facebook">
                                 <i class="fab fa-facebook-f"></i>
                                 Facebook
                             </button>
-                            <button class="share-btn twitter" id="shareTwitter">
+                            <button class="share-btn twitter" id="shareTwitter" data-platform="twitter">
                                 <i class="fab fa-twitter"></i>
                                 Twitter
                             </button>
-                            <button class="share-btn messenger" id="shareMessenger">
+                            <button class="share-btn messenger" id="shareMessenger" data-platform="messenger">
                                 <i class="fab fa-facebook-messenger"></i>
                                 Messenger
                             </button>
@@ -317,7 +381,7 @@
                         <div class="referral-section">
                             <h4>Ton lien de parrainage :</h4>
                             <div class="referral-link">
-                                <input type="text" id="referralLink" readonly 
+                                <input type="text" id="referralLinkInput" readonly 
                                        value="https://quizcodm.com?ref=tonpseudo" aria-label="Lien de parrainage (lecture seule)">
                                 <button class="copy-btn" id="copyLinkBtn" aria-label="Copier le lien de parrainage">
                                     <i class="fas fa-copy"></i>
@@ -360,26 +424,18 @@
         </div>
     </main>
 
-    <!-- Ad Banner Bottom -->
-    <div class="ad-banner ad-bottom">
-        <div class="container">
-            <div class="ad-placeholder">
-                <!-- Google AdSense ou Carbon Ads -->
-                <span class="ad-label">Publicité</span>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo" aria-label="Informations légales et RGPD">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-links">
+                <div class="footer-links" aria-label="Liens légaux et contact">
                     <a href="pages/mentions-legales.html">Mentions légales</a>
                     <a href="pages/politique-confidentialite.html">Politique de confidentialité</a>
                     <a href="mailto:Coyd2976@gmail.com">Contact</a>
                 </div>
-                <div class="footer-disclaimer">
+                <div class="footer-disclaimer" aria-label="Disclaimer et RGPD">
                     <p>Quiz CODM n'est pas affilié à Activision ou Call of Duty Mobile</p>
                     <p>&copy; 2025 Quiz CODM - Tous droits réservés</p>
                 </div>
