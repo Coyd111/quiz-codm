@@ -4,746 +4,625 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Politique de Confidentialité - Quiz CODM</title>
-    <meta name="description" content="Politique de confidentialité RGPD du site Quiz CODM - Protection des données personnelles">
+    <meta name="description" content="Politique de confidentialité du Quiz Call of Duty Mobile - Protection des données et respect de la vie privée">
     <meta name="robots" content="noindex, nofollow">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- CSS Files -->
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
-
+    
+    <!-- Styles spécifiques aux pages légales -->
     <style>
-        /* Styles spécifiques aux pages légales */
-        .legal-page {
-            padding: var(--spacing-xl) 0;
-            min-height: calc(100vh - 200px);
+        .privacy-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: #fff;
+            padding: 2rem 0;
         }
         
-        .legal-container {
+        .privacy-container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 0 var(--spacing-md);
+            padding: 0 2rem;
         }
         
-        .legal-header {
+        .privacy-header {
             text-align: center;
-            margin-bottom: var(--spacing-xxl);
-            padding-bottom: var(--spacing-xl);
-            border-bottom: 3px solid var(--secondary-color);
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #FFD700;
         }
         
-        .legal-title {
+        .privacy-title {
             font-size: 2.5rem;
-            color: var(--dark-color);
-            margin-bottom: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--spacing-md);
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-weight: bold;
         }
         
-        .legal-subtitle {
-            color: var(--gray-medium);
+        .privacy-subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 0.5rem;
+        }
+        
+        .privacy-date {
+            font-size: 1rem;
+            color: #999;
+        }
+        
+        .privacy-summary {
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px solid #28a745;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .privacy-summary h2 {
+            color: #28a745;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .privacy-summary .highlight-green {
+            color: #28a745;
+            font-weight: bold;
             font-size: 1.1rem;
         }
         
-        .breadcrumb {
-            background: var(--gray-light);
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--border-radius);
-            margin-bottom: var(--spacing-xl);
-            font-size: 0.9rem;
-        }
-        
-        .breadcrumb a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color var(--transition-fast);
-        }
-        
-        .breadcrumb a:hover {
-            color: var(--primary-color);
-        }
-        
-        .legal-content {
+        .privacy-content {
             line-height: 1.8;
+            font-size: 1.1rem;
         }
         
-        .legal-content h2 {
-            color: var(--dark-color);
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-lg);
-            padding-left: var(--spacing-sm);
-            border-left: 4px solid var(--secondary-color);
+        .privacy-section {
+            margin-bottom: 3rem;
         }
         
-        .legal-content h3 {
-            color: var(--gray-dark);
-            margin-top: var(--spacing-lg);
-            margin-bottom: var(--spacing-md);
+        .privacy-section h2 {
+            color: #FFD700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
         }
         
-        .legal-content p {
-            margin-bottom: var(--spacing-md);
-            text-align: justify;
+        .privacy-section h3 {
+            color: #FFD700;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
         }
         
-        .legal-content ul, .legal-content ol {
-            margin-bottom: var(--spacing-md);
-            padding-left: var(--spacing-xl);
+        .privacy-section p {
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
         }
         
-        .legal-content li {
-            margin-bottom: var(--spacing-sm);
+        .privacy-section ul {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .privacy-section li {
+            margin-bottom: 0.8rem;
+            color: #e0e0e0;
+        }
+        
+        .info-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #FFD700;
         }
         
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            background: white;
-            border-radius: var(--border-radius);
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .data-table th,
-        .data-table td {
-            padding: var(--spacing-md);
-            text-align: left;
-            border-bottom: 1px solid var(--gray-light);
         }
         
         .data-table th {
-            background: var(--secondary-color);
-            color: white;
-            font-weight: 600;
+            background: #FFD700;
+            color: #000;
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
         }
         
-        .data-table tr:hover {
-            background: var(--gray-light);
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+            color: #e0e0e0;
         }
         
-        .contact-info {
-            background: var(--gray-light);
-            padding: var(--spacing-lg);
-            border-radius: var(--border-radius);
-            margin: var(--spacing-xl) 0;
-            border-left: 4px solid var(--secondary-color);
-        }
-        
-        .contact-info h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
-        }
-        
-        .rights-box {
-            background: linear-gradient(135deg, rgba(0, 255, 0, 0.05), rgba(255, 215, 0, 0.05));
-            border: 2px solid var(--secondary-color);
-            border-radius: var(--border-radius);
-            padding: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .rights-box h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
-        }
-        
-        .back-home {
-            text-align: center;
-            margin-top: var(--spacing-xxl);
-        }
-        
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            color: var(--dark-color);
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all var(--transition-normal);
-        }
-        
-        .btn-back:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+        .data-table tr:last-child td {
+            border-bottom: none;
         }
         
         .highlight {
-            background-color: rgba(0, 255, 0, 0.1);
-            padding: var(--spacing-md);
-            border-radius: var(--border-radius);
-            border-left: 3px solid var(--secondary-color);
-            margin: var(--spacing-md) 0;
+            background: rgba(255, 215, 0, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .highlight-red {
+            background: rgba(220, 53, 69, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .highlight-green {
+            background: rgba(40, 167, 69, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .right-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .right-card:hover {
+            transform: translateY(-5px);
+            border-color: #FFD700;
+        }
+        
+        .right-card h4 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .right-card p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        
+        .privacy-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #FFD700;
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .back-button:hover {
+            background: #FFC107;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .emoji {
+            font-size: 1.2rem;
         }
         
         .warning-box {
-            background-color: rgba(255, 193, 7, 0.1);
-            border-left: 3px solid var(--warning-color);
-            padding: var(--spacing-md);
-            border-radius: var(--border-radius);
-            margin: var(--spacing-md) 0;
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
         }
         
-        .gdpr-icon {
-            color: var(--secondary-color);
-            font-size: 1.2em;
-            margin-right: var(--spacing-sm);
+        .warning-box h3 {
+            color: #dc3545;
+            margin-top: 0;
         }
         
         @media (max-width: 768px) {
-            .legal-title {
-                font-size: 1.8rem;
-                flex-direction: column;
-                gap: var(--spacing-sm);
+            .privacy-container {
+                padding: 0 1rem;
             }
             
-            .legal-content {
-                font-size: 0.95rem;
+            .privacy-title {
+                font-size: 2rem;
             }
             
-            .legal-content p {
-                text-align: left;
+            .privacy-content {
+                font-size: 1rem;
+            }
+            
+            .rights-grid {
+                grid-template-columns: 1fr;
             }
             
             .data-table {
                 font-size: 0.9rem;
             }
-            
-            .data-table th,
-            .data-table td {
-                padding: var(--spacing-sm);
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="../index.html" class="logo">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Quiz CODM</span>
-                </a>
-                <nav class="nav">
-                    <a href="../index.html" class="nav-link">Accueil</a>
-                    <a href="mentions-legales.html" class="nav-link">Mentions légales</a>
-                    <a href="mailto:Coyd2976@gmail.com" class="nav-link">Contact</a>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="legal-page">
-        <div class="legal-container">
-            
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb">
-                <a href="../index.html"><i class="fas fa-home"></i> Accueil</a>
-                <span> / </span>
-                <span>Politique de confidentialité</span>
-            </nav>
-            
-            <!-- Header -->
-            <div class="legal-header">
-                <h1 class="legal-title">
-                    <i class="fas fa-shield-alt"></i>
-                    Politique de Confidentialité
-                </h1>
-                <p class="legal-subtitle">Protection des données personnelles - Conforme RGPD</p>
+    <div class="privacy-page">
+        <div class="privacy-container">
+            <!-- En-tête -->
+            <div class="privacy-header">
+                <h1 class="privacy-title">🔒 Politique de Confidentialité</h1>
+                <p class="privacy-subtitle">Quiz Call of Duty Mobile</p>
+                <p class="privacy-date">Dernière mise à jour : 27 janvier 2025</p>
             </div>
             
-            <!-- Content -->
-            <div class="legal-content">
+            <!-- Résumé de protection -->
+            <div class="privacy-summary">
+                <h2>🛡️ Votre Vie Privée est Protégée</h2>
+                <p>Ce quiz <span class="highlight-green">ne collecte AUCUNE donnée personnelle</span> et fonctionne entièrement sur votre appareil.</p>
+                <p><span class="highlight-green">Aucune inscription, aucun tracking, aucune transmission de données.</span></p>
+            </div>
+            
+            <!-- Bouton retour -->
+            <a href="../index.html" class="back-button">
+                <span class="emoji">🏠</span>
+                Retour au Quiz
+            </a>
+            
+            <!-- Contenu de la politique -->
+            <div class="privacy-content">
                 
-                <div class="highlight">
-                    <p><i class="gdpr-icon fas fa-check-circle"></i><strong>Dernière mise à jour :</strong> Janvier 2025</p>
-                    <p><i class="gdpr-icon fas fa-info-circle"></i><strong>Conformité RGPD :</strong> Cette politique respecte le Règlement Général sur la Protection des Données (RGPD)</p>
-                </div>
-
-                <h2>1. Introduction et engagement</h2>
-                <p>Quiz CODM s'engage à protéger votre vie privée et vos données personnelles. Cette politique de confidentialité vous informe de manière transparente sur :</p>
-                <ul>
-                    <li>Les données que nous collectons et pourquoi</li>
-                    <li>Comment nous utilisons et protégeons ces données</li>
-                    <li>Vos droits concernant vos données personnelles</li>
-                    <li>Comment exercer ces droits</li>
-                </ul>
-
-                <div class="contact-info">
-                    <h3>Responsable du traitement des données</h3>
-                    <p><strong>Nom :</strong> Coyd WILLZ</p>
-                    <p><strong>Email :</strong> <a href="mailto:Coyd2976@gmail.com">Coyd2976@gmail.com</a></p>
-                    <p><strong>Statut :</strong> Particulier - Projet personnel</p>
-                    <p><strong>Pays :</strong> France</p>
-                </div>
-                                <h2>2. Données personnelles collectées</h2>
+                <!-- 1. Introduction -->
+                <section class="privacy-section">
+                    <h2>1. 📋 Introduction</h2>
+                    
+                    <p>Cette politique de confidentialité explique comment le site <span class="highlight">Quiz CODM</span> traite vos données personnelles et respecte votre vie privée.</p>
+                    
+                    <p><strong>Engagement principal :</strong> Ce site ne collecte, ne stocke et ne transmet <span class="highlight-red">AUCUNE donnée personnelle</span> vers des serveurs externes.</p>
+                    
+                    <div class="info-box">
+                        <h3>🎯 Notre Philosophy</h3>
+                        <p>Nous croyons que vous devriez pouvoir jouer à un quiz sans compromettre votre vie privée. C'est pourquoi nous avons conçu ce site pour fonctionner entièrement sur votre appareil, sans collecter vos informations personnelles.</p>
+                    </div>
+                </section>
                 
-                <h3>2.1 Données collectées directement</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Type de donnée</th>
-                            <th>Utilisation</th>
-                            <th>Base légale</th>
-                            <th>Conservation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Pseudo</strong></td>
-                            <td>Participation au tirage au sort, affichage classement</td>
-                            <td>Consentement</td>
-                            <td>12 mois</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Adresse email</strong></td>
-                            <td>Contact gagnants, communications importantes</td>
-                            <td>Consentement</td>
-                            <td>12 mois</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Scores de quiz</strong></td>
-                            <td>Calcul des résultats, classements</td>
-                            <td>Intérêt légitime</td>
-                            <td>Permanent (anonymisé)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Date de participation</strong></td>
-                            <td>Gestion de la limite quotidienne</td>
-                            <td>Intérêt légitime</td>
-                            <td>30 jours</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h3>2.2 Données collectées automatiquement</h3>
-                <p>Lors de votre utilisation du site, nous collectons automatiquement :</p>
-                <ul>
-                    <li><strong>Données de navigation :</strong> pages visitées, durée de session, type de navigateur</li>
-                    <li><strong>Données techniques :</strong> adresse IP (anonymisée), résolution d'écran, système d'exploitation</li>
-                    <li><strong>Données de performance :</strong> temps de réponse, erreurs techniques</li>
-                </ul>
-                
-                <div class="warning-box">
-                    <p><strong>Important :</strong> Nous ne collectons JAMAIS :</p>
+                <!-- 2. Données collectées -->
+                <section class="privacy-section">
+                    <h2>2. 📊 Données Collectées</h2>
+                    
+                    <h3>Aucune donnée personnelle</h3>
+                    <p>Ce site <span class="highlight-red">ne collecte AUCUNE</span> des données suivantes :</p>
                     <ul>
-                        <li>Données sensibles (origine, religion, opinions politiques)</li>
-                        <li>Données financières ou bancaires</li>
-                        <li>Mots de passe ou données de connexion</li>
-                        <li>Informations personnelles non nécessaires</li>
+                        <li>❌ Nom, prénom, ou informations d'identité</li>
+                        <li>❌ Adresse email ou numéro de téléphone</li>
+                        <li>❌ Adresse IP ou géolocalisation</li>
+                        <li>❌ Informations de navigation ou comportement</li>
+                        <li>❌ Données de connexion ou d'authentification</li>
+                        <li>❌ Informations bancaires ou financières</li>
                     </ul>
-                </div>
-
-                <h2>3. Finalités du traitement</h2>
-                
-                <h3>3.1 Utilisation principale</h3>
-                <ol>
-                    <li><strong>Fonctionnement du quiz :</strong>
-                        <ul>
-                            <li>Sauvegarde des scores et progression</li>
-                            <li>Limitation quotidienne du quiz</li>
-                            <li>Calcul des statistiques personnelles</li>
-                        </ul>
-                    </li>
-                    <li><strong>Tirage au sort mensuel :</strong>
-                        <ul>
-                            <li>Validation de la participation</li>
-                            <li>Sélection aléatoire des gagnants</li>
-                            <li>Contact des gagnants</li>
-                        </ul>
-                    </li>
-                    <li><strong>Système de parrainage :</strong>
-                        <ul>
-                            <li>Attribution des tickets bonus</li>
-                            <li>Suivi des parrainages valides</li>
-                            <li>Prévention des abus</li>
-                        </ul>
-                    </li>
-                </ol>
-                
-                <h3>3.2 Utilisation secondaire</h3>
-                <ul>
-                    <li><strong>Amélioration du service :</strong> analyse des performances, correction de bugs</li>
-                    <li><strong>Communication :</strong> informations importantes, résultats des tirages</li>
-                    <li><strong>Conformité légale :</strong> respect des obligations légales</li>
-                </ul>
-
-                <h2>4. Base légale du traitement</h2>
-                <p>Nos traitements de données reposent sur :</p>
-                
-                <div class="rights-box">
-                    <h3><i class="gdpr-icon fas fa-balance-scale"></i> Bases légales RGPD</h3>
-                    <ul>
-                        <li><strong>Consentement (Art. 6.1.a) :</strong> Pour la participation au tirage au sort</li>
-                        <li><strong>Intérêt légitime (Art. 6.1.f) :</strong> Pour le fonctionnement du quiz et l'amélioration du service</li>
-                        <li><strong>Obligation légale (Art. 6.1.c) :</strong> Pour la conservation des données de tirage (transparence)</li>
-                    </ul>
-                </div>
-
-                <h2>5. Partage et transmission des données</h2>
-                
-                <h3>5.1 Principe général</h3>
-                <p><strong>Nous ne vendons, ne louons, ni ne partageons vos données personnelles avec des tiers</strong>, sauf dans les cas spécifiques suivants :</p>
-                
-                <h3>5.2 Partages autorisés</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Destinataire</th>
-                            <th>Données partagées</th>
-                            <th>Finalité</th>
-                            <th>Localisation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>GitHub Pages</strong></td>
-                            <td>Données de navigation</td>
-                            <td>Hébergement du site</td>
-                            <td>États-Unis (Privacy Shield)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Google AdSense</strong></td>
-                            <td>Données anonymisées</td>
-                            <td>Publicité contextuelle</td>
-                            <td>UE + États-Unis</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Services email</strong></td>
-                            <td>Email + pseudo gagnant</td>
-                            <td>Contact des gagnants</td>
-                            <td>France/UE uniquement</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>6. Sécurité des données</h2>
-                
-                <h3>6.1 Mesures techniques</h3>
-                <ul>
-                    <li><strong>Chiffrement :</strong> HTTPS obligatoire pour toutes les communications</li>
-                    <li><strong>Stockage local :</strong> Données sensibles stockées uniquement sur votre appareil</li>
-                    <li><strong>Anonymisation :</strong> Suppression des identifiants des données statistiques</li>
-                    <li><strong>Accès limité :</strong> Seul l'administrateur peut accéder aux données</li>
-                </ul>
-                
-                <h3>6.2 Mesures organisationnelles</h3>
-                <ul>
-                    <li>Formation à la protection des données</li>
-                    <li>Procédures de réponse aux incidents</li>
-                    <li>Audits réguliers de sécurité</li>
-                    <li>Documentation complète des traitements</li>
-                </ul>
-
-                <h2>7. Conservation des données</h2>
-                
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Type de donnée</th>
-                            <th>Durée de conservation</th>
-                            <th>Action après expiration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Données de participation</td>
-                            <td>12 mois après dernière participation</td>
-                            <td>Suppression automatique</td>
-                        </tr>
-                        <tr>
-                            <td>Scores de quiz</td>
-                            <td>Permanent (anonymisés après 12 mois)</td>
-                            <td>Anonymisation complète</td>
-                        </tr>
-                        <tr>
-                            <td>Données de navigation</td>
-                            <td>13 mois maximum</td>
-                            <td>Suppression automatique</td>
-                        </tr>
-                        <tr>
-                            <td>Logs techniques</td>
-                            <td>6 mois</td>
-                            <td>Suppression automatique</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h2>8. Vos droits RGPD</h2>
-                
-                <div class="rights-box">
-                    <h3><i class="gdpr-icon fas fa-user-shield"></i> Vos droits fondamentaux</h3>
                     
-                    <h4>8.1 Droit d'accès (Art. 15)</h4>
-                    <p>Vous pouvez demander une copie de toutes les données personnelles que nous détenons sur vous.</p>
+                    <h3>Données stockées localement</h3>
+                    <p>Seules les données suivantes sont stockées <span class="highlight-green">localement sur votre appareil</span> :</p>
                     
-                    <h4>8.2 Droit de rectification (Art. 16)</h4>
-                    <p>Vous pouvez demander la correction de données inexactes ou incomplètes.</p>
-                    
-                    <h4>8.3 Droit à l'effacement (Art. 17)</h4>
-                    <p>Vous pouvez demander la suppression de vos données dans certaines circonstances.</p>
-                    
-                    <h4>8.4 Droit à la limitation (Art. 18)</h4>
-                    <p>Vous pouvez demander la limitation du traitement de vos données.</p>
-                    
-                    <h4>8.5 Droit à la portabilité (Art. 20)</h4>
-                    <p>Vous pouvez demander vos données dans un format structuré et lisible.</p>
-                    
-                    <h4>8.6 Droit d'opposition (Art. 21)</h4>
-                    <p>Vous pouvez vous opposer au traitement de vos données à tout moment.</p>
-                    
-                    <h4>8.7 Droit de retrait du consentement</h4>
-                    <p>Vous pouvez retirer votre consentement à tout moment sans affecter la légalité des traitements antérieurs.</p>
-                </div>
-
-                <h2>9. Exercice de vos droits</h2>
-                
-                <div class="contact-info">
-                    <h3>Comment exercer vos droits</h3>
-                    <p><strong>Par email :</strong> <a href="mailto:Coyd2976@gmail.com">Coyd2976@gmail.com</a></p>
-                    <p><strong>Objet :</strong> [RGPD Quiz CODM] - Type de demande</p>
-                    <p><strong>Informations à fournir :</strong></p>
-                    <ul>
-                        <li>Votre pseudo utilisé sur le site</li>
-                        <li>Votre adresse email (si fournie)</li>
-                        <li>Description précise de votre demande</li>
-                        <li>Justificatif d'identité si nécessaire</li>
-                    </ul>
-                    <p><strong>Délai de réponse :</strong> 30 jours maximum (RGPD)</p>
-                    <p><strong>Coût :</strong> Gratuit (sauf demandes excessives)</p>
-                </div>
-
-                <h2>10. Cookies et technologies similaires</h2>
-                
-                <h3>10.1 Types de cookies utilisés</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Finalité</th>
-                            <th>Durée</th>
-                            <th>Consentement requis</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>localStorage</strong></td>
-                            <td>Sauvegarde scores et préférences</td>
-                            <td>Permanent local</td>
-                            <td>Non (fonctionnel)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cookies publicitaires</strong></td>
-                            <td>Personnalisation des publicités</td>
-                            <td>13 mois</td>
-                            <td>Oui</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cookies analytiques</strong></td>
-                            <td>Mesure d'audience anonyme</td>
-                            <td>13 mois</td>
-                            <td>Oui</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h3>10.2 Gestion des cookies</h3>
-                <p>Vous pouvez contrôler les cookies via :</p>
-                <ul>
-                    <li><strong>Paramètres du navigateur :</strong> bloquer ou supprimer les cookies</li>
-                    <li><strong>Outils de désactivation :</strong> liens directs vers les partenaires publicitaires</li>
-                    <li><strong>Extensions navigateur :</strong> bloqueurs de tracking</li>
-                </ul>
-                                <h2>11. Transferts internationaux</h2>
-                
-                <h3>11.1 Principe de protection</h3>
-                <p>Nous limitons au maximum les transferts de données hors de l'Union Européenne. Quand ils sont nécessaires, nous nous assurons :</p>
-                <ul>
-                    <li>De la conformité des pays destinataires</li>
-                    <li>De la mise en place de garanties appropriées</li>
-                    <li>Du respect des décisions d'adéquation de la Commission Européenne</li>
-                </ul>
-                
-                <h3>11.2 Transferts autorisés</h3>
-                <ul>
-                    <li><strong>GitHub (États-Unis) :</strong> Privacy Shield + clauses contractuelles types</li>
-                    <li><strong>Google (États-Unis) :</strong> Décision d'adéquation + Privacy Shield</li>
-                </ul>
-
-                <h2>12. Mineurs</h2>
-                
-                <div class="warning-box">
-                    <h3><i class="fas fa-child"></i> Protection des mineurs</h3>
-                    <p>Quiz CODM respecte la protection des mineurs :</p>
-                    <ul>
-                        <li><strong>Âge minimum :</strong> 13 ans (conformément aux conditions Call of Duty Mobile)</li>
-                        <li><strong>Consentement parental :</strong> requis pour les moins de 15 ans en France</li>
-                        <li><strong>Données minimales :</strong> collecte réduite au strict nécessaire</li>
-                        <li><strong>Droit à l'effacement renforcé :</strong> suppression prioritaire sur demande</li>
-                    </ul>
-                </div>
-
-                <h2>13. Modifications de la politique</h2>
-                
-                <p>Cette politique peut être modifiée pour :</p>
-                <ul>
-                    <li>S'adapter aux évolutions légales</li>
-                    <li>Refléter les changements de nos pratiques</li>
-                    <li>Améliorer la transparence</li>
-                </ul>
-                
-                <p><strong>En cas de modification importante :</strong></p>
-                <ul>
-                    <li>Notification par email aux utilisateurs inscrits</li>
-                    <li>Affichage d'une notification sur le site</li>
-                    <li>Mise à jour de la date en haut de cette politique</li>
-                    <li>Possibilité de retrait du consentement</li>
-                </ul>
-
-                <h2>14. Réclamations et recours</h2>
-                
-                <div class="contact-info">
-                    <h3>En cas de problème</h3>
-                    
-                    <h4>Étape 1 : Contact direct</h4>
-                    <p>Contactez-nous d'abord à <a href="mailto:Coyd2976@gmail.com">Coyd2976@gmail.com</a></p>
-                    <p>Nous nous engageons à répondre dans les 72 heures.</p>
-                    
-                    <h4>Étape 2 : Autorité de contrôle</h4>
-                    <p>Si notre réponse ne vous satisfait pas, vous pouvez saisir :</p>
-                    <p><strong>CNIL (Commission Nationale de l'Informatique et des Libertés)</strong><br>
-                    3 Place de Fontenoy - TSA 80715<br>
-                    75334 PARIS CEDEX 07<br>
-                    Tél : 01 53 73 22 22<br>
-                    Site : <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a></p>
-                    
-                    <h4>Étape 3 : Recours judiciaire</h4>
-                    <p>Vous disposez également d'un droit de recours devant les tribunaux compétents.</p>
-                </div>
-
-                <h2>15. Contact et questions</h2>
-                
-                <div class="highlight">
-                    <h3><i class="gdpr-icon fas fa-envelope"></i> Nous contacter</h3>
-                    <p>Pour toute question sur cette politique ou vos données personnelles :</p>
-                    <p><strong>Email :</strong> <a href="mailto:Coyd2976@gmail.com">Coyd2976@gmail.com</a></p>
-                    <p><strong>Objet suggéré :</strong> [Quiz CODM RGPD] - Votre question</p>
-                    <p><strong>Engagement :</strong> Réponse sous 72 heures maximum</p>
-                </div>
-
-                <h2>16. Glossaire RGPD</h2>
-                
-                <div class="data-table" style="margin-top: var(--spacing-lg);">
-                    <table>
+                    <table class="data-table">
                         <thead>
                             <tr>
-                                <th>Terme</th>
-                                <th>Définition</th>
+                                <th>Type de Donnée</th>
+                                <th>Utilisation</th>
+                                <th>Stockage</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Données personnelles</strong></td>
-                                <td>Toute information permettant d'identifier directement ou indirectement une personne physique</td>
+                                <td>Scores de quiz</td>
+                                <td>Affichage de vos performances</td>
+                                <td>localStorage navigateur</td>
                             </tr>
                             <tr>
-                                <td><strong>Responsable de traitement</strong></td>
-                                <td>Personne qui détermine les finalités et les moyens du traitement des données</td>
+                                <td>Statistiques de jeu</td>
+                                <td>Calcul moyennes et progression</td>
+                                <td>localStorage navigateur</td>
                             </tr>
                             <tr>
-                                <td><strong>Consentement</strong></td>
-                                <td>Accord libre, spécifique, éclairé et univoque de la personne concernée</td>
+                                <td>Préférences utilisateur</td>
+                                <td>Son, animations, thème</td>
+                                <td>localStorage navigateur</td>
                             </tr>
                             <tr>
-                                <td><strong>Intérêt légitime</strong></td>
-                                <td>Base légale permettant le traitement si l'intérêt est réel et ne porte pas atteinte aux droits des personnes</td>
+                                <td>Historique des parties</td>
+                                <td>Consultation parties précédentes</td>
+                                <td>localStorage navigateur</td>
                             </tr>
                             <tr>
-                                <td><strong>Anonymisation</strong></td>
-                                <td>Processus rendant impossible l'identification d'une personne à partir des données</td>
+                                <td>Nom d'affichage (optionnel)</td>
+                                <td>Personnalisation classement</td>
+                                <td>localStorage navigateur</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-
-                <div class="highlight" style="margin-top: var(--spacing-xl);">
-                    <h3><i class="gdpr-icon fas fa-info-circle"></i> Résumé de vos droits</h3>
-                    <p><strong>Vous avez le droit de :</strong></p>
+                </section>
+                
+                <!-- 3. Comment nous protégeons vos données -->
+                <section class="privacy-section">
+                    <h2>3. 🛡️ Comment Nous Protégeons Vos Données</h2>
+                    
+                    <h3>Stockage local uniquement</h3>
+                    <p>Toutes vos données restent sur <span class="highlight-green">votre appareil</span> et ne sont jamais transmises à nos serveurs ou à des tiers.</p>
+                    
+                    <h3>Aucun serveur de données</h3>
+                    <p>Ce site n'utilise aucun serveur pour stocker des données utilisateur. Il fonctionne comme une application statique hébergée sur GitHub Pages.</p>
+                    
+                    <h3>Aucun tracking</h3>
+                    <p>Nous n'utilisons :</p>
                     <ul>
-                        <li>✅ Savoir quelles données nous avons sur vous</li>
-                        <li>✅ Corriger des informations inexactes</li>
-                        <li>✅ Demander la suppression de vos données</li>
-                        <li>✅ Limiter l'utilisation de vos données</li>
-                        <li>✅ Récupérer vos données dans un format lisible</li>
-                        <li>✅ Vous opposer au traitement</li>
-                        <li>✅ Retirer votre consentement à tout moment</li>
-                        <li>✅ Déposer une plainte auprès de la CNIL</li>
+                        <li>❌ Aucun Google Analytics ou service d'analyse</li>
+                        <li>❌ Aucun pixel de tracking ou beacon</li>
+                        <li>❌ Aucun cookie de suivi</li>
+                        <li>❌ Aucun script de remarketing</li>
                     </ul>
-                    <p><strong>Comment ?</strong> En nous écrivant à <a href="mailto:Coyd2976@gmail.com">Coyd2976@gmail.com</a></p>
+                    
+                    <div class="info-box">
+                        <h3>🔒 Sécurité Technique</h3>
+                        <p>Le site utilise HTTPS pour sécuriser la connexion et est hébergé sur GitHub Pages, une plateforme sécurisée et fiable.</p>
+                    </div>
+                </section>
+                
+                <!-- 4. Cookies et technologies de suivi -->
+                <section class="privacy-section">
+                    <h2>4. 🍪 Cookies et Technologies de Suivi</h2>
+                    
+                    <h3>Aucun cookie utilisé</h3>
+                    <p>Ce site <span class="highlight-red">n'utilise AUCUN cookie</span>. Nous utilisons exclusivement le localStorage HTML5 pour sauvegarder vos préférences et scores.</p>
+                    
+                    <h3>LocalStorage vs Cookies</h3>
+                    <div class="info-box">
+                        <h3>Pourquoi localStorage au lieu de cookies ?</h3>
+                        <ul>
+                            <li>✅ Plus sécurisé (ne sont pas envoyés au serveur)</li>
+                            <li>✅ Plus de capacité de stockage</li>
+                            <li>✅ Contrôle total de l'utilisateur</li>
+                            <li>✅ Aucune transmission de données</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Aucun script de tiers</h3>
+                    <p>Le site ne charge aucun script de services tiers (Google, Facebook, etc.) qui pourraient collecter vos données.</p>
+                </section>
+                
+                <!-- 5. Partage de données -->
+                <section class="privacy-section">
+                    <h2>5. 📤 Partage de Données</h2>
+                    
+                    <h3>Aucun partage automatique</h3>
+                    <p>Vos données <span class="highlight-red">ne sont JAMAIS partagées</span> automatiquement avec des tiers.</p>
+                    
+                    <h3>Partage volontaire (réseaux sociaux)</h3>
+                    <p>Vous pouvez choisir de partager vos scores sur les réseaux sociaux via :</p>
+                    <ul>
+                        <li>🐦 Twitter - partage public de votre score</li>
+                        <li>📘 Facebook - publication sur votre profil</li>
+                        <li>💬 WhatsApp - message privé à vos contacts</li>
+                        <li>✈️ Telegram - message dans vos conversations</li>
+                        <li>📋 Presse-papiers - copie pour partage manuel</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <h3>⚠️ Attention au partage</h3>
+                        <p>Quand vous partagez votre score sur les réseaux sociaux, ces plateformes appliquent leurs propres politiques de confidentialité. Nous ne contrôlons pas l'utilisation de vos données par ces services.</p>
+                    </div>
+                </section>
+                
+                <!-- 6. Vos droits -->
+                <section class="privacy-section">
+                    <h2>6. ⚖️ Vos Droits (RGPD)</h2>
+                    
+                    <p>Même si nous ne collectons aucune donnée personnelle, vous disposez des droits suivants :</p>
+                    
+                    <div class="rights-grid">
+                        <div class="right-card">
+                            <h4>🔍 Droit d'accès</h4>
+                            <p>Toutes vos données sont visibles dans l'interface du quiz (scores, statistiques, préférences).</p>
+                        </div>
+                        
+                        <div class="right-card">
+                            <h4>✏️ Droit de rectification</h4>
+                            <p>Vous pouvez modifier votre nom d'affichage et vos préférences à tout moment.</p>
+                        </div>
+                        
+                        <div class="right-card">
+                            <h4>🗑️ Droit à l'effacement</h4>
+                            <p>Supprimez toutes vos données via les paramètres ou en vidant le cache de votre navigateur.</p>
+                        </div>
+                        
+                        <div class="right-card">
+                            <h4>📦 Droit à la portabilité</h4>
+                            <p>Exportez vos données via la fonction d'export dans les paramètres du quiz.</p>
+                        </div>
+                        
+                        <div class="right-card">
+                            <h4>🚫 Droit d'opposition</h4>
+                            <p>Cessez d'utiliser le site à tout moment sans conséquence.</p>
+                        </div>
+                        
+                        <div class="right-card">
+                            <h4>🔒 Droit à la limitation</h4>
+                            <p>Désactivez certaines fonctionnalités dans les préférences.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 7. Contrôle de vos données -->
+                <section class="privacy-section">
+                    <h2>7. 🎛️ Contrôle de Vos Données</h2>
+                    
+                    <h3>Suppression complète</h3>
+                    <p>Pour supprimer toutes vos données :</p>
+                    <ol>
+                        <li>Utilisez le bouton "Reset" dans les paramètres du quiz</li>
+                        <li>Ou videz le cache/localStorage de votre navigateur</li>
+                        <li>Ou utilisez le mode navigation privée</li>
+                    </ol>
+                    
+                    <h3>Export de données</h3>
+                    <p>Exportez vos données au format JSON via l'interface du quiz pour :</p>
+                    <ul>
+                        <li>Faire une sauvegarde personnelle</li>
+                        <li>Transférer vos données vers un autre appareil</li>
+                        <li>Consulter l'intégralité de vos informations</li>
+                    </ul>
+                    
+                    <h3>Navigation privée</h3>
+                    <p>En mode navigation privée, aucune donnée n'est sauvegardée. Vos scores et préférences seront perdus à la fermeture de l'onglet.</p>
+                </section>
+                
+                <!-- 8. Tiers et services externes -->
+                <section class="privacy-section">
+                    <h2>8. 🌐 Tiers et Services Externes</h2>
+                    
+                    <h3>GitHub Pages (hébergement)</h3>
+                    <div class="info-box">
+                        <h3>🏢 GitHub, Inc.</h3>
+                        <p><strong>Service :</strong> Hébergement statique du site</p>
+                        <p><strong>Données :</strong> Logs de connexion standard (IP, user-agent)</p>
+                        <p><strong>Politique :</strong> <a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" target="_blank" style="color: #FFD700;">GitHub Privacy Policy</a></p>
+                    </div>
+                    
+                    <h3>WallpaperBat (images)</h3>
+                    <p>Les images du quiz proviennent de WallpaperBat.com. Aucune donnée n'est transmise à ce service, nous utilisons seulement les URLs publiques des images.</p>
+                    
+                    <h3>Réseaux sociaux (partage)</h3>
+                    <p>Le partage se fait via les APIs publiques des plateformes, sans transmission de données personnelles depuis notre site.</p>
+                </section>
+                
+                <!-- 9. Protection des mineurs -->
+                <section class="privacy-section">
+                    <h2>9. 👶 Protection des Mineurs</h2>
+                    
+                    <p>Ce site est adapté à tous les âges et ne collecte aucune donnée personnelle, y compris des mineurs.</p>
+                    
+                    <div class="info-box">
+                        <h3>🔞 Recommandations parents</h3>
+                        <ul>
+                            <li>Le quiz est éducatif et sans contenu inapproprié</li>
+                            <li>Aucune donnée personnelle n'est demandée</li>
+                            <li>Le partage sur réseaux sociaux est optionnel</li>
+                            <li>Supervision recommandée pour les très jeunes enfants</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- 10. Modifications de la politique -->
+                <section class="privacy-section">
+                    <h2>10. 📝 Modifications de cette Politique</h2>
+                    
+                    <p>Cette politique peut être mise à jour pour refléter :</p>
+                    <ul>
+                        <li>Les changements dans le fonctionnement du site</li>
+                        <li>L'évolution des réglementations</li>
+                        <li>L'ajout de nouvelles fonctionnalités</li>
+                    </ul>
+                    
+                    <p>Les modifications importantes seront signalées sur la page d'accueil du quiz.</p>
+                    
+                    <p><strong>Date de dernière modification :</strong> <span class="highlight">27 janvier 2025</span></p>
+                </section>
+                
+                <!-- 11. Contact et questions -->
+                <section class="privacy-section">
+                    <h2>11. 📧 Contact et Questions</h2>
+                    
+                    <div class="info-box">
+                        <h3>💬 Besoin d'aide ?</h3>
+                        <p><strong>Email :</strong> [Adresse email de contact]</p>
+                        <p><strong>Objet :</strong> "Quiz CODM - Question confidentialité"</p>
+                        <p><strong>Délai de réponse :</strong> 72 heures maximum</p>
+                        <p><strong>Langues :</strong> Français, Anglais</p>
+                    </div>
+                    
+                    <p>N'hésitez pas à nous contacter pour :</p>
+                    <ul>
+                        <li>Poser des questions sur cette politique</li>
+                        <li>Signaler un problème de confidentialité</li>
+                        <li>Demander des clarifications techniques</li>
+                        <li>Suggérer des améliorations</li>
+                    </ul>
+                </section>
+                
+            </div>
+            
+            <!-- Pied de page -->
+            <div class="privacy-footer">
+                <div class="privacy-summary">
+                    <h2>✅ Résumé : Votre Vie Privée est Respectée</h2>
+                    <p><span class="highlight-green">Aucune collecte, aucun tracking, aucune transmission.</span></p>
+                    <p>Vos données restent sur votre appareil, sous votre contrôle.</p>
                 </div>
-
-            </div>
-            
-            <!-- Back to home -->
-            <div class="back-home">
-                <a href="../index.html" class="btn-back">
-                    <i class="fas fa-arrow-left"></i>
-                    Retour au Quiz
-                </a>
+                
+                <p>🎮 <strong>Quiz CODM</strong> - Respect de la vie privée depuis 2025</p>
+                <p>© 2025 Coyd WILLZ - Politique de confidentialité transparente</p>
+                <p>
+                    <a href="./mentions-legales.html" style="color: #FFD700; margin: 0 1rem;">Mentions Légales</a>
+                    |
+                    <a href="../index.html" style="color: #FFD700; margin: 0 1rem;">Retour au Quiz</a>
+                </p>
             </div>
             
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" style="background: var(--dark-color); color: var(--light-color); text-align: center; padding: var(--spacing-lg) 0; margin-top: var(--spacing-xl);">
-        <div class="container">
-            <p>&copy; 2025 Quiz CODM - Projet indépendant par Coyd WILLZ</p>
-            <p style="font-size: 0.9rem; margin-top: var(--spacing-sm);">
-                <a href="../index.html" style="color: var(--secondary-color);">Accueil</a> • 
-                <a href="mentions-legales.html" style="color: var(--secondary-color);">Mentions légales</a> • 
-                <a href="mailto:Coyd2976@gmail.com" style="color: var(--secondary-color);">Contact</a>
-            </p>
-            <p style="font-size: 0.8rem; color: var(--gray-medium); margin-top: var(--spacing-sm);">
-                <i class="fas fa-shield-alt"></i> Conformité RGPD • 
-                <i class="fas fa-lock"></i> Données protégées • 
-                <i class="fas fa-info-circle"></i> Non affilié à Activision
-            </p>
-        </div>
-    </footer>
-
-    <!-- Scroll to top functionality -->
+    </div>
+    
+    <!-- JavaScript pour analytics simples -->
     <script>
-        // Smooth scroll to top when clicking back button
-        document.addEventListener('DOMContentLoaded', function() {
-            const backButton = document.querySelector('.btn-back');
-            if (backButton) {
-                backButton.addEventListener('click', function(e) {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                });
-            }
+        // Log de consultation de la politique de confidentialité
+        console.log('🔒 Politique de confidentialité consultée:', new Date().toISOString());
+        
+        // Statistiques simples (localStorage)
+        try {
+            const stats = JSON.parse(localStorage.getItem('codm_quiz_legal_views') || '{}');
+            stats.politiqueConfidentialite = (stats.politiqueConfidentialite || 0) + 1;
+            stats.lastPrivacyView = new Date().toISOString();
+            localStorage.setItem('codm_quiz_legal_views', JSON.stringify(stats));
+        } catch (error) {
+            console.warn('Impossible de sauvegarder les stats de consultation');
+        }
+        
+        // Démonstration du respect de la vie privée
+        console.log('🛡️ Démonstration : Aucune donnée transmise à des serveurs externes');
+        console.log('💾 Toutes vos données restent dans localStorage:', {
+            scores: localStorage.getItem('codm_quiz_user_best_score') ? 'Présent' : 'Absent',
+            preferences: localStorage.getItem('codm_quiz_user_preferences') ? 'Présent' : 'Absent',
+            stats: localStorage.getItem('codm_quiz_user_stats') ? 'Présent' : 'Absent'
         });
     </script>
-
 </body>
 </html>
