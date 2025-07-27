@@ -1,1465 +1,1256 @@
-// === QUIZ APP PRINCIPALE ===
+/**
+ * ===== QUIZ CODM - BASE DE QUESTIONS =====
+ * Questions Call of Duty Mobile avec réponses
+ * Auteur: Coyd WILLZ
+ */
 
-// Variables et éléments globaux
-let userData = {};
-let userTickets = 0;
-let currentQuestions = [];
-let currentQuestionIndex = 0;
-let userAnswers = [];
-let quizScore = 0;
-let quizStartTime = null;
-let hasPlayedToday = false;
-let quizEndTime = null;
-
-// Initial elements - will be populated in initializeElements()
-let elements = {};
-
-// Initialize DOM elements
-function initializeElements() {
-    console.log('Initialisation des éléments du DOM...');
-    
-    // Créer un nouvel objet elements
-    const elements = {
-        startQuizBtn: document.getElementById('startQuizBtn'),
-        quizStart: document.getElementById('quizStart'),
-        quizGame: document.getElementById('quizGame'),
-        participationModal: document.getElementById('participationModal'),
-        questionsCount: document.getElementById('questionsCount'),
-        burgerMenu: document.getElementById('burgerMenu'),
-        mobileOverlay: document.getElementById('mobileOverlay'),
-        mobileNav: document.getElementById('mobileNav'),
-        shareScoreBtn: document.getElementById('shareScoreBtn'),
-        shareBtn: document.getElementById('shareBtn'),
-        questionText: document.getElementById('questionText'),
-        answersContainer: document.getElementById('answersContainer'),
-        currentQuestion: document.getElementById('currentQuestion'),
-        progressFill: document.getElementById('progressFill'),
-        finalScore: document.getElementById('finalScore'),
-        resultsTitle: document.getElementById('resultsTitle'),
-        resultsMessage: document.getElementById('resultsMessage'),
-        participationForm: document.getElementById('participationForm'),
-        closeModal: document.querySelector('.modal-close'),
-        closeShareModal: document.getElementById('closeShareModal'),
-        shareModal: document.getElementById('shareModal')
-    };
-    
-    // Log des éléments trouvés
-    console.log('Éléments initialisés:', {
-        startQuizBtn: !!elements.startQuizBtn,
-        quizStart: !!elements.quizStart,
-        quizGame: !!elements.quizGame,
-        participationForm: !!elements.participationForm
-    });
-    
-    console.log('Éléments trouvés:', Object.keys(elements).filter(k => elements[k] !== null).length + '/' + Object.keys(elements).length);
-    
-    // Retourner l'objet elements
-    return elements;
-}
-
-// === DÉMARRAGE DU QUIZ ===
-// La fonction startQuiz est définie plus bas dans le fichier
-
-// === AFFICHAGE DES QUESTIONS ===
-function displayQuestion() {
-    // À compléter selon ton HTML (affichage dynamique de la question courante)
-}
-
-// === SOUMISSION DE RÉPONSE ===
-function submitAnswer(answer) {
-    userAnswers.push(answer);
-    currentQuestionIndex++;
-    if (currentQuestionIndex < currentQuestions.length) {
-        displayQuestion();
-    } else {
-        endQuiz();
-    }
-}
-
-// === FIN DU QUIZ ===
-function endQuiz() {
-    quizScore = userAnswers.reduce((score, ans, idx) => {
-        return score + (ans === currentQuestions[idx].correctAnswer ? 1 : 0);
-    }, 0);
-    elements.quizGame?.classList.add('hidden');
-    openParticipationModal();
-    if (window.QuizStorage && window.QuizStorage.storage) {
-        window.QuizStorage.storage.logActivity('quiz_completed', {
-            score: quizScore,
-            answers: userAnswers
-        });
-    }
-}
-
-// === MODALS PARTICIPATION ===
-function openParticipationModal() {
-    elements.participationModal?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-}
-function closeParticipationModal() {
-    elements.participationModal?.classList.add('hidden');
-    document.body.style.overflow = '';
-}
-
-// === ENREGISTREMENT DE LA PARTICIPATION ===
-function saveParticipation(participationData) {
-    try {
-        const ticketsAvant = userTickets;
-        const success = window.QuizStorage.participate(participationData);
-        const ticketsApres = window.QuizStorage.getTickets();
-        userTickets = ticketsApres;
-        userData = window.QuizStorage.getUserData();
-        hasPlayedToday = (userData.lastPlayDate === (new Date()).toISOString().slice(0, 10));
-        updateUserInterface();
-        if (success && ticketsApres > ticketsAvant) {
-            showParticipationSuccess();
-            if (window.QuizStorage && window.QuizStorage.storage) {
-                window.QuizStorage.storage.logActivity('participation_completed', {
-                    username: participationData.username,
-                    ticketsAvant,
-                    ticketsApres
-                });
-            }
-            console.log('✅ Participation enregistrée');
-        } else {
-            showErrorNotification('Erreur lors de l\'enregistrement de votre participation. Veuillez réessayer.');
-            console.error('❌ Erreur lors de la participation');
-        }
-    } catch (e) {
-        alert("Erreur lors de l'enregistrement de votre participation. Veuillez réessayer.");
-        console.error("Erreur QuizStorage.saveParticipation:", e);
-    }
-}
-
-// === SUCCÈS PARTICIPATION ===
-function showParticipationSuccess() {
-    const successMessage = document.createElement('div');
-    successMessage.className = 'success-notification visible animate-confetti';
-    successMessage.setAttribute('role', 'alert');
-    successMessage.setAttribute('aria-live', 'assertive');
-    successMessage.setAttribute('tabindex', '-1');
-    successMessage.style.position = 'fixed';
-    successMessage.style.top = '50%';
-    successMessage.style.left = '50%';
-    successMessage.style.transform = 'translate(-50%, -50%)';
-    successMessage.style.zIndex = '9999';
-    successMessage.style.background = 'rgba(30,35,60,0.98)';
-    successMessage.style.color = '#fff';
-    successMessage.style.padding = '2.5rem 2.5rem 2rem 2.5rem';
-    successMessage.style.borderRadius = '1.2em';
-    successMessage.style.boxShadow = '0 8px 32px #000b, 0 0 32px #50fa7b55';
-    successMessage.innerHTML = `
-        <button class=\"close-success\" aria-label=\"Fermer la notification\" style=\"position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;color:#fff;cursor:pointer;\">&times;</button>
-        <div style=\"display:flex;flex-direction:column;align-items:center;\">
-            <span style=\"font-size:2.5rem;line-height:1;display:block;margin-bottom:.5rem;\"><i class=\"fas fa-trophy\" aria-hidden=\"true\" style=\"color:#ffe066;text-shadow:0 0 8px #50fa7b;\"></i></span>
-            <h3 style=\"margin:1rem 0 .5rem 0;font-size:1.6rem;\">Participation enregistrée !</h3>
-            <p style=\"margin-bottom:.7rem;font-size:1.15rem;\">Score du jour : <strong class=\"score-glow\" style=\"color:#fff;font-size:1.4em;text-shadow:0 0 8px #50fa7b,0 0 16px #ffe066;\">${userData?.todayScore ?? 0}/10</strong></p>
-            <p style=\"margin-bottom:.7rem;font-size:1.15rem;\">Tickets cumulés : <strong class=\"tickets-glow\" style=\"color:#fff;font-size:1.4em;text-shadow:0 0 8px #ffe066,0 0 16px #50fa7b;\">${userTickets}</strong></p>
-            <button class=\"share-score-btn\" style=\"margin-top:1rem;padding:.6em 1.2em;font-size:1.1rem;font-weight:700;border-radius:.8em;background:linear-gradient(90deg,#50fa7b,#ffe066);color:#222;box-shadow:0 2px 8px #ffe06699;cursor:pointer;border:none;outline:none;transition:background 0.2s;\">
-                <i class=\"fas fa-share\" style=\"margin-right:.5em;\"></i>Partager mon score
-            </button>
-            <p style=\"margin-top:1.2rem;font-size:.98rem;opacity:.8;\">Partage ton score pour gagner plus de tickets !</p>
-        </div>
-    `;
-    document.body.appendChild(successMessage);
-    successMessage.focus();
-    const closeBtn = successMessage.querySelector('.close-success');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => successMessage.remove());
-    }
-    function handleEscClose(e) {
-        if (e.key === 'Escape') {
-            successMessage.remove();
-            document.removeEventListener('keydown', handleEscClose);
-        }
-    }
-    document.addEventListener('keydown', handleEscClose);
-    setTimeout(() => {
-        successMessage.classList.add('show');
-    }, 100);
-    const shareBtn = successMessage.querySelector('.share-score-btn');
-    if (shareBtn && typeof openShareModal === 'function') {
-        shareBtn.addEventListener('click', openShareModal);
-    }
-    setTimeout(() => {
-        if (document.body.contains(successMessage)) successMessage.remove();
-    }, 6000);
-}
-
-// === STATISTIQUES ===
-function updateStats() {
-    if (elements.questionsCount && typeof window.questions !== 'undefined') {
-        elements.questionsCount.textContent = window.questions.length;
-    }
-    if (window.QuizStorage) {
-        const analytics = window.QuizStorage.analytics();
-        console.log('📊 Analytics:', analytics);
-    }
-}
-
-// === MENU MOBILE ===
-function setupMobileMenu() {
-    const burgerBtn = elements.burgerMenu;
-    const overlay = elements.mobileOverlay;
-    const mobileNav = elements.mobileNav;
-    if (!burgerBtn || !overlay || !mobileNav) {
-        console.warn('⚠️ Éléments du menu mobile introuvables');
-        return;
-    }
-    burgerBtn.addEventListener('click', function() {
-        const isActive = burgerBtn.classList.contains('active');
-        if (isActive) {
-            closeMobileMenu();
-        } else {
-            openMobileMenu();
-        }
-    });
-    overlay.addEventListener('click', closeMobileMenu);
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeMobileMenu();
-        }
-    });
-}
-function openMobileMenu() {
-    elements.burgerMenu?.classList.add('active');
-    elements.mobileOverlay?.classList.add('active');
-    elements.mobileNav?.classList.add('active');
-    document.body.classList.add('menu-open');
-}
-function closeMobileMenu() {
-    elements.burgerMenu?.classList.remove('active');
-    elements.mobileOverlay?.classList.remove('active');
-    elements.mobileNav?.classList.remove('active');
-    document.body.classList.remove('menu-open');
-}
-
-// === UTILITAIRES ===
-function generateReferralCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < 8; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
-function showStorageWarning() {
-    const warning = document.createElement('div');
-    warning.className = 'storage-warning';
-    warning.innerHTML = `
-        <div class=\"warning-content\">
-            <i class=\"fas fa-exclamation-triangle\"></i>
-            <h3>Mode dégradé</h3>
-            <p>Le stockage local n'est pas disponible. Certaines fonctionnalités peuvent être limitées.</p>
-        </div>
-    `;
-    document.body.appendChild(warning);
-    setTimeout(() => {
-        warning.remove();
-    }, 5000);
-}
-
-// === EXPORT POUR DEBUG ===
-window.QuizApp = {
-    userData,
-    currentQuestions,
-    elements,
-    getStats: () => window.QuizStorage?.analytics(),
-    getTickets: () => userTickets,
-    resetDaily: () => {
-        hasPlayedToday = false;
-        checkDailyQuizStatus();
-    },
-    completeQuiz: () => {
-        quizScore = 8;
-        endQuiz();
-    }
+// ===== CONFIGURATION DES QUESTIONS =====
+const QUIZ_CONFIG = {
+    questionsPerQuiz: 10,
+    totalAvailableQuestions: 15, // Sera étendu plus tard
+    shuffleQuestions: true,
+    shuffleAnswers: true,
+    categories: ['armes', 'gameplay', 'personnages', 'saisons', 'maps']
 };
 
-// Gestionnaire d'événement DOMContentLoaded
-window.addEventListener('DOMContentLoaded', function() {
-    console.log('🎮 [DEBUG] Début de l\'initialisation DOMContentLoaded');
-    console.log('🎮 [DEBUG] window.QuizStorage:', typeof window.QuizStorage);
-    console.log('🎮 [DEBUG] window.questions:', window.questions ? `Tableau de ${window.questions.length} questions` : 'non défini');
+// ===== BASE DE QUESTIONS CODM =====
+const CODM_QUESTIONS = [
+    {
+        id: 1,
+        question: "Quelle arme est considérée comme l'une des meilleures mitraillettes (SMG) en combat rapproché depuis la saison 10 ?",
+        answers: ["QQ9", "GKS", "Chicom", "PDW-57"],
+        correct: 0,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "La QQ9 est reconnue pour sa cadence de tir élevée et sa mobilité excellente en combat rapproché."
+    },
+    {
+        id: 2,
+        question: "Quel fusil d'assaut a un mode rafale par défaut ?",
+        answers: ["M4", "M16", "AK-47", "Man-O-War"],
+        correct: 1,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "Le M16 tire en mode rafale à 3 coups, contrairement aux autres fusils d'assaut automatiques."
+    },
+    {
+        id: 3,
+        question: "Quel sniper inflige des dégâts mortels même en tirant dans le torse ?",
+        answers: ["Arctic .50", "DL Q33", "XPR-50", "Koshka"],
+        correct: 1,
+        category: "armes",
+        difficulty: "hard",
+        explanation: "Le DL Q33 peut éliminer en un tir même avec un impact au torse, pas seulement à la tête."
+    },
+    {
+        id: 4,
+        question: "Quelle mitraillette possède une cadence de tir extrêmement rapide, mais un recul difficile à contrôler ?",
+        answers: ["Fennec", "MSMC", "Razorback", "PP19 Bizon"],
+        correct: 0,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "La Fennec a la cadence de tir la plus élevée des SMG mais son recul est très difficile à maîtriser."
+    },
+    {
+        id: 5,
+        question: "Quelle arme dispose d'un double canon et est classée comme fusil à pompe ?",
+        answers: ["BY15", "HS0405", "KRM-262", "R9-0"],
+        correct: 3,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le R9-0 possède deux canons qui tirent simultanément, doublant les dégâts par coup."
+    },
+    {
+        id: 6,
+        question: "Quelle SMG possède un chargeur de base de 50 balles ?",
+        answers: ["QQ9", "PP19 Bizon", "Fennec", "AGR 556"],
+        correct: 1,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "La PP19 Bizon se distingue par son chargeur hélicoïdal de 50 balles sans accessoire."
+    },
+    {
+        id: 7,
+        question: "Le DR-H est redoutable grâce à :",
+        answers: ["Son accessoire OTM Mag", "Son recul très bas", "Son silencieux intégré", "Son viseur thermique"],
+        correct: 0,
+        category: "armes",
+        difficulty: "hard",
+        explanation: "L'accessoire OTM Mag du DR-H augmente considérablement ses dégâts et sa portée."
+    },
+    {
+        id: 8,
+        question: "Quelle arme secondaire peut infliger des dégâts explosifs ?",
+        answers: ["MW11", "J358", "Crossbow", "Renetti"],
+        correct: 2,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le Crossbow peut être équipé de munitions explosives qui infligent des dégâts de zone."
+    },
+    {
+        id: 9,
+        question: "Parmi les snipers, lequel est réputé pour sa vitesse de visée (ADS) très rapide sans accessoire ?",
+        answers: ["Arctic .50", "DL Q33", "XPR-50", "Locus"],
+        correct: 3,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le Locus reste l’un des snipers les plus rapides en ADS, même sans accessoires améliorés."
+    },
+    {
+        id: 10,
+        question: "Le fusil de chasse KRM-262 est réputé pour :",
+        answers: ["Son auto fire", "Son faible recul", "Son one-shot facile à courte distance", "Son silencieux intégré"],
+        correct: 2,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "Le KRM-262 peut éliminer en un tir à courte distance avec un bon placement."
+    },
+    {
+        id: 11,
+        question: "Quelle arme possède une version mythique avec compteur de kills affiché en game ?",
+        answers: ["Fennec", "Kilo 141", "QQ9", "Peacekeeper MK2"],
+        correct: 3,
+        category: "armes",
+        difficulty: "hard",
+        explanation: "La version mythique du Peacekeeper MK2 affiche un compteur de kills en temps réel pendant la partie."
+    },
+    {
+        id: 12,
+        question: "Le JAK-12 est :",
+        answers: ["Un fusil à pompe automatique", "Une SMG", "Une LMG", "Une grenade spéciale"],
+        correct: 0,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le JAK-12 est un fusil à pompe entièrement automatique, unique en son genre dans CODM."
+    },
+    {
+        id: 13,
+        question: "Le fusil d'assaut AS VAL est connu pour :",
+        answers: ["Son silencieux intégré", "Son énorme recul", "Son rechargement lent", "Être utilisable uniquement en Battle Royale"],
+        correct: 0,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "L'AS VAL possède un silencieux intégré par défaut, ce qui le rend très discret."
+    },
+    {
+        id: 14,
+        question: "Quelle arme est équipée par défaut d'un viseur holographique ?",
+        answers: ["Type 25", "AK117", "HVK-30", "M4"],
+        correct: 2,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "L'HVK-30 est le seul fusil d'assaut avec un viseur holographique intégré dès le niveau 1."
+    },
+    {
+        id: 15,
+        question: "Le Rytec AMR se distingue par :",
+        answers: ["Sa précision extrême", "Sa lunette thermique", "Ses balles explosives", "Son mode automatique"],
+        correct: 2,
+        category: "armes",
+        difficulty: "hard",
+        explanation: "Le Rytec AMR peut utiliser des munitions explosives qui infligent des dégâts de zone importants."
+        },
+    {
+        id: 16,
+        question: "Quelle mitraillette est connue pour sa précision et sa capacité à tirer en rafale ?",
+        answers: ["GKS", "Fennec", "Chicom", "Pharo"],
+        correct: 2,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "La Chicom est une SMG qui tire en rafale de 3 coups, idéale pour les combats rapprochés précis."
+    },
+    {
+        id: 17,
+        question: "Quelle LMG a été particulièrement populaire pour sa stabilité et son grand chargeur ?",
+        answers: ["UL736", "RPD", "M4LMG", "Holger 26"],
+        correct: 1,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "La RPD est connue pour sa stabilité, son recul faible et son énorme chargeur."
+    },
+    {
+        id: 18,
+        question: "Le Peacekeeper MK2 se distingue par :",
+        answers: ["Un cadence de tir modérée mais très précis", "Un silencieux intégré", "Un recul très difficile", "Un mode rafale"],
+        correct: 0,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le Peacekeeper MK2 combine une excellente précision et de bons dégâts, surtout avec ses balles améliorées."
+    },
+    {
+        id: 19,
+        question: "Quel sniper est semi-automatique parmi ces choix ?",
+        answers: ["DL Q33", "XPR-50", "Arctic .50", "Locus"],
+        correct: 1,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le XPR-50 est un sniper semi-automatique, idéal pour enchaîner les tirs rapidement."
+    },
+    {
+        id: 20,
+        question: "Le Man-O-War est apprécié pour :",
+        answers: ["Son faible recul", "Ses dégâts élevés", "Sa cadence de tir rapide", "Sa grande mobilité"],
+        correct: 1,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le Man-O-War inflige de lourds dégâts, ce qui compense sa cadence modérée."
+    },
+    {
+        id: 21,
+        question: "Le M4 est surtout utilisé pour :",
+        answers: ["Son énorme cadence", "Sa simplicité et sa stabilité", "Ses dégâts explosifs", "Ses tirs en rafale"],
+        correct: 1,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "Le M4 est souvent recommandé aux débutants grâce à sa stabilité et son recul très faible."
+    },
+    {
+        id: 22,
+        question: "Quelle arme peut passer en mode entièrement automatique avec un accessoire ?",
+        answers: ["M16", "Man-O-War", "Kilo 141", "ICR-1"],
+        correct: 0,
+        category: "armes",
+        difficulty: "hard",
+        explanation: "Le M16 peut devenir automatique avec le 'Wildfire' Perk via l’armurerie Gunsmith."
+    },
+    {
+        id: 23,
+        question: "Le HS0405 est un :",
+        answers: ["SMG", "Fusil de précision", "Fusil à pompe", "LMG"],
+        correct: 2,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "Le HS0405 est un fusil à pompe à canon long avec un fort potentiel de one-shot."
+    },
+    {
+        id: 24,
+        question: "Quelle LMG est appréciée pour son design modulaire et son efficacité en mode BR ?",
+        answers: ["UL736", "Holger 26", "Chopper", "PKM"],
+        correct: 1,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "La Holger 26 peut être modifiée en AR via Gunsmith, ce qui la rend très polyvalente en Battle Royale."
+    },
+    {
+        id: 25,
+        question: "La Razorback est une SMG caractérisée par :",
+        answers: ["Une cadence ultra-rapide", "Un recul imprévisible", "Une très bonne précision", "Un chargeur explosif"],
+        correct: 2,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "La Razorback se démarque par sa précision constante, même sans accessoires."
+    },
+    {
+        id: 26,
+        question: "Quelle arme est souvent considérée comme très polyvalente en multijoueur ?",
+        answers: ["Type 25", "AK117", "ICR-1", "ASM10"],
+        correct: 1,
+        category: "armes",
+        difficulty: "easy",
+        explanation: "L’AK117 est rapide, stable et efficace à toutes distances, idéale en multijoueur."
+    },
+    {
+        id: 27,
+        question: "La grenade C4 est :",
+        answers: ["Une arme secondaire explosive", "Une arme principale", "Un bonus de série", "Un accessoire de scorestreak"],
+        correct: 0,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le C4 est une grenade collante pouvant être déclenchée manuellement."
+    },
+    {
+        id: 28,
+        question: "Quelle arme est réputée pour être très puissante mais avec un gros recul vertical ?",
+        answers: ["ASM10", "ICR-1", "M4", "Peacekeeper MK2"],
+        correct: 0,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "L’ASM10 inflige de gros dégâts mais nécessite de bien contrôler le recul vertical."
+    },
+    {
+        id: 29,
+        question: "Quelle SMG tire en rafales de 4 coups ?",
+        answers: ["Chicom", "Pharo", "QQ9", "MSMC"],
+        correct: 1,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "La Pharo tire en rafales de 4 balles et peut être très létale avec précision."
+    },
+    {
+        id: 30,
+        question: "Le RPD est souvent équipé de quel accessoire pour améliorer sa visée ?",
+        answers: ["Chargeur rapide", "Viseur laser MIP", "Poignée tactique", "Crosse RTC stable"],
+        correct: 1,
+        category: "armes",
+        difficulty: "medium",
+        explanation: "Le viseur laser MIP améliore la précision en visée mobile avec le RPD."
+    },
+    {
+    id: 31,
+    question: "Quel pistolet-mitrailleur possède une variante légendaire très populaire avec effet de traînée ?",
+    answers: ["QQ9", "Fennec", "MSMC", "AGR 556"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Fennec a une variante légendaire populaire avec effet visuel de traînée, très appréciée par les joueurs."
+},
+{
+    id: 32,
+    question: "Quelle arme est célèbre pour sa cadence extrême et son double canon ?",
+    answers: ["HS0405", "Fennec Akimbo", "R9-0", "JAK-12"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le R9-0 possède deux canons pouvant tirer en succession rapide, rendant sa cadence très redoutable."
+},
+{
+    id: 33,
+    question: "Quelle LMG possède la capacité d'être utilisée comme une AR grâce au Gunsmith ?",
+    answers: ["Chopper", "UL736", "Holger 26", "PKM"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "La Holger 26 est l'une des seules LMG pouvant se transformer en fusil d’assaut via les accessoires Gunsmith."
+},
+{
+    id: 34,
+    question: "La PDW-57 est reconnue pour :",
+    answers: ["Sa portée longue", "Son silence natif", "Son gros chargeur et sa stabilité", "Son mode rafale"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "La PDW-57 est une SMG très stable avec un grand chargeur de base, appréciée pour sa simplicité."
+},
+{
+    id: 35,
+    question: "Quelle arme utilise des carreaux explosifs comme munition spéciale ?",
+    answers: ["Crossbow", "KRM-262", "Rytec AMR", "XPR-50"],
+    correct: 0,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Crossbow peut être équipé de carreaux explosifs qui infligent des dégâts de zone importants."
+},
+{
+    id: 36,
+    question: "Le HBRa3 est un fusil :",
+    answers: ["À rafale", "À visée thermique", "Automatique et équilibré", "Semi-automatique"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le HBRa3 est un fusil d’assaut automatique avec une bonne polyvalence et une maniabilité appréciée."
+},
+{
+    id: 37,
+    question: "Quelle arme est exclusive à certaines saisons et difficilement obtenable hors événement ?",
+    answers: ["AK-117", "Peacekeeper MK2", "S36", "MX9"],
+    correct: 3,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le MX9 est une SMG souvent liée à des événements spécifiques et rarement disponible en boutique."
+},
+{
+    id: 38,
+    question: "Quelle arme secondaire est idéale pour finir un ennemi à courte distance ?",
+    answers: ["MW11", "J358", "Knife", "Renetti"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le couteau (Knife) permet une élimination instantanée à très courte distance."
+},
+{
+    id: 39,
+    question: "Quelle SMG a une cadence faible mais une excellente précision à longue distance ?",
+    answers: ["AGR 556", "Razorback", "GKS", "Chicom"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "La GKS est connue pour sa précision et sa portée, idéale pour du combat mi-distance."
+},
+{
+    id: 40,
+    question: "Quelle est l'une des principales forces du Kilo 141 ?",
+    answers: ["Sa cadence explosive", "Sa précision exceptionnelle", "Son viseur thermique intégré", "Son rechargement rapide"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Kilo 141 offre une grande précision et constance, très fiable même sans accessoires."
+},
+{
+    id: 41,
+    question: "Le sniper Rytec AMR peut utiliser quel type de munitions uniques ?",
+    answers: ["Explosives", "Silencieuses", "Incendiaires", "Radar"],
+    correct: 0,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "Le Rytec AMR est l’un des rares snipers pouvant tirer des balles explosives."
+},
+{
+    id: 42,
+    question: "Quel fusil de précision est conseillé pour les tirs rapides en enchaînement ?",
+    answers: ["DL Q33", "XPR-50", "Locus", "Arctic .50"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le XPR-50 est semi-automatique, parfait pour les tirs enchaînés à courte ou moyenne distance."
+},
+{
+    id: 43,
+    question: "La GKS peut être améliorée avec quel accessoire unique ?",
+    answers: ["Kit rafale", "Silencieux intégré", "Chargeur grande capacité", "Viseur thermique"],
+    correct: 0,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "La GKS peut tirer en rafales de 4 coups avec le kit spécifique disponible dans le Gunsmith."
+},
+{
+    id: 44,
+    question: "Quel fusil d’assaut est réputé pour sa cadence extrêmement rapide ?",
+    answers: ["ICR-1", "AK-117", "Type 25", "Man-O-War"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le Type 25 possède l’une des cadences les plus rapides des fusils d’assaut en multijoueur."
+},
+{
+    id: 45,
+    question: "Quelle arme mythique possède des effets sonores et visuels uniques ?",
+    answers: ["AK-47", "Peacekeeper MK2", "Fennec", "ASM10"],
+    correct: 1,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "La version mythique du Peacekeeper MK2 inclut des effets sonores, visuels et même un kill counter."
+        },
+{
+    id: 46,
+    question: "Quelle arme a été introduite comme récompense d'événement lors de la Saison 11 2023 ?",
+    answers: ["Kilo 141", "AGR 556", "M13", "Oden"],
+    correct: 3,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "L’Oden, un fusil d’assaut à très hautes performances, a été introduit comme récompense lors d’un événement de la saison 11 2023."
+},
+{
+    id: 47,
+    question: "Le MSMC est reconnu pour :",
+    answers: ["Sa longue portée", "Sa stabilité à longue distance", "Sa cadence extrêmement rapide", "Son recul maîtrisé"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le MSMC possède une cadence de tir très rapide, mais difficile à contrôler sans accessoire."
+},
+{
+    id: 48,
+    question: "Quelle arme est idéale pour les tirs à la tête en mode multijoueur grâce à sa précision ?",
+    answers: ["ICR-1", "ASM10", "Peacekeeper MK2", "Type 25"],
+    correct: 0,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "L’ICR-1 est très stable et précise, ce qui la rend idéale pour viser la tête en multijoueur."
+},
+{
+    id: 49,
+    question: "Quelle SMG possède un mode rafale de base ?",
+    answers: ["QQ9", "Chicom", "Pharo", "Fennec"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "La Pharo est une SMG qui tire automatiquement en rafales de 4 balles."
+},
+{
+    id: 50,
+    question: "Quelle arme légendaire introduite en 2022 a un thème d'énergie futuriste ?",
+    answers: ["Fennec Ascended", "M13 Morningstar", "Man-O-War Cardinal", "RPD Orbit"],
+    correct: 1,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "Le M13 Morningstar est une arme légendaire avec un thème futuriste, incluant effets lumineux et animations spéciales."
+},
+{
+    id: 51,
+    question: "Quelle arme lourde est la plus utilisée en mode Zombie grâce à son gros chargeur ?",
+    answers: ["UL736", "PKM", "RPD", "Chopper"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "La RPD avec son gros chargeur et sa stabilité est parfaite pour le mode Zombie."
+},
+{
+    id: 52,
+    question: "Quelle SMG est équipée par défaut d’un viseur laser visible ?",
+    answers: ["AGR 556", "Fennec", "QQ9", "MSMC"],
+    correct: 0,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "L’AGR 556 est livrée avec un viseur laser intégré qui améliore la précision de tir à la hanche."
+},
+{
+    id: 53,
+    question: "Quel est l’avantage principal du DL Q33 par rapport à d’autres snipers ?",
+    answers: ["Temps de visée ultra rapide", "Aucun recul", "Kill instantané sur le torse", "Tir automatique"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le DL Q33 inflige des dégâts mortels au torse, ce qui en fait un des snipers les plus redoutés."
+},
+{
+    id: 54,
+    question: "Quelle arme a une version mythique 'Divine Smite' ?",
+    answers: ["Kilo 141", "Holger 26", "Peacekeeper MK2", "DL Q33"],
+    correct: 3,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "Le DL Q33 Divine Smite est une version mythique très recherchée avec effets visuels divins."
+},
+{
+    id: 55,
+    question: "Le Chopper est un LMG avec une particularité unique, laquelle ?",
+    answers: ["Tir automatique très rapide mais sans viseur", "Recharge automatique après chaque tir", "Cadence ultra lente", "Mode rafale activé d'origine"],
+    correct: 0,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "Le Chopper est un LMG qui peut tirer de manière extrêmement rapide mais sans viseur par défaut, à manier en tir à la hanche."
+},
+{
+    id: 56,
+    question: "Quelle mitraillette est recommandée en Battle Royale pour sa portée et sa cadence ?",
+    answers: ["QQ9", "GKS", "AGR 556", "Fennec"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "L’AGR 556 est une SMG stable et efficace à moyenne distance, idéale en Battle Royale."
+},
+{
+    id: 57,
+    question: "Le couteau balistique (Ballistic Knife) permet :",
+    answers: ["Des attaques explosives", "Des tirs à distance silencieux", "Des tirs de feu", "Des attaques au C4"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Ballistic Knife peut tirer des lames silencieuses à distance, utile pour les éliminations discrètes."
+},
+{
+    id: 58,
+    question: "Quelle arme a une version mythique avec ailes d’ange et effets sonores célestes ?",
+    answers: ["Type 25", "AK117", "Peacekeeper MK2", "Kilo 141"],
+    correct: 3,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "La version mythique du Kilo 141 'Demon Song' intègre des effets visuels et sonores angéliques."
+},
+{
+    id: 59,
+    question: "Quel revolver est célèbre pour son énorme puissance de tir ?",
+    answers: ["J358", "MW11", "Renetti", "Crossbow"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le J358 est un revolver puissant capable d’éliminer un ennemi avec un bon tir bien placé."
+},
+{
+    id: 60,
+    question: "Le RUS-79U est une SMG qui se distingue par :",
+    answers: ["Un mode automatique stable", "Son recul vertical extrême", "Un mode rafale par défaut", "Une vitesse de rechargement ultra lente"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le RUS-79U est une SMG automatique fiable, facile à prendre en main et stable même sans accessoire."
+        },
+{
+    id: 61,
+    question: "Quelle arme est inspirée du fusil russe AK-12 ?",
+    answers: ["AK117", "ASM10", "KN-44", "FR.556"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le KN-44 est inspiré de l’AK-12 et offre un bon compromis entre stabilité et dégâts."
+},
+{
+    id: 62,
+    question: "La M13 est particulièrement efficace grâce à :",
+    answers: ["Son faible recul", "Sa capacité de tir explosif", "Son silencieux intégré", "Son tir par rafales uniquement"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "La M13 combine une cadence élevée et un recul très faible, idéale pour les combats rapprochés et moyens."
+},
+{
+    id: 63,
+    question: "Quelle arme secondaire est souvent utilisée en multijoueur pour des kills rapides à courte portée ?",
+    answers: ["Renetti", "J358", "Shorty", "MW11"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Shorty est un fusil à pompe compact qui permet des kills instantanés à courte distance."
+},
+{
+    id: 64,
+    question: "Le Kilo Bolt-Action est un hybride entre :",
+    answers: ["Fusil de précision et fusil à pompe", "SMG et sniper", "AR et DMR", "Fusil d’assaut et sniper"],
+    correct: 3,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Kilo Bolt-Action fonctionne comme un sniper rapide avec une mobilité proche des AR."
+},
+{
+    id: 65,
+    question: "Quelle LMG se distingue par sa mobilité améliorée ?",
+    answers: ["UL736", "PKM", "Holger 26", "M4LMG"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "La Holger 26 peut être modifiée pour ressembler à un AR, augmentant ainsi sa mobilité."
+},
+{
+    id: 66,
+    question: "La Type 25 a longtemps été connue pour :",
+    answers: ["Son mode rafale", "Sa cadence extrême", "Son rechargement très lent", "Son recul incontrôlable"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "La Type 25 est célèbre pour sa cadence de tir très élevée, utile pour rusher."
+},
+{
+    id: 67,
+    question: "Le SVD est un :",
+    answers: ["Sniper semi-auto", "Fusil à pompe", "AR modifié", "SMG longue portée"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le SVD est un fusil de précision semi-automatique, parfait pour enchaîner les tirs rapides."
+},
+{
+    id: 68,
+    question: "Quelle arme mythique est surnommée 'Ascended' ?",
+    answers: ["Peacekeeper MK2", "Fennec", "RUS-79U", "Kilo 141"],
+    correct: 1,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "La Fennec Ascended est une version mythique célèbre avec des effets visuels impressionnants."
+},
+{
+    id: 69,
+    question: "La QQ9 est souvent comparée à quelle arme de la série Modern Warfare ?",
+    answers: ["MP5", "UMP45", "Vector", "MP7"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "La QQ9 est la version CODM de la célèbre MP5, une SMG compacte et efficace."
+},
+{
+    id: 70,
+    question: "Quelle arme dispose de la cadence de tir la plus élevée parmi les fusils d’assaut ?",
+    answers: ["M13", "Type 25", "AK117", "Peacekeeper MK2"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "La Type 25 possède la cadence de tir la plus rapide parmi les AR, ce qui la rend redoutable en combat rapproché."
+},
+{
+    id: 71,
+    question: "Le DL Q33 est :",
+    answers: ["Un sniper semi-automatique", "Un sniper bolt-action", "Un fusil à pompe lourd", "Une SMG camouflée"],
+    correct: 1,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le DL Q33 est un sniper bolt-action redouté pour ses dégâts élevés."
+},
+{
+    id: 72,
+    question: "Le M4LMG est une version lourde de :",
+    answers: ["ICR-1", "M4", "AK47", "Man-O-War"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le M4LMG partage sa base avec le M4, mais dispose d’un chargeur plus important et de meilleure portée."
+},
+{
+    id: 73,
+    question: "Quelle SMG se caractérise par sa grande précision même sans accessoire ?",
+    answers: ["GKS", "Chicom", "Fennec", "QQ9"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "La GKS est très stable, même sans attache, et tire en automatique."
+},
+{
+    id: 74,
+    question: "Le Rytec AMR peut être équipé de :",
+    answers: ["Balles incendiaires", "Balles explosives", "Silencieux thermique", "Chargeur double"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Rytec AMR est un sniper unique capable d’utiliser des munitions explosives."
+},
+{
+    id: 75,
+    question: "Le Man-O-War est parfois jugé lent à cause de :",
+    answers: ["Son animation de rechargement", "Son poids", "Sa cadence de tir", "Son zoom trop long"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Malgré sa puissance, le Man-O-War a une cadence relativement lente par rapport à d'autres AR."
+        },
+{
+    id: 76,
+    question: "Quelle arme est réputée pour son efficacité en duel à moyenne distance, surtout en mode classé ?",
+    answers: ["ICR-1", "ASM10", "Kilo 141", "HVK-30"],
+    correct: 3,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le HVK-30, grâce à son accessoire à munitions puissantes, est redoutable à moyenne distance."
+},
+{
+    id: 77,
+    question: "Quel pistolet possède un mode rafale par défaut ?",
+    answers: ["MW11", "J358", "Renetti", "Shorty"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le Renetti peut tirer en rafale de 3 balles, ce qui en fait une arme secondaire puissante."
+},
+{
+    id: 78,
+    question: "La KN-44 est populaire pour :",
+    answers: ["Son recul très stable", "Sa cadence extrême", "Son silencieux intégré", "Ses dégâts explosifs"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "La KN-44 combine dégâts corrects et excellent contrôle du recul, la rendant fiable."
+},
+{
+    id: 79,
+    question: "Quelle SMG peut être équipée d’un chargeur à haute capacité (80 balles) ?",
+    answers: ["PP19 Bizon", "Fennec", "AGR 556", "MSMC"],
+    correct: 0,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le PP19 Bizon peut atteindre 80 balles avec l’accessoire adéquat, ce qui prolonge l’engagement sans recharger."
+},
+{
+    id: 80,
+    question: "Le Locus est surtout apprécié pour :",
+    answers: ["Sa puissance brute", "Sa mobilité et sa vitesse de visée", "Sa capacité à tirer en rafale", "Son chargeur explosif"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Locus est très rapide en visée et permet de quickscope efficacement."
+},
+{
+    id: 81,
+    question: "Le XPR-50 est désavantagé par :",
+    answers: ["Son manque de munitions", "Sa cadence trop lente", "Son faible potentiel de one-shot", "Son bruit trop fort"],
+    correct: 2,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "En tant que sniper semi-auto, le XPR-50 inflige moins de dégâts et peine à éliminer en un coup."
+},
+{
+    id: 82,
+    question: "Quelle arme est inspirée de la célèbre G36C ?",
+    answers: ["ICR-1", "Peacekeeper MK2", "M13", "HVK-30"],
+    correct: 0,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "L’ICR-1 est la version CODM de la G36C, reconnue pour sa stabilité et sa précision."
+},
+{
+    id: 83,
+    question: "Le M21 EBR est un :",
+    answers: ["Sniper bolt-action", "Sniper semi-auto", "Fusil d’assaut à lunette", "SMG longue portée"],
+    correct: 1,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le M21 EBR est un sniper semi-automatique permettant des tirs enchaînés rapides."
+},
+{
+    id: 84,
+    question: "Quelle arme peut équiper un lance-grenade sous le canon ?",
+    answers: ["AK117", "Man-O-War", "M4", "FR.556"],
+    correct: 3,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le FR.556 est le seul fusil d’assaut pouvant utiliser un lance-grenade via Gunsmith."
+},
+{
+    id: 85,
+    question: "Le Chopper est une LMG qui se distingue par :",
+    answers: ["Un recul extrême", "Un mode tir continu sans visée", "Un silencieux intégré", "Un mode semi-automatique"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le Chopper permet de tirer en mouvement avec précision sans viser, ce qui est unique parmi les LMG."
+},
+{
+    id: 86,
+    question: "Quelle SMG est surnommée la 'Laser SMG' pour sa précision ?",
+    answers: ["GKS", "AGR 556", "MSMC", "RUS-79U"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "L’AGR 556 est surnommée 'Laser SMG' pour sa précision et sa stabilité même en mouvement."
+},
+{
+    id: 87,
+    question: "Le M16 est peu utilisé car :",
+    answers: ["Son rechargement est trop long", "Il est trop bruyant", "Le mode rafale est peu efficace en combat rapide", "Il inflige des dégâts trop faibles"],
+    correct: 2,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "Le M16, en mode rafale, est difficile à utiliser efficacement en combat rapproché rapide."
+},
+{
+    id: 88,
+    question: "Quel fusil d’assaut dispose d’un mode semi-auto de base ?",
+    answers: ["FR.556", "M4", "Kilo 141", "SKS"],
+    correct: 3,
+    category: "armes",
+    difficulty: "hard",
+    explanation: "Le SKS est un fusil DMR à tir semi-automatique par défaut, infligeant de gros dégâts avec précision."
+},
+{
+    id: 89,
+    question: "Le PKM est souvent utilisé pour :",
+    answers: ["Sa mobilité extrême", "Son faible recul", "Sa capacité de suppression prolongée", "Ses munitions explosives"],
+    correct: 2,
+    category: "armes",
+    difficulty: "easy",
+    explanation: "Le PKM a un grand chargeur et une excellente capacité de feu soutenu, utile pour verrouiller une zone."
+},
+{
+    id: 90,
+    question: "La Koshka se distingue des autres snipers par :",
+    answers: ["Sa précision extrême", "Sa mobilité accrue et visée rapide", "Sa capacité à tirer en rafale", "Son chargeur de 10 balles"],
+    correct: 1,
+    category: "armes",
+    difficulty: "medium",
+    explanation: "La Koshka a une excellente mobilité et une animation rapide, ce qui la rend redoutable pour le quickscope."
+        },
+{
+    id: 91,
+    question: "Quelle carte emblématique est inspirée d’un cargo en pleine mer ?",
+    answers: ["Shipment", "Hijacked", "Crash", "Terminal"],
+    correct: 1,
+    category: "cartes",
+    difficulty: "easy",
+    explanation: "Hijacked se déroule sur un yacht de luxe, souvent en mer, très populaire pour les combats rapprochés."
+},
+{
+    id: 92,
+    question: "Sur quelle carte trouve-t-on un hélicoptère écrasé au centre ?",
+    answers: ["Crash", "Raid", "Takeoff", "Meltdown"],
+    correct: 0,
+    category: "cartes",
+    difficulty: "easy",
+    explanation: "Crash est célèbre pour son hélico au centre, offrant un point de conflit stratégique."
+},
+{
+    id: 93,
+    question: "Quelle carte se situe dans une station nucléaire désertique ?",
+    answers: ["Firing Range", "Meltdown", "Crossfire", "Summit"],
+    correct: 1,
+    category: "cartes",
+    difficulty: "medium",
+    explanation: "Meltdown représente un site nucléaire abandonné, avec des zones dangereuses et ouvertes."
+},
+{
+    id: 94,
+    question: "Quelle carte est connue pour ses couloirs étroits et son combat rapproché constant ?",
+    answers: ["Nuketown", "Shipment", "Firing Range", "Terminal"],
+    correct: 1,
+    category: "cartes",
+    difficulty: "easy",
+    explanation: "Shipment est minuscule et très dynamique, avec peu d’endroits pour se cacher."
+},
+{
+    id: 95,
+    question: "Quelle carte se déroule dans un terminal d’aéroport ?",
+    answers: ["Terminal", "Takeoff", "Highrise", "Standoff"],
+    correct: 0,
+    category: "cartes",
+    difficulty: "easy",
+    explanation: "Terminal prend place dans un aéroport civil, avec un avion accessible à l’intérieur."
+},
+{
+    id: 96,
+    question: "La carte 'Raid' est basée dans :",
+    answers: ["Un bâtiment gouvernemental", "Une villa de luxe à Hollywood", "Une base militaire", "Un centre commercial"],
+    correct: 1,
+    category: "cartes",
+    difficulty: "medium",
+    explanation: "Raid se déroule dans une villa moderne avec piscine, inspirée d’Hollywood Hills."
+},
+{
+    id: 97,
+    question: "Quelle carte se trouve dans un environnement enneigé ?",
+    answers: ["Summit", "Crossfire", "Firing Range", "Hijacked"],
+    correct: 0,
+    category: "cartes",
+    difficulty: "easy",
+    explanation: "Summit est une carte enneigée avec un complexe industriel en altitude."
+},
+{
+    id: 98,
+    question: "Standoff est située dans :",
+    answers: ["Une ville afghane", "Un village mexicain", "Une rue américaine", "Une petite ville asiatique"],
+    correct: 3,
+    category: "cartes",
+    difficulty: "medium",
+    explanation: "Standoff se déroule dans un village asiatique au style rural, bien connu pour ses zones ouvertes et ses angles serrés."
+},
+{
+    id: 99,
+    question: "La carte 'Takeoff' est connue pour :",
+    answers: ["Son décor d’île tropicale", "Son train mobile", "Ses lance-roquettes", "Ses hangars militaires"],
+    correct: 0,
+    category: "cartes",
+    difficulty: "hard",
+    explanation: "Takeoff est inspirée d'une base spatiale sur une île tropicale, avec des structures uniques."
+},
+{
+    id: 100,
+    question: "Quelle carte se situe dans une université ou un campus moderne ?",
+    answers: ["Hacienda", "Slums", "Scrapyard", "University"],
+    correct: 3,
+    category: "cartes",
+    difficulty: "hard",
+    explanation: "University est une carte introduite dans CODM qui se déroule sur un campus avec des couloirs et salles de classe."
+},
+{
+    id: 101,
+    question: "Firing Range est basée sur :",
+    answers: ["Un champ d'entraînement militaire", "Une ville abandonnée", "Une base navale", "Une station scientifique"],
+    correct: 0,
+    category: "cartes",
+    difficulty: "easy",
+    explanation: "Firing Range est un champ de tir militaire classique, avec des cabanes et des zones ouvertes."
+},
+{
+    id: 102,
+    question: "Quelle carte est intégrée dans la zone de Battle Royale Isolated ?",
+    answers: ["Crash", "Hijacked", "Nuketown", "Toutes"],
+    correct: 3,
+    category: "cartes",
+    difficulty: "medium",
+    explanation: "Plusieurs cartes multijoueur sont aussi intégrées dans Isolated, la map BR principale."
+},
+{
+    id: 103,
+    question: "Quelle carte a un train qui traverse les lignes de combat ?",
+    answers: ["Express", "Takeoff", "Summit", "Highrise"],
+    correct: 0,
+    category: "cartes",
+    difficulty: "hard",
+    explanation: "Express est une carte urbaine avec un train rapide qui peut tuer les joueurs s’ils ne font pas attention."
+},
+{
+    id: 104,
+    question: "La carte 'Slums' est connue pour :",
+    answers: ["Son décor futuriste", "Son temple central", "Son ambiance urbaine délabrée", "Son style western"],
+    correct: 2,
+    category: "cartes",
+    difficulty: "medium",
+    explanation: "Slums se déroule dans une ville délabrée typique, avec ruelles et petits immeubles."
+},
+{
+    id: 105,
+    question: "Quelle carte a été ajoutée dans CODM avec un événement zombie ?",
+    answers: ["Shi No Numa", "Meltdown", "Terminal", "Takeoff"],
+    correct: 0,
+    category: "cartes",
+    difficulty: "medium",
+    explanation: "Shi No Numa est une carte zombie iconique, adaptée dans CODM pour des événements PvE."
+}
+
+]
+
+
+// ===== FONCTIONS DE GESTION DES QUESTIONS =====
+
+/**
+ * Sélectionne aléatoirement des questions pour un quiz
+ * @param {number} count - Nombre de questions à sélectionner
+ * @returns {Array} Tableau des questions sélectionnées
+ */
+function getRandomQuestions(count = QUIZ_CONFIG.questionsPerQuiz) {
+    const availableQuestions = [...CODM_QUESTIONS];
+    const selectedQuestions = [];
     
-    try {
-        // 1. Initialisation des éléments DOM
-        console.log('1. Initialisation des éléments du DOM...');
-        console.log('[DEBUG] Avant initializeElements()');
-        elements = initializeElements();
-        console.log('[DEBUG] Après initializeElements(), éléments trouvés:', Object.keys(elements).filter(k => elements[k] !== null).join(', '));
+    // Vérifier qu'on a assez de questions
+    const maxQuestions = Math.min(count, availableQuestions.length);
+    
+    for (let i = 0; i < maxQuestions; i++) {
+        const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+        const question = availableQuestions.splice(randomIndex, 1)[0];
         
-        // Vérification des éléments critiques
-        if (!elements.startQuizBtn || !elements.quizStart || !elements.quizGame) {
-            const missingElements = [];
-            if (!elements.startQuizBtn) missingElements.push('startQuizBtn');
-            if (!elements.quizStart) missingElements.push('quizStart');
-            if (!elements.quizGame) missingElements.push('quizGame');
-            
-            console.error('❌ Éléments critiques manquants dans le DOM:', missingElements.join(', '));
-            alert('Erreur d\'initialisation: éléments manquants dans la page. Veuillez recharger la page.');
-            return;
+        // Mélanger les réponses si configuré
+        if (QUIZ_CONFIG.shuffleAnswers) {
+            question = shuffleAnswers(question);
         }
         
-        // 2. Initialisation de l'application
-        console.log('2. Initialisation de l\'application...');
-        console.log('[DEBUG] Avant initializeApp()');
-        initializeApp();
-        console.log('[DEBUG] Après initializeApp()');
-        
-        // 3. Vérification de l'état du quiz (AVANT la configuration des écouteurs)
-        console.log('3. Vérification de l\'état du quiz...');
-        console.log('[DEBUG] Avant checkDailyQuizStatus()');
-        try {
-            checkDailyQuizStatus();
-            console.log('[DEBUG] Après checkDailyQuizStatus(), hasPlayedToday:', hasPlayedToday);
-        } catch (error) {
-            console.error('❌ Erreur lors de la vérification de l\'état du quiz:', error);
-            // On continue malgré l'erreur, ce n'est pas bloquant
+        selectedQuestions.push(question);
+    }
+    
+    return selectedQuestions;
+}
+
+/**
+ * Mélange les réponses d'une question
+ * @param {Object} question - Question à traiter
+ * @returns {Object} Question avec réponses mélangées
+ */
+function shuffleAnswers(question) {
+    const shuffledQuestion = { ...question };
+    const correctAnswer = question.answers[question.correct];
+    
+    // Mélanger le tableau des réponses
+    const shuffledAnswers = [...question.answers];
+    for (let i = shuffledAnswers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledAnswers[i], shuffledAnswers[j]] = [shuffledAnswers[j], shuffledAnswers[i]];
+    }
+    
+    // Trouver le nouvel index de la bonne réponse
+    shuffledQuestion.answers = shuffledAnswers;
+    shuffledQuestion.correct = shuffledAnswers.indexOf(correctAnswer);
+    
+    return shuffledQuestion;
+}
+
+/**
+ * Obtient une question par son ID
+ * @param {number} questionId - ID de la question
+ * @returns {Object|null} Question trouvée ou null
+ */
+function getQuestionById(questionId) {
+    return CODM_QUESTIONS.find(q => q.id === questionId) || null;
+}
+
+/**
+ * Filtre les questions par catégorie
+ * @param {string} category - Catégorie recherchée
+ * @returns {Array} Questions de la catégorie
+ */
+function getQuestionsByCategory(category) {
+    return CODM_QUESTIONS.filter(q => q.category === category);
+}
+
+/**
+ * Filtre les questions par difficulté
+ * @param {string} difficulty - Difficulté recherchée ('easy', 'medium', 'hard')
+ * @returns {Array} Questions de la difficulté
+ */
+function getQuestionsByDifficulty(difficulty) {
+    return CODM_QUESTIONS.filter(q => q.difficulty === difficulty);
+}
+
+/**
+ * Obtient les statistiques des questions
+ * @returns {Object} Statistiques complètes
+ */
+function getQuestionsStats() {
+    const stats = {
+        total: CODM_QUESTIONS.length,
+        byCategory: {},
+        byDifficulty: {
+            easy: 0,
+            medium: 0,
+            hard: 0
         }
+    };
+    
+    // Compter par catégorie
+    CODM_QUESTIONS.forEach(question => {
+        // Catégories
+        if (!stats.byCategory[question.category]) {
+            stats.byCategory[question.category] = 0;
+        }
+        stats.byCategory[question.category]++;
         
-        // 4. Configuration des écouteurs d'événements
-        console.log('4. Configuration des écouteurs d\'événements...');
-        console.log('[DEBUG] Avant setupEventListeners()');
-        setupEventListeners();
-        console.log('[DEBUG] Après setupEventListeners()');
-        setupMobileMenu();
-        console.log('[DEBUG] Après setupMobileMenu()');
-        
-        // 5. Mise à jour de l'interface utilisateur
-        console.log('5. Mise à jour de l\'interface utilisateur...');
-        updateStats();
-        updateUserInterface();
-        
-        // Afficher l'état approprié en fonction de hasPlayedToday
-        if (hasPlayedToday) {
-            showCompletedState();
+        // Difficultés
+        if (stats.byDifficulty[question.difficulty] !== undefined) {
+            stats.byDifficulty[question.difficulty]++;
+        }
+    });
+    
+    return stats;
+}
+
+/**
+ * Valide le format d'une question
+ * @param {Object} question - Question à valider
+ * @returns {boolean} True si la question est valide
+ */
+function validateQuestion(question) {
+    const required = ['id', 'question', 'answers', 'correct', 'category'];
+    
+    // Vérifier les champs obligatoires
+    for (const field of required) {
+        if (!question.hasOwnProperty(field)) {
+            console.error(`Champ manquant: ${field}`);
+            return false;
+        }
+    }
+    
+    // Vérifier le format des réponses
+    if (!Array.isArray(question.answers) || question.answers.length < 2) {
+        console.error('Au moins 2 réponses requises');
+        return false;
+    }
+    
+    // Vérifier l'index de la bonne réponse
+    if (question.correct < 0 || question.correct >= question.answers.length) {
+        console.error('Index de réponse correcte invalide');
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Ajoute une nouvelle question (pour extension future)
+ * @param {Object} question - Nouvelle question
+ * @returns {boolean} Succès de l'ajout
+ */
+function addQuestion(question) {
+    if (!validateQuestion(question)) {
+        return false;
+    }
+    
+    // Vérifier que l'ID n'existe pas déjà
+    if (getQuestionById(question.id)) {
+        console.error(`Question avec ID ${question.id} existe déjà`);
+        return false;
+    }
+    
+    CODM_QUESTIONS.push(question);
+    console.log(`Question ${question.id} ajoutée avec succès`);
+    return true;
+}
+
+/**
+ * Génère un quiz complet avec métadonnées
+ * @param {Object} options - Options de génération
+ * @returns {Object} Quiz complet
+ */
+function generateQuiz(options = {}) {
+    const defaultOptions = {
+        questionsCount: QUIZ_CONFIG.questionsPerQuiz,
+        category: null,
+        difficulty: null,
+        includeExplanations: true
+    };
+    
+    const finalOptions = { ...defaultOptions, ...options };
+    
+    let availableQuestions = [...CODM_QUESTIONS];
+    
+    // Filtrer par catégorie si spécifiée
+    if (finalOptions.category) {
+        availableQuestions = availableQuestions.filter(q => q.category === finalOptions.category);
+    }
+    
+    // Filtrer par difficulté si spécifiée
+    if (finalOptions.difficulty) {
+        availableQuestions = availableQuestions.filter(q => q.difficulty === finalOptions.difficulty);
+    }
+    
+    // Sélectionner les questions
+    const selectedQuestions = getRandomElements(availableQuestions, finalOptions.questionsCount);
+    
+    // Mélanger les réponses
+    const processedQuestions = selectedQuestions.map(q => 
+        QUIZ_CONFIG.shuffleAnswers ? shuffleAnswers(q) : q
+    );
+    
+    return {
+        id: Date.now(),
+        questions: processedQuestions,
+        metadata: {
+            totalQuestions: processedQuestions.length,
+            category: finalOptions.category || 'mixed',
+            difficulty: finalOptions.difficulty || 'mixed',
+            createdAt: new Date().toISOString(),
+            estimatedDuration: processedQuestions.length * 30 // 30 secondes par question
+        }
+    };
+}
+
+// ===== UTILITAIRES HELPER =====
+
+/**
+ * Sélectionne des éléments aléatoires d'un tableau
+ * @param {Array} array - Tableau source
+ * @param {number} count - Nombre d'éléments
+ * @returns {Array} Éléments sélectionnés
+ */
+function getRandomElements(array, count) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, Math.min(count, array.length));
+}
+
+// ===== EXPORT DES FONCTIONS =====
+
+// Export pour utilisation dans d'autres fichiers
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        CODM_QUESTIONS,
+        QUIZ_CONFIG,
+        getRandomQuestions,
+        shuffleAnswers,
+        getQuestionById,
+        getQuestionsByCategory,
+        getQuestionsByDifficulty,
+        getQuestionsStats,
+        validateQuestion,
+        addQuestion,
+        generateQuiz
+    };
+}
+
+// ===== EXPOSITION GLOBALE =====
+
+// Rendre disponible globalement
+window.QuizQuestions = {
+    generateQuiz,
+    getRandomQuestions,
+    getQuestionById,
+    getQuestionsByCategory,
+    getQuestionsByDifficulty,
+    getQuestionsStats,
+    validateQuestion,
+    addQuestion,
+};
+
+// ===== INITIALISATION =====
+
+// Valider toutes les questions au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🎯 Validation des questions CODM...');
+    
+    let validQuestions = 0;
+    let invalidQuestions = 0;
+    
+    CODM_QUESTIONS.forEach(question => {
+        if (validateQuestion(question)) {
+            validQuestions++;
         } else {
-            showStartState();
+            invalidQuestions++;
+            console.error(`Question invalide:`, question);
         }
-        
-        // 6. Vérification du stockage local
-        console.log('6. Vérification du stockage local...');
-        if (window.QuizStorage && !window.QuizStorage.isSupported()) {
-            console.warn('⚠️ Le stockage local n\'est pas supporté ou est désactivé');
-            showStorageWarning();
-        }
-        
-        console.log('✅ Initialisation terminée avec succès');
-        
-    } catch (error) {
-        console.error('❌ ERREUR CRITIQUE lors de l\'initialisation:', error);
-        alert('Une erreur critique est survenue lors du chargement de l\'application. Veuillez recharger la page.');
-        
-        // Tentative de récupération
-        try {
-            if (elements.quizStart) {
-                elements.quizStart.classList.remove('hidden');
-            }
-            if (elements.quizGame) {
-                elements.quizGame.classList.add('hidden');
-            }
-        } catch (e) {
-            console.error('Impossible de récupérer l\'interface utilisateur:', e);
-        }
+    });
+    
+    console.log(`✅ ${validQuestions} questions valides`);
+    if (invalidQuestions > 0) {
+        console.warn(`⚠️ ${invalidQuestions} questions invalides détectées`);
     }
     
-    // Vérification des modules optionnels
-    if (typeof window.quizShare === 'undefined') {
-        console.warn('⚠️ Module de partage (quizShare) non initialisé. Le quiz reste accessible.');
-    }
-    if (typeof window.quizReferral === 'undefined') {
-        console.warn('⚠️ Module de parrainage (quizReferral) non initialisé. Le quiz reste accessible.');
-    }
+    // Afficher les statistiques
+    const stats = getQuestionsStats();
+    console.log('📊 Statistiques questions:', stats);
 });
 
-// ===== FONCTIONS D'INITIALISATION =====
-function initializeApp() {
-    // Vérification du support du stockage
-    if (!window.QuizStorage.isSupported()) {
-        console.warn('⚠️ Stockage local non supporté - Mode dégradé');
-        showStorageWarning();
-    }
-    
-    // Chargement des données utilisateur via le nouveau système
-    userData = window.QuizStorage.loadUser();
-    userTickets = userData.totalTickets;
-    
-    // Mise à jour de l'affichage
-    updateUserInterface();
-    
-    // Mélange des questions du jour
-    if (typeof window.questions !== 'undefined') {
-        // Utilisation du système de questions équilibrées
-        if (typeof getBalancedQuestions === 'function') {
-            currentQuestions = getBalancedQuestions(10);
-        } else {
-            currentQuestions = getRandomQuestions(window.questions, 10);
-        }
-    } else {
-        console.warn('⚠️ Questions non chargées, utilisation des questions par défaut');
-        currentQuestions = getDefaultQuestions();
-    }
-    
-    console.log('✅ Application initialisée avec système de stockage avancé');
-}
-
-// ===== INTERFACE UTILISATEUR =====
-function updateUserInterface() {
-    // Mise à jour des tickets affichés
-    if (elements.totalTickets) {
-        elements.totalTickets.textContent = userTickets;
-    }
-    // Mise à jour du header (tickets + score)
-    const headerTickets = document.getElementById('totalTicketsHeader');
-    if (headerTickets) {
-        headerTickets.textContent = userTickets;
-    }
-    const headerScore = document.getElementById('todayScoreHeader');
-    if (headerScore && userData && typeof userData.todayScore !== 'undefined') {
-        headerScore.textContent = `${userData.todayScore}/10`;
-    }
-    // Mise à jour des statistiques si disponibles
-    const analytics = window.QuizStorage.analytics();
-    if (elements.totalPlayers && analytics.totalQuizzes > 0) {
-        // Simulation du nombre total de joueurs basé sur les analytics locales
-        const estimatedPlayers = Math.max(1247, analytics.totalQuizzes * 10);
-        elements.totalPlayers.textContent = estimatedPlayers.toLocaleString();
-    }
-}
-
-// ===== GESTION DU QUIZ QUOTIDIEN =====
-function checkDailyQuizStatus() {
-    console.log('📅 [DEBUG] Vérification du statut quotidien du quiz...');
-    console.log('[DEBUG] Avant vérification, hasPlayedToday:', hasPlayedToday);
-    
-    try {
-        // Vérification de la disponibilité de QuizStorage
-        if (!window.QuizStorage) {
-            console.warn('QuizStorage n\'est pas disponible - Vérification du statut du quiz impossible');
-            hasPlayedToday = false;
-            showStartState();
-            return;
-        }
-        
-        // Chargement des données utilisateur avec gestion d'erreur
-        console.log('[DEBUG] Chargement des données utilisateur...');
-        try {
-            userData = window.QuizStorage.loadUser();
-            console.log('[DEBUG] Données utilisateur chargées:', {
-                lastPlayDate: userData?.lastPlayDate || 'non défini',
-                lastPlayTime: userData?.lastPlayTime || 'non défini',
-                playCount: userData?.playCount || 0
-            });
-        } catch (e) {
-            console.error('❌ Erreur lors du chargement des données utilisateur:', e);
-            userData = { lastPlayDate: null };
-            console.log('[DEBUG] Valeur par défaut pour userData:', userData);
-        }
-        
-        const today = new Date().toDateString();
-        const now = new Date();
-        const lastPlayDate = userData?.lastPlayDate || null;
-        
-        console.log('[DEBUG] Dates importantes:', {
-            'Date du jour (toDateString)': today,
-            'Date complète': now.toISOString(),
-            'Dernière date de jeu': lastPlayDate || 'jamais',
-            'Heure actuelle locale': now.toLocaleTimeString(),
-            'Fuseau horaire': Intl.DateTimeFormat().resolvedOptions().timeZone
-        });
-        
-        // Vérification si l'utilisateur a déjà joué aujourd'hui
-        if (lastPlayDate && typeof lastPlayDate === 'string') {
-            const lastPlayDateObj = new Date(lastPlayDate);
-            const todayObj = new Date(today);
-            
-            console.log('[DEBUG] Comparaison des dates:', {
-                'lastPlayDate (reconstruite)': lastPlayDateObj.toISOString(),
-                'today (reconstruite)': todayObj.toISOString(),
-                'Dates identiques?': lastPlayDate === today
-            });
-            
-            hasPlayedToday = (lastPlayDate === today);
-            console.log('ℹ️ L\'utilisateur a déjà joué aujourd\'hui:', hasPlayedToday);
-            
-            // Si l'utilisateur a déjà joué, on récupère l'heure du dernier jeu
-            if (hasPlayedToday && userData.lastPlayTime) {
-                const lastPlayTime = new Date(userData.lastPlayTime);
-                const timeOptions = { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: false 
-                };
-                const formattedTime = lastPlayTime.toLocaleTimeString('fr-FR', timeOptions);
-                
-                // Mise à jour du message avec l'heure du dernier jeu
-                const completedMessage = document.querySelector('.quiz-completed-message');
-                if (completedMessage) {
-                    completedMessage.textContent = `Vous avez déjà joué aujourd'hui à ${formattedTime}. Revenez demain pour un nouveau quiz !`;
-                    console.log('Message de quiz terminé mis à jour avec l\'heure:', formattedTime);
-                }
-            }
-        } else {
-            hasPlayedToday = false;
-            console.log('Aucune date de jeu précédente trouvée - Considéré comme nouveau joueur');
-        }
-        
-        // Mise à jour de l'interface utilisateur
-        if (hasPlayedToday) {
-            console.log('Affichage de l\'état "quiz terminé"');
-            showCompletedState();
-        } else {
-            console.log('Affichage de l\'état de démarrage');
-            showStartState();
-        }
-        
-    } catch (error) {
-        console.error('Erreur critique lors de la vérification du statut du quiz:', error);
-        // En cas d'erreur, on considère que l'utilisateur n'a pas joué aujourd'hui
-        hasPlayedToday = false;
-        showStartState();
-    }
-}
-
-function showStartState() {
-    console.log('Affichage de l\'état de démarrage...');
-    
-    try {
-        // Récactiver et afficher le bouton de démarrage
-        if (elements.startQuizBtn) {
-            elements.startQuizBtn.disabled = false;
-            elements.startQuizBtn.textContent = 'Commencer le quiz';
-            elements.startQuizBtn.style.display = ''; // S'assurer qu'il est visible
-            console.log('Bouton de démarrage activé:', elements.startQuizBtn);
-        } else {
-            console.error('Le bouton startQuizBtn est introuvable dans le DOM');
-        }
-        
-        // Afficher la section de démarrage et masquer les autres sections
-        if (elements.quizStart) {
-            elements.quizStart.classList.remove('hidden');
-            elements.quizStart.style.display = '';
-            console.log('Section de démarrage affichée');
-        }
-        
-        // Masquer les autres sections du quiz
-        const sectionsToHide = [
-            elements.quizGame,
-            elements.quizCompleted,
-            elements.quizResults,
-            document.getElementById('participationModal'),
-            document.getElementById('shareModal')
-        ];
-        
-        sectionsToHide.forEach(section => {
-            if (section) {
-                section.classList.add('hidden');
-                section.style.display = 'none';
-            }
-        });
-        
-        console.log('État de démarrage affiché avec succès');
-        
-    } catch (error) {
-        console.error('Erreur lors de l\'affichage de l\'état de démarrage:', error);
-        // En cas d'erreur, on essaie au moins d'afficher la section de démarrage
-        if (elements.quizStart) {
-            elements.quizStart.classList.remove('hidden');
-            elements.quizStart.style.display = '';
-        }
-    }
-}
-
-function showCompletedState() {
-    console.log('Affichage de l\'état de quiz terminé...');
-    
-    try {
-        // Désactiver le bouton de démarrage s'il existe
-        if (elements.startQuizBtn) {
-            elements.startQuizBtn.disabled = true;
-            elements.startQuizBtn.textContent = 'Quiz terminé pour aujourd\'hui';
-            console.log('Bouton de démarrage désactivé');
-        }
-        
-        // Afficher la section de quiz terminé
-        if (elements.quizCompleted) {
-            elements.quizCompleted.classList.remove('hidden');
-            elements.quizCompleted.style.display = '';
-            console.log('Section de quiz terminé affichée');
-            
-            // Mettre à jour le message avec l'heure du dernier jeu si disponible
-            if (userData?.lastPlayTime) {
-                const lastPlayTime = new Date(userData.lastPlayTime);
-                const timeOptions = { 
-                    hour: '2-digit', 
-                    minute: '2-digit',
-                    hour12: false 
-                };
-                const formattedTime = lastPlayTime.toLocaleTimeString('fr-FR', timeOptions);
-                
-                const completedMessage = elements.quizCompleted.querySelector('.quiz-completed-message');
-                if (completedMessage) {
-                    completedMessage.textContent = `Vous avez déjà joué aujourd'hui à ${formattedTime}. Revenez demain pour un nouveau quiz !`;
-                    console.log('Message de quiz terminé mis à jour avec l\'heure:', formattedTime);
-                }
-            }
-            
-            // Mettre à jour le score d'aujourd'hui si disponible
-            if (elements.todayScore) {
-                elements.todayScore.textContent = `${userData.todayScore || 0}/10`;
-                console.log('Score du jour mis à jour:', elements.todayScore.textContent);
-            }
-        }
-        
-        // Masquer les autres sections du quiz
-        const sectionsToHide = [
-            elements.quizStart,
-            elements.quizGame,
-            elements.quizResults,
-            document.getElementById('participationModal'),
-            document.getElementById('shareModal')
-        ];
-        
-        sectionsToHide.forEach(section => {
-            if (section) {
-                section.classList.add('hidden');
-                section.style.display = 'none';
-            }
-        });
-        
-        console.log('État de quiz terminé affiché avec succès');
-        
-    } catch (error) {
-        console.error('Erreur lors de l\'affichage de l\'état de quiz terminé:', error);
-        
-        // En cas d'erreur, on essaie d'afficher un message d'erreur
-        try {
-            if (elements.quizCompleted) {
-                elements.quizCompleted.classList.remove('hidden');
-                elements.quizCompleted.style.display = '';
-                
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'error-message';
-                errorMessage.textContent = 'Une erreur est survenue lors du chargement du quiz.';
-                elements.quizCompleted.appendChild(errorMessage);
-            }
-        } catch (e) {
-            console.error('Impossible d\'afficher le message d\'erreur:', e);
-        }
-    }
-}
-
-// ===== GESTION DES QUESTIONS =====
-function getRandomQuestions(allQuestions, count) {
-    // Mélange et sélection de questions aléatoires
-    const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-}
-
-function getDefaultQuestions() {
-    // Questions par défaut si le fichier questions.js n'est pas chargé
-    return [
-        {
-            question: "Quelle est l'arme d'assaut la plus populaire dans CODM ?",
-            answers: ["AK-47", "M4", "AK-117", "Type 25"],
-            correct: 0,
-            category: "armes",
-            difficulty: "facile"
-        },
-        {
-            question: "Sur quelle carte se déroule le mode Battle Royale ?",
-            answers: ["Nuketown", "Blackout", "Isolated", "Crash"],
-            correct: 2,
-            category: "battle-royale",
-            difficulty: "facile"
-        }
-        // ... Autres questions par défaut
-    ];
-}
-
-function displayQuestion() {
-    const question = currentQuestions[currentQuestionIndex];
-    
-    if (!question) {
-        console.error('❌ Question introuvable:', currentQuestionIndex);
-        return;
-    }
-    
-    // Mise à jour du texte de la question
-    elements.questionText.textContent = question.question;
-    
-    // Mise à jour du compteur
-    elements.currentQuestion.textContent = currentQuestionIndex + 1;
-    
-    // Mise à jour de la barre de progression
-    const progressPercent = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
-    elements.progressFill.style.setProperty('--progress-width', `${progressPercent}%`);
-    elements.progressFill.style.width = `${progressPercent}%`;
-    
-    // Génération des réponses
-    displayAnswers(question.answers);
-}
-
-function displayAnswers(answers) {
-    elements.answersContainer.innerHTML = '';
-    
-    answers.forEach((answer, index) => {
-        const button = document.createElement('button');
-        button.className = 'answer-btn';
-        button.textContent = answer;
-        button.setAttribute('data-answer', index);
-        
-        button.addEventListener('click', () => selectAnswer(index));
-        
-        elements.answersContainer.appendChild(button);
-    });
-}
-
-function selectAnswer(answerIndex) {
-    const question = currentQuestions[currentQuestionIndex];
-    const isCorrect = answerIndex === question.correct;
-    
-    // Sauvegarde de la réponse
-    userAnswers[currentQuestionIndex] = answerIndex;
-    
-    // Mise à jour du score
-    if (isCorrect) {
-        quizScore++;
-    }
-    
-    // Animation des boutons
-    animateAnswerSelection(answerIndex, question.correct);
-    
-    // Passage à la question suivante après délai
-    setTimeout(() => {
-        nextQuestion();
-    }, 2000);
-}
-
-function animateAnswerSelection(selectedIndex, correctIndex) {
-    const buttons = elements.answersContainer.querySelectorAll('.answer-btn');
-    
-    buttons.forEach((btn, index) => {
-        btn.disabled = true;
-        
-        if (index === selectedIndex) {
-            btn.classList.add('selected');
-        }
-        
-        if (index === correctIndex) {
-            btn.classList.add('correct');
-        } else if (index === selectedIndex && selectedIndex !== correctIndex) {
-            btn.classList.add('incorrect');
-        }
-    });
-}
-
-function nextQuestion() {
-    currentQuestionIndex++;
-    
-    if (currentQuestionIndex < currentQuestions.length) {
-        displayQuestion();
-    } else {
-        endQuiz();
-    }
-}
-
-// ===== FIN DU QUIZ =====
-function endQuiz() {
-    quizEndTime = new Date();
-    const timeSpent = Math.round((quizEndTime - quizStartTime) / 1000); // Temps en secondes
-    
-    // Sauvegarde des résultats avec le nouveau système
-    saveQuizResults(timeSpent);
-    
-    // Affichage des résultats
-    showResults();
-    
-    console.log(`🏆 Quiz terminé! Score: ${quizScore}/${currentQuestions.length}`);
-}
-
-function saveQuizResults(timeSpent) {
-    // Préparation des données détaillées du quiz
-    const quizResult = {
-        score: quizScore,
-        totalQuestions: currentQuestions.length,
-        timeSpent: timeSpent,
-        questions: currentQuestions.map((q, index) => ({
-            question: q.question,
-            userAnswer: userAnswers[index],
-            correctAnswer: q.correct,
-            isCorrect: userAnswers[index] === q.correct,
-            category: q.category,
-            difficulty: q.difficulty
-        })),
-        answers: userAnswers,
-        difficulty: 'mixed' // Mélange de difficultés
-    };
-    
-    // Sauvegarde via le système de stockage avancé
-    const success = window.QuizStorage.saveQuiz(quizResult);
-    
-    if (success) {
-        // Ajout du ticket de base pour avoir joué
-        const ticketsEarned = window.QuizStorage.addTickets(1, 'quiz');
-        userTickets = ticketsEarned;
-        
-        // Mise à jour des données utilisateur locales
-        userData = window.QuizStorage.loadUser();
-        
-        // Mise à jour de l'interface
-        updateUserInterface();
-        
-        console.log('✅ Résultats sauvegardés avec succès');
-    } else {
-        console.error('❌ Erreur lors de la sauvegarde des résultats');
-    }
-}
-
-function showResults() {
-    // Masquage du quiz en cours
-    elements.quizGame?.classList.add('hidden');
-    
-    // Affichage des résultats
-    elements.quizResults?.classList.remove('hidden');
-    
-    // Mise à jour du score
-    elements.finalScore.textContent = `${quizScore}/10`;
-    
-    // Messages selon le score
-    const { title, message } = getScoreMessage(quizScore);
-    elements.resultsTitle.textContent = title;
-    elements.resultsMessage.textContent = message;
-}
-
-function getScoreMessage(score) {
-    if (score >= 9) {
-        return {
-            title: "LÉGENDAIRE ! 🔥",
-            message: "Tu es un vrai expert de Call of Duty Mobile !"
-        };
-    } else if (score >= 7) {
-        return {
-            title: "EXCELLENT ! 👑",
-            message: "Tu maîtrises vraiment CODM !"
-        };
-    } else if (score >= 5) {
-        return {
-            title: "BIEN JOUÉ ! 💪",
-            message: "Pas mal, mais tu peux faire mieux !"
-        };
-    } else {
-        return {
-            title: "CONTINUE ! 🎯",
-            message: "Reviens demain pour t'améliorer !"
-        };
-    }
-}
-
-// ===== ÉVÉNEMENTS =====
-function setupEventListeners() {
-    console.log('🔧 Configuration des écouteurs d\'événements...');
-    
-    // Vérification de l'élément startQuizBtn
-    if (!elements.startQuizBtn) {
-        console.log('[DEBUG] Recherche du bouton startQuizBtn dans le DOM...');
-        elements.startQuizBtn = document.getElementById('startQuizBtn');
-        if (!elements.startQuizBtn) {
-            console.error('❌ ERREUR CRITIQUE: Impossible de trouver le bouton startQuizBtn');
-            console.log('[DEBUG] État du DOM:', {
-                'document.readyState': document.readyState,
-                'elements.startQuizBtn': elements.startQuizBtn,
-                'document.getElementById': document.getElementById('startQuizBtn')
-            });
-            return;
-        } else {
-            console.log('[DEBUG] Bouton startQuizBtn trouvé dans le DOM:', elements.startQuizBtn);
-        }
-    }
-    
-    // Supprimer d'abord tous les écouteurs existants
-    console.log('[DEBUG] Clonage du bouton startQuizBtn...');
-    const newBtn = elements.startQuizBtn.cloneNode(true);
-    console.log('[DEBUG] Remplacement du bouton dans le DOM...');
-    elements.startQuizBtn.parentNode.replaceChild(newBtn, elements.startQuizBtn);
-    elements.startQuizBtn = newBtn;
-    console.log('[DEBUG] Bouton cloné et remplacé avec succès');
-    
-    // Ajouter le nouvel écouteur
-    console.log('[DEBUG] Ajout de l\'écouteur onclick au bouton...');
-    elements.startQuizBtn.onclick = function(e) {
-        console.log('🎯 [CLIC] Clic sur le bouton Commencer le quiz détecté');
-        console.log('[DEBUG] État au moment du clic:', {
-            'hasPlayedToday': hasPlayedToday,
-            'elements.quizStart': elements.quizStart ? 'trouvé' : 'non trouvé',
-            'elements.quizGame': elements.quizGame ? 'trouvé' : 'non trouvé',
-            'window.questions': window.questions ? `Tableau de ${window.questions.length} questions` : 'non défini'
-        });
-        
-        e.preventDefault();
-        e.stopPropagation();
-        
-        try {
-            startQuiz();
-        } catch (error) {
-            console.error('❌ ERREUR dans le gestionnaire de clic:', error);
-            alert('Une erreur est survenue lors du démarrage du quiz. Veuillez réessayer.');
-        }
-        
-        return false;
-    };
-    
-    console.log('[DEBUG] Écouteur onclick attaché avec succès');
-    
-    // Activer le bouton
-    elements.startQuizBtn.disabled = false;
-    elements.startQuizBtn.style.cursor = 'pointer';
-    
-    // Autres écouteurs d'événements
-    if (elements.participateBtn) {
-        elements.participateBtn.addEventListener('click', openParticipationModal);
-    }
-    
-    if (elements.shareScoreBtn) {
-        elements.shareScoreBtn.addEventListener('click', openShareModal);
-    }
-    
-    if (elements.shareBtn) {
-        elements.shareBtn.addEventListener('click', openShareModal);
-    }
-    
-    // Gestion des modales
-    if (elements.closeModal) {
-        elements.closeModal.addEventListener('click', closeParticipationModal);
-    }
-    
-    if (elements.closeShareModal) {
-        elements.closeShareModal.addEventListener('click', closeShareModal);
-    }
-    
-    if (elements.participationModal) {
-        elements.participationModal.addEventListener('click', (e) => {
-            if (e.target === elements.participationModal) {
-                closeParticipationModal();
-            }
-        });
-    }
-    
-    if (elements.shareModal) {
-        elements.shareModal.addEventListener('click', (e) => {
-            if (e.target === elements.shareModal) {
-                closeShareModal();
-            }
-        });
-    }
-    
-    // Formulaire de participation
-    if (elements.participationForm) {
-        elements.participationForm.addEventListener('submit', handleParticipation);
-    }
-    
-    console.log('✅ Tous les écouteurs d\'événements ont été initialisés');
-}
-    
-
-
-function startQuiz() {
-    console.log('🚀 [DEBUG] Démarrage du quiz...');
-    console.log('[DEBUG] État au début de startQuiz:', {
-        'hasPlayedToday': hasPlayedToday,
-        'currentQuestions': currentQuestions ? `Tableau de ${currentQuestions.length} questions` : 'non défini',
-        'window.questions': window.questions ? `Tableau de ${window.questions.length} questions` : 'non défini',
-        'elements.quizStart': elements.quizStart ? 'trouvé' : 'non trouvé',
-        'elements.quizGame': elements.quizGame ? 'trouvé' : 'non trouvé'
-    });
-    
-    try {
-        // Vérification des éléments nécessaires
-        if (!elements.quizStart || !elements.quizGame) {
-            throw new Error('Éléments du quiz manquants dans le DOM');
-        }
-        
-        // Vérification si l'utilisateur a déjà joué aujourd'hui
-        console.log('[DEBUG] Vérification de hasPlayedToday:', hasPlayedToday);
-        if (hasPlayedToday) {
-            console.log('ℹ️ L\'utilisateur a déjà joué aujourd\'hui');
-            console.log('[DEBUG] Affichage du message d\'alerte...');
-            alert('Tu as déjà joué aujourd\'hui ! Reviens demain 😊');
-            return;
-        }
-        
-        console.log('Vérification des questions disponibles...');
-        if (!window.questions || !Array.isArray(window.questions) || window.questions.length === 0) {
-            throw new Error('Aucune question disponible pour le quiz');
-        }
-        
-        // Récupération de l'historique des questions
-        let recentQuestions = [];
-        if (window.QuizStorage && typeof window.QuizStorage.getQuizHistory === 'function') {
-            console.log('Récupération de l\'historique des questions...');
-            const history = window.QuizStorage.getQuizHistory(5) || [];
-            history.forEach(qz => {
-                if (qz.questions && Array.isArray(qz.questions)) {
-                    qz.questions.forEach(q => {
-                        if (q && q.question) {
-                            recentQuestions.push(q.question);
-                        }
-                    });
-                }
-            });
-        }
-        
-        // Sélection des questions
-        console.log('Sélection des questions...');
-        let pool = window.questions.filter(q => q && q.question && !recentQuestions.includes(q.question));
-        
-        // Si pas assez de nouvelles questions, on complète avec toutes
-        if (pool.length < 10) {
-            console.log('Pas assez de nouvelles questions, utilisation de toutes les questions disponibles');
-            pool = [...window.questions];
-        }
-        
-        // Mélange et sélection des questions
-        console.log('Mélange des questions...');
-        currentQuestions = window.QuizQuestions.shuffleArray(pool).slice(0, 10);
-        
-        // Vérification des questions sélectionnées
-        if (currentQuestions.length === 0) {
-            throw new Error('Aucune question valide sélectionnée pour le quiz');
-        }
-        
-        // Réinitialisation des variables
-        currentQuestionIndex = 0;
-        userAnswers = [];
-        quizScore = 0;
-        quizStartTime = new Date();
-        
-        // Mise à jour de l'interface
-        console.log('Mise à jour de l\'interface utilisateur...');
-        elements.quizStart.classList.add('hidden');
-        elements.quizGame.classList.remove('hidden');
-        
-        // Affichage de la première question
-        console.log('Affichage de la première question...');
-        displayQuestion();
-        
-        // Journalisation de l'activité
-        if (window.QuizStorage && window.QuizStorage.storage) {
-            console.log('Journalisation de l\'activité...');
-            window.QuizStorage.storage.logActivity('quiz_started', {
-                questionsCount: currentQuestions.length,
-                startTime: quizStartTime.toISOString()
-            });
-        }
-        
-        console.log('✅ Quiz démarré avec succès');
-        
-    } catch (error) {
-        console.error('❌ ERREUR lors du démarrage du quiz:', error);
-        alert('Une erreur est survenue lors du démarrage du quiz. Veuillez réessayer.');
-        
-        // Réafficher le bouton de démarrage en cas d'erreur
-        if (elements.quizStart && elements.quizGame) {
-            elements.quizStart.classList.remove('hidden');
-            elements.quizGame.classList.add('hidden');
-        }
-    }
-}
-
-// ===== GESTION DES MODALS =====
-function openParticipationModal() {
-    elements.participationModal?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeParticipationModal() {
-    elements.participationModal?.classList.add('hidden');
-    document.body.style.overflow = '';
-}
-
-function openShareModal() {
-    elements.shareModal?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    
-    // Génération du lien de parrainage si pas déjà fait
-    if (typeof generateReferralLink === 'function') {
-        generateReferralLink();
-    }
-}
-
-function closeShareModal() {
-    elements.shareModal?.classList.add('hidden');
-    document.body.style.overflow = '';
-}
-
-// ===== NOTIFICATION ERREUR ACCESSIBLE =====
-function showErrorNotification(message) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-notification';
-    errorDiv.setAttribute('role', 'alert');
-    errorDiv.setAttribute('aria-live', 'assertive');
-    errorDiv.setAttribute('tabindex', '-1');
-    errorDiv.style.position = 'fixed';
-    errorDiv.style.top = '50%';
-    errorDiv.style.left = '50%';
-    errorDiv.style.transform = 'translate(-50%, -50%)';
-    errorDiv.style.zIndex = '9999';
-    errorDiv.style.background = 'rgba(60,10,10,0.98)';
-    errorDiv.style.color = '#fff';
-    errorDiv.style.padding = '2rem 2.5rem';
-    errorDiv.style.borderRadius = '1.2em';
-    errorDiv.style.boxShadow = '0 8px 32px #000b, 0 0 32px #ff5555bb';
-    errorDiv.innerHTML = `
-        <button class="close-error" aria-label="Fermer la notification" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;color:#fff;cursor:pointer;">&times;</button>
-        <div style="display:flex;flex-direction:column;align-items:center;">
-            <span style="font-size:2.5rem;line-height:1;display:block;margin-bottom:.5rem;"><i class="fas fa-exclamation-triangle" aria-hidden="true" style="color:#ff5555;text-shadow:0 0 8px #ff5555;"></i></span>
-            <h3 style="margin:1rem 0 .5rem 0;font-size:1.3rem;">Erreur</h3>
-            <p style="margin-bottom:.7rem;font-size:1.1rem;">${message}</p>
-        </div>
-    `;
-    document.body.appendChild(errorDiv);
-    errorDiv.focus();
-    // Fermeture manuelle
-    const closeBtn = errorDiv.querySelector('.close-error');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => errorDiv.remove());
-    }
-    // Fermeture clavier (ESC)
-    function handleEscClose(e) {
-        if (e.key === 'Escape') {
-            errorDiv.remove();
-            document.removeEventListener('keydown', handleEscClose);
-        }
-    }
-    document.addEventListener('keydown', handleEscClose);
-    setTimeout(() => {
-        if (document.body.contains(errorDiv)) errorDiv.remove();
-    }, 7000);
-}
-
-// ===== GESTION DE LA PARTICIPATION =====
-function handleParticipation(event) {
-    event.preventDefault();
-
-    // Rechargement des données utilisateur pour éviter la triche (valeurs live)
-    let latestUserData;
-    try {
-        latestUserData = window.QuizStorage.loadUser();
-    } catch (e) {
-        showErrorNotification("Erreur de lecture du stockage. Veuillez réessayer ou changer de navigateur.");
-        console.error("Erreur QuizStorage.loadUser:", e);
-        return;
-    }
-    // Vérification stricte de la participation du jour
-    const today = new Date().toDateString();
-    if (latestUserData.lastPlayDate === today) {
-        showErrorNotification("Tu as déjà participé aujourd'hui ! Reviens demain pour rejouer.");
-        return;
-    }
-
-    const formData = new FormData(event.target);
-    const participationData = {
-        username: formData.get('username'),
-        email: formData.get('email'),
-        gdprConsent: formData.get('rgpdConsent') === 'on'
-    };
-
-    // Validation des données
-    if (!participationData.username || !participationData.email || !participationData.gdprConsent) {
-        alert('Veuillez remplir tous les champs et accepter la politique de confidentialité.');
-        return;
-    }
-
-    // Attribution des tickets et sauvegarde, avec vérification d’intégrité
-    let success = false;
-    let ticketsAvant = latestUserData.totalTickets;
-    let ticketsApres = ticketsAvant;
-    try {
-        // Appel sécurisé à QuizStorage
-        success = window.QuizStorage.saveParticipation(participationData);
-        // Rechargement pour synchro
-        latestUserData = window.QuizStorage.loadUser();
-        ticketsApres = latestUserData.totalTickets;
-        userTickets = ticketsApres;
-        userData = latestUserData;
-        hasPlayedToday = (userData.lastPlayDate === today);
-        updateUserInterface();
-    } catch (e) {
-        alert("Erreur lors de l'enregistrement de votre participation. Veuillez réessayer.");
-        console.error("Erreur QuizStorage.saveParticipation:", e);
-        return;
-    }
-    if (success && ticketsApres > ticketsAvant) {
-        showParticipationSuccess();
-        // Log de l'activité
-        if (window.QuizStorage && window.QuizStorage.storage) {
-            window.QuizStorage.storage.logActivity('participation_completed', {
-                username: participationData.username,
-                ticketsAvant,
-                ticketsApres
-            });
-        }
-        console.log('✅ Participation enregistrée avec succès, tickets gagnés:', ticketsApres - ticketsAvant);
-    } else if (success && ticketsApres === ticketsAvant) {
-        showErrorNotification("Participation enregistrée, mais aucun ticket supplémentaire attribué (déjà joué aujourd'hui ?)");
-        console.warn('Participation enregistrée mais pas de gain de tickets.');
-    } else {
-        alert("Erreur lors de l'enregistrement de votre participation. Veuillez réessayer.");
-        console.error('❌ Erreur lors de la participation');
-    }
-}
-
-    event.preventDefault();
-    
-    const formData = new FormData(event.target);
-    const participationData = {
-        username: formData.get('username'),
-        email: formData.get('email'),
-        gdprConsent: formData.get('rgpdConsent') === 'on'
-    };
-    
-    // Validation des données
-    if (!participationData.username || !participationData.email || !participationData.gdprConsent) {
-        alert('Veuillez remplir tous les champs et accepter la politique de confidentialité.');
-        return;
-    }
-    
-    // Validation de l'email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(participationData.email)) {
-        alert('Veuillez saisir une adresse email valide.');
-        return;
-    }
-    
-    // Enregistrement de la participation via le système de stockage
-    const success = window.QuizStorage.participate(participationData);
-    
-    if (success) {
-        // Fermeture du modal et affichage du succès
-        closeParticipationModal();
-        showParticipationSuccess();
-        
-        // Log de l'activité
-        if (window.QuizStorage && window.QuizStorage.storage) {
-            window.QuizStorage.storage.logActivity('participation_completed', {
-                username: participationData.username,
-                tickets: userTickets
-            });
-        }
-        
-        console.log('✅ Participation enregistrée avec succès');
-    } else {
-        showErrorNotification('Erreur lors de l\'enregistrement de votre participation. Veuillez réessayer.');
-        console.error('❌ Erreur lors de la participation');
-    }
-// }
-
-function showParticipationSuccess() {
-    // Création d'un message de succès accessible et animé
-    const successMessage = document.createElement('div');
-    successMessage.className = 'success-notification visible animate-confetti';
-    successMessage.setAttribute('role', 'alert');
-    successMessage.setAttribute('aria-live', 'assertive');
-    successMessage.setAttribute('tabindex', '-1');
-    successMessage.style.position = 'fixed';
-    successMessage.style.top = '50%';
-    successMessage.style.left = '50%';
-    successMessage.style.transform = 'translate(-50%, -50%)';
-    successMessage.style.zIndex = '9999';
-    successMessage.style.background = 'rgba(30,35,60,0.98)';
-    successMessage.style.color = '#fff';
-    successMessage.style.padding = '2.5rem 2.5rem 2rem 2.5rem';
-    successMessage.style.borderRadius = '1.2em';
-    successMessage.style.boxShadow = '0 8px 32px #000b, 0 0 32px #50fa7b55';
-    successMessage.innerHTML = `
-        <button class="close-success" aria-label="Fermer la notification" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;color:#fff;cursor:pointer;">&times;</button>
-        <div style="display:flex;flex-direction:column;align-items:center;">
-            <span style="font-size:2.5rem;line-height:1;display:block;margin-bottom:.5rem;"><i class="fas fa-trophy" aria-hidden="true" style="color:#ffe066;text-shadow:0 0 8px #50fa7b;"></i></span>
-            <h3 style="margin:1rem 0 .5rem 0;font-size:1.6rem;">Participation enregistrée !</h3>
-            <p style="margin-bottom:.7rem;font-size:1.15rem;">Score du jour : <strong class="score-glow" style="color:#fff;font-size:1.4em;text-shadow:0 0 8px #50fa7b,0 0 16px #ffe066;">${userData?.todayScore ?? 0}/10</strong></p>
-            <p style="margin-bottom:.7rem;font-size:1.15rem;">Tickets cumulés : <strong class="tickets-glow" style="color:#fff;font-size:1.4em;text-shadow:0 0 8px #ffe066,0 0 16px #50fa7b;">${userTickets}</strong></p>
-            <button class="share-score-btn" style="margin-top:1rem;padding:.6em 1.2em;font-size:1.1rem;font-weight:700;border-radius:.8em;background:linear-gradient(90deg,#50fa7b,#ffe066);color:#222;box-shadow:0 2px 8px #ffe06699;cursor:pointer;border:none;outline:none;transition:background 0.2s;">
-                <i class="fas fa-share" style="margin-right:.5em;"></i>Partager mon score
-            </button>
-            <p style="margin-top:1.2rem;font-size:.98rem;opacity:.8;">Partage ton score pour gagner plus de tickets !</p>
-        </div>
-    `;
-    document.body.appendChild(successMessage);
-    // Focus auto pour accessibilité
-    successMessage.focus();
-    // Fermeture manuelle (croix)
-    const closeBtn = successMessage.querySelector('.close-success');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => successMessage.remove());
-    }
-    // Fermeture clavier (ESC)
-    function handleEscClose(e) {
-        if (e.key === 'Escape') {
-            successMessage.remove();
-            document.removeEventListener('keydown', handleEscClose);
-        }
-    }
-    document.addEventListener('keydown', handleEscClose);
-    // Animation d'apparition
-    setTimeout(() => {
-        successMessage.classList.add('show');
-    }, 100);
-    // Bouton partager mon score (ouvre le modal de partage natif si dispo)
-    const shareBtn = successMessage.querySelector('.share-score-btn');
-    if (shareBtn && typeof openShareModal === 'function') {
-        shareBtn.addEventListener('click', openShareModal);
-    }
-    // Suppression automatique après 6 secondes (si pas fermé manuellement)
-    setTimeout(() => {
-        if (document.body.contains(successMessage)) successMessage.remove();
-    }, 6000);
-}
-
-    // Création d'un message de succès temporaire
-    const successMessage = document.createElement('div');
-    successMessage.className = 'success-notification visible';
-    successMessage.style.position = 'fixed';
-    successMessage.style.top = '50%';
-    successMessage.style.left = '50%';
-    successMessage.style.transform = 'translate(-50%, -50%)';
-    successMessage.style.zIndex = '9999';
-    successMessage.style.background = 'rgba(30,35,60,0.98)';
-    successMessage.style.color = '#fff';
-    successMessage.style.padding = '2.5rem 2.5rem 2rem 2.5rem';
-    successMessage.style.borderRadius = '1.5rem';
-    successMessage.style.boxShadow = '0 6px 32px 0 rgba(0,0,0,0.25)';
-    successMessage.style.textAlign = 'center';
-    successMessage.style.fontSize = '1.25rem';
-    successMessage.innerHTML = `
-        <div class="success-content">
-            <i class="fas fa-check-circle" style="font-size:2.5rem;color:#5ee45e;"></i>
-            <h3 style="margin:1rem 0 .5rem 0;">Participation enregistrée !</h3>
-            <p>Score du jour : <strong>${userData?.todayScore ?? 0}/10</strong></p>
-            <p>Tickets cumulés : <strong>${userTickets}</strong></p>
-            <p style="margin-top:1rem;">Partage ton score pour gagner plus de tickets !</p>
-        </div>
-    `;
-    document.body.appendChild(successMessage);
-    // Animation d'apparition
-    setTimeout(() => {
-        successMessage.classList.add('show');
-    }, 100);
-    // Suppression automatique après 6 secondes
-    setTimeout(() => {
-        successMessage.remove();
-    }, 6000);
-// }
-
-// ===== MISE À JOUR DES STATISTIQUES =====
-function updateStats() {
-    // Mise à jour du compteur de questions
-    if (elements.questionsCount && typeof window.questions !== 'undefined') {
-        elements.questionsCount.textContent = window.questions.length;
-    }
-    
-    // Autres statistiques depuis le système de stockage
-    if (window.QuizStorage) {
-        const analytics = window.QuizStorage.analytics();
-        
-        // Mise à jour des statistiques si disponibles
-        console.log('📊 Analytics:', analytics);
-    }
-}
-
-// ===== MENU MOBILE =====
-function setupMobileMenu() {
-    const burgerBtn = elements.burgerMenu;
-    const overlay = elements.mobileOverlay;
-    const mobileNav = elements.mobileNav;
-    
-    if (!burgerBtn || !overlay || !mobileNav) {
-        console.warn('⚠️ Éléments du menu mobile introuvables');
-        return;
-    }
-    
-    // Toggle du menu
-    burgerBtn.addEventListener('click', function() {
-        const isActive = burgerBtn.classList.contains('active');
-        
-        if (isActive) {
-            closeMobileMenu();
-        } else {
-            openMobileMenu();
-        }
-    });
-    
-    // Fermeture via overlay
-    overlay.addEventListener('click', closeMobileMenu);
-    
-    // Fermeture via ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeMobileMenu();
-        }
-    });
-}
-
-function openMobileMenu() {
-    elements.burgerMenu?.classList.add('active');
-    elements.mobileOverlay?.classList.add('active');
-    elements.mobileNav?.classList.add('active');
-    document.body.classList.add('menu-open');
-}
-
-function closeMobileMenu() {
-    elements.burgerMenu?.classList.remove('active');
-    elements.mobileOverlay?.classList.remove('active');
-    elements.mobileNav?.classList.remove('active');
-    document.body.classList.remove('menu-open');
-}
-
-// ===== FONCTIONS UTILITAIRES =====
-function generateReferralCode() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < 8; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
-
-function showStorageWarning() {
-    const warning = document.createElement('div');
-    warning.className = 'storage-warning';
-    warning.innerHTML = `
-        <div class="warning-content">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Mode dégradé</h3>
-            <p>Le stockage local n'est pas disponible. Certaines fonctionnalités peuvent être limitées.</p>
-        </div>
-    `;
-    
-    document.body.appendChild(warning);
-    
-    setTimeout(() => {
-        warning.remove();
-    }, 5000);
-}
-
-// ===== EXPORT POUR DEBUG =====
-window.QuizApp = {
-    userData,
-    currentQuestions,
-    elements,
-    
-    // Fonctions utiles pour le debug
-    getStats: () => window.QuizStorage?.analytics(),
-    getTickets: () => userTickets,
-    resetDaily: () => {
-        hasPlayedToday = false;
-        checkDailyQuizStatus();
-    },
-    // Permet de simuler un quiz terminé pour le debug
-    completeQuiz: () => {
-        quizScore = 8; // Simule un score de 8/10
-        endQuiz();
-    }
-};
-
-console.log('🎮 App.js chargé avec intégration storage.js complète!');
+console.log('🎮 Quiz CODM - Questions chargées (15 questions disponibles)');
