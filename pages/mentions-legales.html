@@ -4,378 +4,391 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mentions Légales - Quiz CODM</title>
-    <meta name="description" content="Mentions légales du site Quiz CODM - Informations légales obligatoires">
+    <meta name="description" content="Mentions légales du Quiz Call of Duty Mobile - Informations légales et responsabilités">
     <meta name="robots" content="noindex, nofollow">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- CSS Files -->
+    <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
-
+    
+    <!-- Styles spécifiques aux pages légales -->
     <style>
-        /* Styles spécifiques aux pages légales */
         .legal-page {
-            padding: var(--spacing-xl) 0;
-            min-height: calc(100vh - 200px);
+            min-height: 100vh;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: #fff;
+            padding: 2rem 0;
         }
         
         .legal-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 var(--spacing-md);
+            padding: 0 2rem;
         }
         
         .legal-header {
             text-align: center;
-            margin-bottom: var(--spacing-xxl);
-            padding-bottom: var(--spacing-xl);
-            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #FFD700;
         }
         
         .legal-title {
             font-size: 2.5rem;
-            color: var(--dark-color);
-            margin-bottom: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--spacing-md);
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-weight: bold;
         }
         
         .legal-subtitle {
-            color: var(--gray-medium);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 0.5rem;
         }
         
-        .breadcrumb {
-            background: var(--gray-light);
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--border-radius);
-            margin-bottom: var(--spacing-xl);
-            font-size: 0.9rem;
-        }
-        
-        .breadcrumb a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color var(--transition-fast);
-        }
-        
-        .breadcrumb a:hover {
-            color: var(--primary-color);
+        .legal-date {
+            font-size: 1rem;
+            color: #999;
         }
         
         .legal-content {
             line-height: 1.8;
+            font-size: 1.1rem;
         }
         
-        .legal-content h2 {
-            color: var(--dark-color);
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-lg);
-            padding-left: var(--spacing-sm);
-            border-left: 4px solid var(--primary-color);
+        .legal-section {
+            margin-bottom: 3rem;
         }
         
-        .legal-content h3 {
-            color: var(--gray-dark);
-            margin-top: var(--spacing-lg);
-            margin-bottom: var(--spacing-md);
+        .legal-section h2 {
+            color: #FFD700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #333;
         }
         
-        .legal-content p {
-            margin-bottom: var(--spacing-md);
-            text-align: justify;
+        .legal-section h3 {
+            color: #FFD700;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
         }
         
-        .legal-content ul {
-            margin-bottom: var(--spacing-md);
-            padding-left: var(--spacing-xl);
+        .legal-section p {
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
         }
         
-        .legal-content li {
-            margin-bottom: var(--spacing-sm);
+        .legal-section ul {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .legal-section li {
+            margin-bottom: 0.8rem;
+            color: #e0e0e0;
         }
         
         .contact-info {
-            background: var(--gray-light);
-            padding: var(--spacing-lg);
-            border-radius: var(--border-radius);
-            margin: var(--spacing-xl) 0;
-            border-left: 4px solid var(--secondary-color);
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
         }
         
         .contact-info h3 {
-            color: var(--secondary-color);
             margin-top: 0;
         }
         
-        .back-home {
-            text-align: center;
-            margin-top: var(--spacing-xxl);
+        .highlight {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: #FFD700;
+            font-weight: bold;
         }
         
-        .btn-back {
+        .legal-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+        }
+        
+        .back-button {
             display: inline-flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            color: var(--dark-color);
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--border-radius);
+            gap: 0.5rem;
+            background: #FFD700;
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all var(--transition-normal);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
         }
         
-        .btn-back:hover {
+        .back-button:hover {
+            background: #FFC107;
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
         
-        .highlight {
-            background-color: rgba(255, 215, 0, 0.1);
-            padding: var(--spacing-sm);
-            border-radius: var(--border-radius);
-            border-left: 3px solid var(--primary-color);
-            margin: var(--spacing-md) 0;
+        .emoji {
+            font-size: 1.2rem;
         }
         
         @media (max-width: 768px) {
+            .legal-container {
+                padding: 0 1rem;
+            }
+            
             .legal-title {
-                font-size: 1.8rem;
-                flex-direction: column;
-                gap: var(--spacing-sm);
+                font-size: 2rem;
             }
             
             .legal-content {
-                font-size: 0.95rem;
-            }
-            
-            .legal-content p {
-                text-align: left;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="../index.html" class="logo">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Quiz CODM</span>
-                </a>
-                <nav class="nav">
-                    <a href="../index.html" class="nav-link">Accueil</a>
-                    <a href="politique-confidentialite.html" class="nav-link">Confidentialité</a>
-                    <a href="mailto:Coyd2976@gmail.com" class="nav-link">Contact</a>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="legal-page">
+    <div class="legal-page">
         <div class="legal-container">
-            
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb">
-                <a href="../index.html"><i class="fas fa-home"></i> Accueil</a>
-                <span> / </span>
-                <span>Mentions légales</span>
-            </nav>
-            
-            <!-- Header -->
+            <!-- En-tête -->
             <div class="legal-header">
-                <h1 class="legal-title">
-                    <i class="fas fa-file-contract"></i>
-                    Mentions Légales
-                </h1>
-                <p class="legal-subtitle">Informations légales obligatoires du site Quiz CODM</p>
+                <h1 class="legal-title">📋 Mentions Légales</h1>
+                <p class="legal-subtitle">Quiz Call of Duty Mobile</p>
+                <p class="legal-date">Dernière mise à jour : 27 janvier 2025</p>
             </div>
             
-            <!-- Content -->
+            <!-- Bouton retour -->
+            <a href="../index.html" class="back-button">
+                <span class="emoji">🏠</span>
+                Retour au Quiz
+            </a>
+            
+            <!-- Contenu légal -->
             <div class="legal-content">
                 
-                <div class="highlight">
-                    <p><strong>Dernière mise à jour :</strong> Janvier 2025</p>
-                    <p><strong>Site web :</strong> Quiz CODM - Quiz quotidien Call of Duty Mobile</p>
-                </div>
-
-                <h2>1. Éditeur du site</h2>
-                <div class="contact-info">
-                    <h3>Informations sur l'éditeur</h3>
-                    <p><strong>Nom :</strong> Coyd WILLZ</p>
-                    <p><strong>Email :</strong> <a href="mailto:Coyd2976@gmail.com">Coyd2976@gmail.com</a></p>
-                    <p><strong>Statut :</strong> Particulier - Projet personnel</p>
-                    <p><strong>Pays :</strong> France</p>
-                </div>
-
-                <h2>2. Hébergeur du site</h2>
-                <p>Le site Quiz CODM est hébergé par :</p>
-                <p><strong>GitHub, Inc.</strong><br>
-                Service : GitHub Pages<br>
-                88 Colin P Kelly Jr St<br>
-                San Francisco, CA 94107<br>
-                États-Unis<br>
-                Site web : <a href="https://github.com" target="_blank" rel="noopener">https://github.com</a></p>
-
-                <h2>3. Objet du site</h2>
-                <p>Quiz CODM est un site web interactif proposant :</p>
-                <ul>
-                    <li>Un quiz quotidien sur l'univers Call of Duty Mobile</li>
-                    <li>Un système de tirage au sort mensuel avec cartes cadeaux</li>
-                    <li>Des fonctionnalités de partage social et parrainage</li>
-                    <li>Un classement communautaire des joueurs</li>
-                </ul>
-
-                <h2>4. Propriété intellectuelle</h2>
+                <!-- 1. Informations générales -->
+                <section class="legal-section">
+                    <h2>1. 📝 Informations Générales</h2>
+                    
+                    <h3>Éditeur du site</h3>
+                    <div class="contact-info">
+                        <p><strong>Nom du site :</strong> <span class="highlight">Quiz CODM</span></p>
+                        <p><strong>URL :</strong> <span class="highlight">[URL du site]</span></p>
+                        <p><strong>Nature :</strong> Site web de quiz gratuit sur Call of Duty Mobile</p>
+                        <p><strong>Statut :</strong> Projet personnel non commercial</p>
+                        <p><strong>Auteur :</strong> <span class="highlight">Coyd WILLZ</span></p>
+                        <p><strong>Contact :</strong> [Adresse email de contact]</p>
+                    </div>
+                    
+                    <p>Le présent site est édité par <strong>Coyd WILLZ</strong> dans le cadre d'un projet personnel de quiz interactif sur l'univers de Call of Duty Mobile.</p>
+                </section>
                 
-                <h3>4.1 Contenu du site</h3>
-                <p>Le site Quiz CODM et son contenu (textes, structure, design, code source) sont la propriété de l'éditeur, sauf mention contraire.</p>
-                <p>Toute reproduction, distribution, modification ou utilisation sans autorisation expresse est interdite.</p>
+                <!-- 2. Hébergement -->
+                <section class="legal-section">
+                    <h2>2. 🌐 Hébergement</h2>
+                    
+                    <div class="contact-info">
+                        <h3>GitHub Pages</h3>
+                        <p><strong>Hébergeur :</strong> GitHub, Inc.</p>
+                        <p><strong>Adresse :</strong> 88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis</p>
+                        <p><strong>Site web :</strong> <a href="https://github.com" target="_blank" style="color: #FFD700;">https://github.com</a></p>
+                        <p><strong>Téléphone :</strong> +1 (877) 448-4820</p>
+                    </div>
+                    
+                    <p>Le site est hébergé gratuitement sur GitHub Pages, un service de GitHub, Inc.</p>
+                </section>
                 
-                <h3>4.2 Marques et contenus Call of Duty</h3>
-                <div class="highlight">
-                    <p><strong>CLAUSE IMPORTANTE :</strong> Quiz CODM n'est pas affilié, approuvé, ou officiellement connecté à Call of Duty, Call of Duty Mobile, Activision, TiMi Studio Group, ou toute autre société associée.</p>
-                </div>
+                <!-- 3. Propriété intellectuelle -->
+                <section class="legal-section">
+                    <h2>3. ⚖️ Propriété Intellectuelle</h2>
+                    
+                    <h3>Contenus du site</h3>
+                    <p>L'ensemble des contenus présents sur ce site (structure, textes, questions, code source, design) sont la propriété exclusive de <strong>Coyd WILLZ</strong>, sauf mention contraire.</p>
+                    
+                    <h3>Call of Duty Mobile</h3>
+                    <p><strong>Call of Duty Mobile</strong> est une marque commerciale et un jeu développé par :</p>
+                    <ul>
+                        <li><strong>Activision Publishing, Inc.</strong></li>
+                        <li><strong>TiMi Studio Group</strong> (développement)</li>
+                        <li><strong>Garena</strong> (publication dans certaines régions)</li>
+                    </ul>
+                    
+                    <p>Ce quiz est un projet de fan non officiel et n'est <span class="highlight">ni affilié, ni approuvé, ni sponsorisé</span> par Activision, TiMi Studios, ou toute autre entité liée à Call of Duty Mobile.</p>
+                    
+                    <h3>Images et visuels</h3>
+                    <p>Les images utilisées proviennent de :</p>
+                    <ul>
+                        <li><strong>WallpaperBat.com</strong> - Wallpapers Call of Duty Mobile</li>
+                        <li>Captures d'écran officielles du jeu</li>
+                        <li>Visuels promotionnels publics</li>
+                    </ul>
+                    
+                    <p>Ces éléments sont utilisés dans un cadre informatif et éducatif (Fair Use).</p>
+                </section>
                 
-                <p>Call of Duty®, Call of Duty Mobile®, et tous les éléments associés sont des marques déposées de :</p>
-                <ul>
-                    <li><strong>Activision Publishing, Inc.</strong></li>
-                    <li><strong>TiMi Studio Group</strong> (développeur)</li>
-                    <li><strong>Tencent Games</strong> (éditeur)</li>
-                </ul>
+                <!-- 4. Utilisation du service -->
+                <section class="legal-section">
+                    <h2>4. 🎮 Utilisation du Service</h2>
+                    
+                    <h3>Accès gratuit</h3>
+                    <p>L'accès au quiz est <span class="highlight">entièrement gratuit</span> et ne nécessite aucune inscription obligatoire.</p>
+                    
+                    <h3>Utilisation autorisée</h3>
+                    <p>Vous êtes autorisé à :</p>
+                    <ul>
+                        <li>Jouer au quiz autant de fois que souhaité</li>
+                        <li>Partager vos scores sur les réseaux sociaux</li>
+                        <li>Recommander le site à d'autres joueurs</li>
+                        <li>Utiliser le site sur tous vos appareils</li>
+                    </ul>
+                    
+                    <h3>Utilisation interdite</h3>
+                    <p>Il est formellement interdit de :</p>
+                    <ul>
+                        <li>Copier ou reproduire les questions sans autorisation</li>
+                        <li>Utiliser le contenu à des fins commerciales</li>
+                        <li>Tenter de pirater ou perturber le fonctionnement du site</li>
+                        <li>Utiliser des robots ou scripts automatisés</li>
+                        <li>Se faire passer pour l'auteur du site</li>
+                    </ul>
+                </section>
                 
-                <p>L'utilisation d'éléments liés à Call of Duty Mobile dans ce quiz s'inscrit dans le cadre du :</p>
-                <ul>
-                    <li>Droit de citation à des fins pédagogiques</li>
-                    <li>Usage équitable (Fair Use) pour contenu transformatif</li>
-                    <li>Promotion non-commerciale du jeu</li>
-                </ul>
-
-                <h2>5. Responsabilité</h2>
+                <!-- 5. Données personnelles -->
+                <section class="legal-section">
+                    <h2>5. 🔒 Données Personnelles</h2>
+                    
+                    <h3>Données collectées</h3>
+                    <p>Ce site utilise uniquement le <span class="highlight">stockage local (localStorage)</span> de votre navigateur pour :</p>
+                    <ul>
+                        <li>Sauvegarder vos scores et statistiques</li>
+                        <li>Mémoriser vos préférences (son, animations)</li>
+                        <li>Conserver l'historique de vos parties</li>
+                        <li>Gérer le classement local</li>
+                    </ul>
+                    
+                    <h3>Aucune donnée externe</h3>
+                    <p><strong>Aucune donnée personnelle n'est transmise à des serveurs externes.</strong> Toutes vos informations restent sur votre appareil.</p>
+                    
+                    <p>Pour plus de détails, consultez notre <a href="./politique-confidentialite.html" style="color: #FFD700;">Politique de Confidentialité</a>.</p>
+                </section>
                 
-                <h3>5.1 Limitation de responsabilité</h3>
-                <p>L'éditeur s'efforce de fournir des informations exactes et à jour, mais ne peut garantir l'exactitude, la complétude ou l'actualité des informations diffusées sur le site.</p>
+                <!-- 6. Cookies -->
+                <section class="legal-section">
+                    <h2>6. 🍪 Cookies</h2>
+                    
+                    <p>Ce site <span class="highlight">n'utilise aucun cookie</span>. Le stockage des données se fait exclusivement via le localStorage HTML5 de votre navigateur.</p>
+                    
+                    <p>Vous pouvez supprimer toutes vos données à tout moment en vidant le cache de votre navigateur ou en utilisant la fonction "Reset" dans les paramètres du quiz.</p>
+                </section>
                 
-                <h3>5.2 Disponibilité du service</h3>
-                <p>L'éditeur ne peut être tenu responsable :</p>
-                <ul>
-                    <li>Des interruptions temporaires du service</li>
-                    <li>Des dysfonctionnements techniques</li>
-                    <li>De la perte de données liée à l'utilisation du site</li>
-                    <li>Des dommages directs ou indirects résultant de l'utilisation</li>
-                </ul>
-
-                <h2>6. Tirage au sort et récompenses</h2>
+                <!-- 7. Responsabilités -->
+                <section class="legal-section">
+                    <h2>7. ⚠️ Responsabilités</h2>
+                    
+                    <h3>Limitation de responsabilité</h3>
+                    <p>L'auteur du site s'efforce de fournir des informations exactes et à jour, mais ne peut garantir :</p>
+                    <ul>
+                        <li>L'exactitude absolue de toutes les questions</li>
+                        <li>La disponibilité permanente du service</li>
+                        <li>L'absence de bugs ou dysfonctionnements</li>
+                    </ul>
+                    
+                    <h3>Exclusion de garantie</h3>
+                    <p>Ce service est fourni <span class="highlight">"tel quel"</span> sans garantie d'aucune sorte. L'utilisateur utilise le site à ses propres risques.</p>
+                    
+                    <h3>Dommages et intérêts</h3>
+                    <p>En aucun cas l'auteur ne pourra être tenu responsable de dommages directs ou indirects résultant de l'utilisation du site.</p>
+                </section>
                 
-                <h3>6.1 Modalités du tirage</h3>
-                <p>Le tirage au sort mensuel est organisé de manière équitable :</p>
-                <ul>
-                    <li>10 gagnants par mois recevant chacun 5€ en carte cadeau</li>
-                    <li>Tirage effectué de manière aléatoire et transparente</li>
-                    <li>Publication des pseudos des gagnants pour transparence</li>
-                    <li>Aucune obligation d'achat pour participer</li>
-                </ul>
+                <!-- 8. Liens externes -->
+                <section class="legal-section">
+                    <h2>8. 🔗 Liens Externes</h2>
+                    
+                    <p>Ce site peut contenir des liens vers des sites externes :</p>
+                    <ul>
+                        <li>Réseaux sociaux (partage de scores)</li>
+                        <li>Sources d'images (WallpaperBat.com)</li>
+                        <li>Sites officiels Call of Duty Mobile</li>
+                    </ul>
+                    
+                    <p>L'auteur n'est pas responsable du contenu de ces sites externes ni de leurs politiques de confidentialité.</p>
+                </section>
                 
-                <h3>6.2 Financement des récompenses</h3>
-                <p>Les récompenses sont financées par :</p>
-                <ul>
-                    <li>Publicités discrètes (Google AdSense, Carbon Ads)</li>
-                    <li>Programmes d'affiliation gaming</li>
-                    <li>Aucune participation financière des utilisateurs</li>
-                </ul>
-
-                <h2>7. Utilisation des données personnelles</h2>
-                <p>Pour les informations détaillées sur la collecte et le traitement des données personnelles, consultez notre <a href="politique-confidentialite.html">Politique de Confidentialité</a>.</p>
+                <!-- 9. Modifications -->
+                <section class="legal-section">
+                    <h2>9. 📝 Modifications</h2>
+                    
+                    <p>Ces mentions légales peuvent être modifiées à tout moment. Les modifications entrent en vigueur dès leur publication sur le site.</p>
+                    
+                    <p>Il est conseillé de consulter régulièrement cette page pour prendre connaissance des éventuelles modifications.</p>
+                </section>
                 
-                <p>En résumé, nous collectons uniquement :</p>
-                <ul>
-                    <li>Pseudo et email pour la participation au tirage</li>
-                    <li>Scores de quiz (stockage local)</li>
-                    <li>Aucune donnée sensible ou personnelle</li>
-                </ul>
-
-                <h2>8. Cookies et technologies similaires</h2>
-                <p>Le site utilise :</p>
-                <ul>
-                    <li><strong>localStorage</strong> : pour sauvegarder vos scores et préférences</li>
-                    <li><strong>Cookies publicitaires</strong> : pour les réseaux publicitaires (avec consentement)</li>
-                    <li><strong>Cookies analytiques</strong> : pour améliorer le service (anonymisés)</li>
-                </ul>
-
-                <h2>9. Liens externes</h2>
-                <p>Le site peut contenir des liens vers des sites externes. L'éditeur n'est pas responsable :</p>
-                <ul>
-                    <li>Du contenu des sites externes</li>
-                    <li>De leur politique de confidentialité</li>
-                    <li>De leurs pratiques de collecte de données</li>
-                </ul>
-
-                <h2>10. Modération et contenu utilisateur</h2>
-                <p>L'éditeur se réserve le droit de :</p>
-                <ul>
-                    <li>Modérer les pseudos inappropriés</li>
-                    <li>Suspendre l'accès en cas d'abus du système</li>
-                    <li>Modifier les règles du quiz avec préavis</li>
-                </ul>
-
-                <h2>11. Droit applicable</h2>
-                <p>Les présentes mentions légales sont régies par le droit français.</p>
-                <p>En cas de litige, les tribunaux français seront compétents.</p>
-
-                <h2>12. Contact et réclamations</h2>
-                <div class="contact-info">
-                    <h3>Pour toute question ou réclamation</h3>
-                    <p><strong>Email :</strong> <a href="mailto:Coyd2976@gmail.com">Coyd2976@gmail.com</a></p>
-                    <p><strong>Objet à préciser :</strong> [Quiz CODM] - Votre demande</p>
-                    <p><strong>Délai de réponse :</strong> 72 heures maximum</p>
-                </div>
-
-                <div class="highlight">
-                    <p><strong>Note importante :</strong> Ce projet est une initiative personnelle et indépendante, créée par passion pour Call of Duty Mobile. Il n'y a aucune affiliation commerciale avec les créateurs officiels du jeu.</p>
-                </div>
-
+                <!-- 10. Droit applicable -->
+                <section class="legal-section">
+                    <h2>10. ⚖️ Droit Applicable</h2>
+                    
+                    <p>Les présentes mentions légales sont régies par le <span class="highlight">droit français</span>.</p>
+                    
+                    <p>En cas de litige, les tribunaux français seront seuls compétents.</p>
+                </section>
+                
+                <!-- 11. Contact -->
+                <section class="legal-section">
+                    <h2>11. 📧 Contact</h2>
+                    
+                    <div class="contact-info">
+                        <h3>Pour toute question concernant ces mentions légales</h3>
+                        <p><strong>Email :</strong> [Adresse email de contact]</p>
+                        <p><strong>Réponse :</strong> Sous 72 heures en moyenne</p>
+                        <p><strong>Langues :</strong> Français, Anglais</p>
+                    </div>
+                    
+                    <p>N'hésitez pas à nous contacter pour toute question, suggestion ou signalement concernant le quiz.</p>
+                </section>
+                
             </div>
             
-            <!-- Back to home -->
-            <div class="back-home">
-                <a href="../index.html" class="btn-back">
-                    <i class="fas fa-arrow-left"></i>
-                    Retour au Quiz
-                </a>
+            <!-- Pied de page -->
+            <div class="legal-footer">
+                <p>🎮 <strong>Quiz CODM</strong> - Projet de fan non officiel</p>
+                <p>© 2025 Coyd WILLZ - Tous droits réservés</p>
+                <p>
+                    <a href="./politique-confidentialite.html" style="color: #FFD700; margin: 0 1rem;">Politique de Confidentialité</a>
+                    |
+                    <a href="../index.html" style="color: #FFD700; margin: 0 1rem;">Retour au Quiz</a>
+                </p>
             </div>
             
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" style="background: var(--dark-color); color: var(--light-color); text-align: center; padding: var(--spacing-lg) 0; margin-top: var(--spacing-xl);">
-        <div class="container">
-            <p>&copy; 2025 Quiz CODM - Projet indépendant par Coyd WILLZ</p>
-            <p style="font-size: 0.9rem; margin-top: var(--spacing-sm);">
-                <a href="../index.html" style="color: var(--primary-color);">Accueil</a> • 
-                <a href="politique-confidentialite.html" style="color: var(--primary-color);">Politique de confidentialité</a> • 
-                <a href="mailto:Coyd2976@gmail.com" style="color: var(--primary-color);">Contact</a>
-            </p>
-            <p style="font-size: 0.8rem; color: var(--gray-medium); margin-top: var(--spacing-sm);">
-                Non affilié à Activision • Call of Duty Mobile est une marque déposée
-            </p>
-        </div>
-    </footer>
-
+    </div>
+    
+    <!-- JavaScript pour analytics simples -->
+    <script>
+        // Log de consultation des mentions légales
+        console.log('📋 Mentions légales consultées:', new Date().toISOString());
+        
+        // Statistiques simples (localStorage)
+        try {
+            const stats = JSON.parse(localStorage.getItem('codm_quiz_legal_views') || '{}');
+            stats.mentionsLegales = (stats.mentionsLegales || 0) + 1;
+            stats.lastView = new Date().toISOString();
+            localStorage.setItem('codm_quiz_legal_views', JSON.stringify(stats));
+        } catch (error) {
+            console.warn('Impossible de sauvegarder les stats de consultation');
+        }
+    </script>
 </body>
 </html>
