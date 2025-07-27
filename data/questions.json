@@ -1,914 +1,484 @@
-// ===== STORAGE.JS - GESTION LOCALSTORAGE QUIZ CODM =====
-
-// ===== CONSTANTES DE STOCKAGE =====
-const STORAGE_KEYS = {
-    USER_DATA: 'quizCODM_userData',
-    QUIZ_HISTORY: 'quizCODM_quizHistory',
-    LEADERBOARD: 'quizCODM_leaderboard',
-    REFERRALS: 'quizCODM_referrals',
-    SETTINGS: 'quizCODM_settings',
-    PARTICIPATION: 'quizCODM_participation',
-    ANALYTICS: 'quizCODM_analytics'
-};
-
-// Limites de stockage
-const STORAGE_LIMITS = {
-    MAX_QUIZ_HISTORY: 100,
-    MAX_LEADERBOARD_ENTRIES: 50,
-    MAX_REFERRALS: 1000,
-    MAX_STORAGE_SIZE: 5 * 1024 * 1024 // 5MB
-};
-
-// ===== CLASSE PRINCIPALE DE GESTION DU STOCKAGE =====
-class QuizStorage {
-    constructor() {
-        this.isSupported = this.checkStorageSupport();
-        this.version = '1.0.0';
-        this.initializeStorage();
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2025-01-27",
+    "totalQuestions": 15,
+    "categories": ["armes", "gameplay", "personnages", "saisons", "maps"],
+    "difficulties": ["easy", "medium", "hard"],
+    "language": "fr",
+    "author": "Coyd WILLZ",
+    "description": "Base de questions Quiz CODM - Call of Duty Mobile"
+  },
+  "configuration": {
+    "questionsPerQuiz": 10,
+    "shuffleQuestions": true,
+    "shuffleAnswers": true,
+    "showExplanations": true,
+    "timeLimit": 30000,
+    "scoringSystem": {
+      "correctAnswer": 1,
+      "incorrectAnswer": 0,
+      "timeBonus": false
     }
-
-    // ===== VÉRIFICATION DU SUPPORT =====
-    checkStorageSupport() {
-        try {
-            const test = '__storage_test__';
-            localStorage.setItem(test, test);
-            localStorage.removeItem(test);
-            return true;
-        } catch (error) {
-            console.error('❌ localStorage non supporté:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
-            return false;
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "Quelle arme est considérée comme l'une des meilleures mitraillettes (SMG) en combat rapproché depuis la saison 10 ?",
+      "answers": [
+        "QQ9",
+        "GKS", 
+        "Chicom",
+        "PDW-57"
+      ],
+      "correctIndex": 0,
+      "category": "armes",
+      "subcategory": "smg",
+      "difficulty": "medium",
+      "tags": ["mitraillette", "combat-rapproche", "saison-10", "meta"],
+      "explanation": "La QQ9 est reconnue pour sa cadence de tir élevée et sa mobilité excellente en combat rapproché depuis la saison 10.",
+      "source": "Guide meta CODM 2024",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 25
+    },
+    {
+      "id": 2,
+      "question": "Quel fusil d'assaut a un mode rafale par défaut ?",
+      "answers": [
+        "M4",
+        "M16", 
+        "AK-47",
+        "Man-O-War"
+      ],
+      "correctIndex": 1,
+      "category": "armes",
+      "subcategory": "fusil-assaut",
+      "difficulty": "easy",
+      "tags": ["fusil-assaut", "mode-rafale", "basique"],
+      "explanation": "Le M16 tire en mode rafale à 3 coups par défaut, contrairement aux autres fusils d'assaut qui sont automatiques.",
+      "source": "Manuel armes CODM",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 20
+    },
+    {
+      "id": 3,
+      "question": "Quel sniper inflige des dégâts mortels même en tirant dans le torse ?",
+      "answers": [
+        "Arctic .50",
+        "DL Q33",
+        "XPR-50", 
+        "Koshka"
+      ],
+      "correctIndex": 1,
+      "category": "armes",
+      "subcategory": "sniper",
+      "difficulty": "hard",
+      "tags": ["sniper", "one-shot", "torse", "degats"],
+      "explanation": "Le DL Q33 peut éliminer en un tir même avec un impact au torse, pas seulement à la tête comme les autres snipers.",
+      "source": "Test dégâts snipers",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 30
+    },
+    {
+      "id": 4,
+      "question": "Quelle mitraillette possède une cadence de tir extrêmement rapide, mais un recul difficile à contrôler ?",
+      "answers": [
+        "Fennec",
+        "MSMC",
+        "Razorback",
+        "PP19 Bizon"
+      ],
+      "correctIndex": 0,
+      "category": "armes",
+      "subcategory": "smg",
+      "difficulty": "medium",
+      "tags": ["mitraillette", "cadence-tir", "recul", "fennec"],
+      "explanation": "La Fennec a la cadence de tir la plus élevée des SMG mais son recul vertical est très difficile à maîtriser sans accessoires.",
+      "source": "Analyse statistiques armes",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 25
+    },
+    {
+      "id": 5,
+      "question": "Quelle arme dispose d'un double canon et est classée comme fusil à pompe ?",
+      "answers": [
+        "BY15",
+        "HS0405",
+        "KRM-262",
+        "R9-0"
+      ],
+      "correctIndex": 3,
+      "category": "armes",
+      "subcategory": "fusil-pompe",
+      "difficulty": "medium",
+      "tags": ["fusil-pompe", "double-canon", "r9-0"],
+      "explanation": "Le R9-0 possède deux canons qui tirent simultanément, doublant les dégâts par coup mais avec un rechargement plus long.",
+      "source": "Description armes CODM",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 25
+    },
+    {
+      "id": 6,
+      "question": "Quelle SMG possède un chargeur de base de 50 balles ?",
+      "answers": [
+        "QQ9",
+        "PP19 Bizon",
+        "Fennec", 
+        "AGR 556"
+      ],
+      "correctIndex": 1,
+      "category": "armes",
+      "subcategory": "smg",
+      "difficulty": "easy",
+      "tags": ["mitraillette", "chargeur", "munitions", "bizon"],
+      "explanation": "La PP19 Bizon se distingue par son chargeur hélicoïdal de 50 balles sans avoir besoin d'accessoires d'extension.",
+      "source": "Statistiques armes",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 20
+    },
+    {
+      "id": 7,
+      "question": "Le DR-H est redoutable grâce à :",
+      "answers": [
+        "Son accessoire OTM Mag",
+        "Son recul très bas",
+        "Son silencieux intégré",
+        "Son viseur thermique"
+      ],
+      "correctIndex": 0,
+      "category": "armes",
+      "subcategory": "fusil-assaut",
+      "difficulty": "hard",
+      "tags": ["dr-h", "accessoire", "otm-mag", "degats"],
+      "explanation": "L'accessoire OTM Mag (Otm Magazine) du DR-H augmente considérablement ses dégâts et sa portée effective.",
+      "source": "Guide accessoires CODM",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 30
+    },
+    {
+      "id": 8,
+      "question": "Quelle arme secondaire peut infliger des dégâts explosifs ?",
+      "answers": [
+        "MW11",
+        "J358",
+        "Crossbow",
+        "Renetti"
+      ],
+      "correctIndex": 2,
+      "category": "armes",
+      "subcategory": "secondaire",
+      "difficulty": "medium",
+      "tags": ["arme-secondaire", "crossbow", "explosif", "degats-zone"],
+      "explanation": "Le Crossbow peut être équipé de munitions explosives qui infligent des dégâts de zone importants aux ennemis proches.",
+      "source": "Test armes secondaires",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 25
+    },
+    {
+      "id": 9,
+      "question": "Quelle est la particularité du Locus parmi les snipers ?",
+      "answers": [
+        "Le plus de balles dans le chargeur",
+        "Viseur thermique",
+        "Animation de rechargement personnalisée",
+        "Le plus rapide en visée"
+      ],
+      "correctIndex": 3,
+      "category": "armes",
+      "subcategory": "sniper",
+      "difficulty": "medium",
+      "tags": ["locus", "sniper", "ads-speed", "visee"],
+      "explanation": "Le Locus a la vitesse de visée (ADS - Aim Down Sight) la plus rapide parmi tous les snipers bolt-action du jeu.",
+      "source": "Comparatif snipers CODM",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 25
+    },
+    {
+      "id": 10,
+      "question": "Le fusil de chasse KRM-262 est réputé pour :",
+      "answers": [
+        "Son auto fire",
+        "Son faible recul",
+        "Son one-shot facile à courte distance",
+        "Son silencieux intégré"
+      ],
+      "correctIndex": 2,
+      "category": "armes",
+      "subcategory": "fusil-pompe",
+      "difficulty": "easy",
+      "tags": ["krm-262", "fusil-pompe", "one-shot", "courte-distance"],
+      "explanation": "Le KRM-262 peut éliminer en un tir à courte distance avec un bon placement des tirs, ce qui en fait une arme redoutable en CQC.",
+      "source": "Guide fusils à pompe",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 20
+    },
+    {
+      "id": 11,
+      "question": "Quelle arme possède une version mythique avec compteur de kills affiché en game ?",
+      "answers": [
+        "Fennec",
+        "Kilo 141",
+        "QQ9",
+        "Peacekeeper MK2"
+      ],
+      "correctIndex": 3,
+      "category": "armes",
+      "subcategory": "skin-legendaire",
+      "difficulty": "hard",
+      "tags": ["peacekeeper", "mythique", "compteur-kills", "skin"],
+      "explanation": "La version mythique du Peacekeeper MK2 'Artifact' affiche un compteur de kills en temps réel pendant la partie sur l'arme elle-même.",
+      "source": "Collection skins mythiques",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 30
+    },
+    {
+      "id": 12,
+      "question": "Le JAK-12 est :",
+      "answers": [
+        "Un fusil à pompe automatique",
+        "Une SMG",
+        "Une LMG",
+        "Une grenade spéciale"
+      ],
+      "correctIndex": 0,
+      "category": "armes",
+      "subcategory": "fusil-pompe",
+      "difficulty": "medium",
+      "tags": ["jak-12", "fusil-pompe", "automatique", "unique"],
+      "explanation": "Le JAK-12 est un fusil à pompe entièrement automatique, ce qui le rend unique parmi les shotguns de CODM.",
+      "source": "Description armes spéciales",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 25
+    },
+    {
+      "id": 13,
+      "question": "Le fusil d'assaut AS VAL est connu pour :",
+      "answers": [
+        "Son silencieux intégré",
+        "Son énorme recul",
+        "Son rechargement lent",
+        "Être utilisable uniquement en Battle Royale"
+      ],
+      "correctIndex": 0,
+      "category": "armes",
+      "subcategory": "fusil-assaut",
+      "difficulty": "easy",
+      "tags": ["as-val", "silencieux", "integre", "furtif"],
+      "explanation": "L'AS VAL possède un silencieux intégré par défaut, ce qui le rend très discret et idéal pour le jeu furtif.",
+      "source": "Guide armes furtives",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 20
+    },
+    {
+      "id": 14,
+      "question": "Quelle arme est équipée par défaut d'un viseur holographique ?",
+      "answers": [
+        "Type 25",
+        "AK117",
+        "HVK-30",
+        "M4"
+      ],
+      "correctIndex": 2,
+      "category": "armes",
+      "subcategory": "fusil-assaut",
+      "difficulty": "medium",
+      "tags": ["hvk-30", "viseur-holographique", "defaut", "equipement"],
+      "explanation": "L'HVK-30 est le seul fusil d'assaut avec un viseur holographique intégré dès le niveau 1, sans avoir besoin d'accessoires.",
+      "source": "Configuration armes par défaut",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 25
+    },
+    {
+      "id": 15,
+      "question": "Le Rytec AMR se distingue par :",
+      "answers": [
+        "Sa précision extrême",
+        "Sa lunette thermique",
+        "Ses balles explosives",
+        "Son mode automatique"
+      ],
+      "correctIndex": 2,
+      "category": "armes",
+      "subcategory": "sniper",
+      "difficulty": "hard",
+      "tags": ["rytec-amr", "balles-explosives", "sniper", "degats-zone"],
+      "explanation": "Le Rytec AMR peut utiliser des munitions explosives qui infligent des dégâts de zone importants, parfait contre les véhicules.",
+      "source": "Guide snipers anti-matériel",
+      "imageHint": "questions/weapons",
+      "points": 1,
+      "estimatedTime": 30
+    }
+  ],
+  "categories": {
+    "armes": {
+      "name": "Armes",
+      "description": "Questions sur les armes disponibles dans CODM",
+      "icon": "🔫",
+      "color": "#FF6B6B",
+      "subcategories": {
+        "smg": {
+          "name": "Mitraillettes",
+          "description": "Questions sur les SMG",
+          "questionCount": 4
+        },
+        "fusil-assaut": {
+          "name": "Fusils d'assaut", 
+          "description": "Questions sur les AR",
+          "questionCount": 4
+        },
+        "sniper": {
+          "name": "Snipers",
+          "description": "Questions sur les snipers",
+          "questionCount": 4
+        },
+        "fusil-pompe": {
+          "name": "Fusils à pompe",
+          "description": "Questions sur les shotguns",
+          "questionCount": 2
+        },
+        "secondaire": {
+          "name": "Armes secondaires",
+          "description": "Questions sur les pistolets",
+          "questionCount": 1
         }
+      }
+    },
+    "gameplay": {
+      "name": "Gameplay",
+      "description": "Mécaniques de jeu et stratégies",
+      "icon": "🎮",
+      "color": "#4ECDC4",
+      "questionCount": 0
+    },
+    "personnages": {
+      "name": "Personnages",
+      "description": "Opérateurs et skins",
+      "icon": "👤",
+      "color": "#45B7D1",
+      "questionCount": 0
+    },
+    "saisons": {
+      "name": "Saisons",
+      "description": "Battle Pass et événements",
+      "icon": "📅",
+      "color": "#96CEB4",
+      "questionCount": 0
+    },
+    "maps": {
+      "name": "Cartes",
+      "description": "Maps multijoueur et BR",
+      "icon": "🗺️",
+      "color": "#FECA57",
+      "questionCount": 0
     }
-
-    // ===== INITIALISATION =====
-    initializeStorage() {
-        if (!this.isSupported) {
-            console.warn('⚠️ Stockage local non disponible - Mode dégradé');
-            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
-            return;
-        }
-
-        try {
-            // Migration des données si nécessaire
-            this.migrateData();
-            // Initialisation des structures de base
-            this.ensureDataStructures();
-            // Nettoyage périodique
-            this.performMaintenance();
-            console.log('✅ Système de stockage initialisé');
-        } catch (error) {
-            console.error('❌ Erreur initialisation stockage:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
+  },
+  "difficulties": {
+    "easy": {
+      "name": "Facile",
+      "description": "Questions basiques pour débutants",
+      "color": "#2ECC71",
+      "points": 1,
+      "timeLimit": 20000,
+      "questionCount": 4
+    },
+    "medium": {
+      "name": "Moyen",
+      "description": "Questions intermédiaires",
+      "color": "#F39C12",
+      "points": 1,
+      "timeLimit": 25000,
+      "questionCount": 8
+    },
+    "hard": {
+      "name": "Difficile", 
+      "description": "Questions pour experts",
+      "color": "#E74C3C",
+      "points": 1,
+      "timeLimit": 30000,
+      "questionCount": 3
     }
-
-    // ===== GESTION DES DONNÉES UTILISATEUR =====
-    
-    /**
-     * Initialise les données utilisateur par défaut
-     * @returns {Object} Données utilisateur par défaut
-     */
-    createDefaultUserData() {
-        const now = new Date();
-        return {
-            // Identité
-            userId: this.generateUserId(),
-            username: null,
-            email: null,
-            createdAt: now.toISOString(),
-            lastActiveDate: now.toISOString(),
-            
-            // Quiz
-            lastPlayDate: null,
-            todayScore: 0,
-            totalQuizzes: 0,
-            bestScore: 0,
-            averageScore: 0,
-            perfectScores: 0,
-            
-            // Système de tickets
-            totalTickets: 0,
-            ticketsEarned: 0,
-            ticketsFromShares: 0,
-            ticketsFromReferrals: 0,
-            
-            // Participation
-            hasParticipated: false,
-            participationDate: null,
-            monthlyParticipations: 0,
-            
-            // Parrainage
-            referralCode: this.generateReferralCode(),
-            referralsCount: 0,
-            referredBy: null,
-            
-            // Préférences
-            settings: this.createDefaultSettings(),
-            
-            // Version des données
-            dataVersion: this.version
-        };
+  },
+  "tags": {
+    "meta": {
+      "name": "Meta",
+      "description": "Armes et stratégies meta actuelles",
+      "questionCount": 1
+    },
+    "one-shot": {
+      "name": "One-Shot",
+      "description": "Capacité d'élimination en un tir",
+      "questionCount": 2
+    },
+    "accessoire": {
+      "name": "Accessoires",
+      "description": "Modifications et attachements d'armes",
+      "questionCount": 1
+    },
+    "explosif": {
+      "name": "Explosif",
+      "description": "Armes avec dégâts explosifs",
+      "questionCount": 2
+    },
+    "silencieux": {
+      "name": "Silencieux",
+      "description": "Armes avec suppression sonore",
+      "questionCount": 1
     }
-
-    /**
-     * Sauvegarde les données utilisateur
-     * @param {Object} userData - Données utilisateur à sauvegarder
-     * @returns {boolean} Succès de la sauvegarde
-     */
-    saveUserData(userData) {
-        try {
-            if (!userData) return false;
-
-            // Validation des données
-            const validatedData = this.validateUserData(userData);
-            
-            // Mise à jour de la date de dernière activité
-            validatedData.lastActiveDate = new Date().toISOString();
-            
-            // Sauvegarde sécurisée
-            return this.secureSet(STORAGE_KEYS.USER_DATA, validatedData);
-        } catch (error) {
-            console.error('❌ Erreur sauvegarde données utilisateur:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
+  },
+  "statistics": {
+    "totalQuestions": 15,
+    "averageDifficulty": "medium",
+    "averageTime": 25,
+    "completionRate": 0,
+    "lastGenerated": "2025-01-27T00:00:00Z",
+    "questionsPerCategory": {
+      "armes": 15,
+      "gameplay": 0,
+      "personnages": 0,
+      "saisons": 0,
+      "maps": 0
+    },
+    "questionsPerDifficulty": {
+      "easy": 4,
+      "medium": 8,
+      "hard": 3
     }
-
-    /**
-     * Charge les données utilisateur
-     * @returns {Object} Données utilisateur ou données par défaut
-     */
-    loadUserData() {
-        try {
-            const userData = this.secureGet(STORAGE_KEYS.USER_DATA);
-            
-            if (!userData) {
-                const defaultData = this.createDefaultUserData();
-                this.saveUserData(defaultData);
-                return defaultData;
-            }
-
-            // Vérification de la migration nécessaire
-            if (userData.dataVersion !== this.version) {
-                return this.migrateUserData(userData);
-            }
-
-            return userData;
-        } catch (error) {
-            console.error('❌ Erreur chargement données utilisateur:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return this.createDefaultUserData();
-        }
-    }
-
-    // ===== HISTORIQUE DES QUIZ =====
-    
-    /**
-     * Sauvegarde un résultat de quiz
-     * @param {Object} quizResult - Résultat du quiz
-     * @returns {boolean} Succès de la sauvegarde
-     */
-    saveQuizResult(quizResult) {
-        try {
-            const history = this.getQuizHistory();
-            const result = {
-                id: this.generateId(),
-                date: new Date().toISOString(),
-                score: quizResult.score,
-                totalQuestions: quizResult.totalQuestions,
-                timeSpent: quizResult.timeSpent || null,
-                questions: quizResult.questions || [],
-                answers: quizResult.answers || [],
-                difficulty: quizResult.difficulty || 'mixed'
-            };
-
-            // Ajout au début de l'historique
-            history.unshift(result);
-            
-            // Limitation du nombre d'entrées
-            if (history.length > STORAGE_LIMITS.MAX_QUIZ_HISTORY) {
-                history.splice(STORAGE_LIMITS.MAX_QUIZ_HISTORY);
-            }
-
-            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, history);
-            
-            // Mise à jour des statistiques utilisateur
-            this.updateUserStats(result);
-            
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur sauvegarde résultat quiz:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Récupère l'historique des quiz
-     * @param {number} limit - Nombre de résultats à retourner
-     * @returns {Array} Historique des quiz
-     */
-    getQuizHistory(limit = null) {
-        const history = this.secureGet(STORAGE_KEYS.QUIZ_HISTORY) || [];
-        return limit ? history.slice(0, limit) : history;
-    }
-
-    // ===== SYSTÈME DE TICKETS =====
-    
-    /**
-     * Ajoute des tickets à l'utilisateur
-     * @param {number} amount - Nombre de tickets à ajouter
-     * @param {string} source - Source des tickets (quiz, share, referral)
-     * @returns {number} Nombre total de tickets
-     */
-    addTickets(amount, source = 'quiz') {
-        if (!Number.isInteger(amount) || amount <= 0) {
-            console.warn('⚠️ Ajout de tickets invalide:', amount);
-            return this.getTickets(); // Retourne le nombre actuel de tickets
-        }
-
-        try {
-            const userData = this.loadUserData();
-            
-            userData.totalTickets += amount;
-            userData.ticketsEarned += amount;
-            
-            // Suivi par source
-            switch (source) {
-                case 'share':
-                    userData.ticketsFromShares += amount;
-                    break;
-                case 'referral':
-                    userData.ticketsFromReferrals += amount;
-                    break;
-                default:
-                    console.warn('⚠️ Source de tickets inconnue:', source);
-                    break;
-            }
-
-            this.saveUserData(userData);
-            
-            // Log de l'activité
-            this.logActivity('tickets_earned', { amount, source });
-            
-            return userData.totalTickets;
-        } catch (error) {
-            console.error('❌ Erreur ajout tickets:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return this.getTickets(); // Retourne le nombre actuel de tickets
-        }
-    }
-
-    /**
-     * Récupère le nombre de tickets de l'utilisateur
-     * @returns {number} Nombre de tickets
-     */
-    getTickets() {
-        const userData = this.loadUserData();
-        return userData.totalTickets || 0;
-    }
-
-    // ===== SYSTÈME DE PARRAINAGE =====
-    
-    /**
-     * Enregistre un nouveau parrainage
-     * @param {string} referrerCode - Code du parrain
-     * @param {string} newUserCode - Code du nouveau utilisateur
-     * @returns {boolean} Succès de l'enregistrement du parrainage
-     */
-    recordReferral(referrerCode, newUserCode) {
-        if (!referrerCode || !newUserCode) {
-            console.warn('⚠️ Codes de parrainage invalides');
-            return false;
-        }
-
-        try {
-            const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
-
-            // Vérification si le parrainage existe déjà
-            if (referrals.some(ref => ref.referrerCode === referrerCode && ref.newUserCode === newUserCode)) {
-                console.warn('⚠️ Ce parrainage existe déjà');
-                return false;
-            }
-            
-            const referral = {
-                id: this.generateId(),
-                referrerCode,
-                newUserCode,
-                date: new Date().toISOString(),
-                status: 'completed'
-            };
-
-            referrals.push(referral);
-            
-            // Limitation du nombre de parrainages
-            if (referrals.length > STORAGE_LIMITS.MAX_REFERRALS) {
-                referrals.shift();
-            }
-
-            this.secureSet(STORAGE_KEYS.REFERRALS, referrals);
-            
-            // Ajout des tickets bonus au parrain si c'est l'utilisateur actuel
-            const userData = this.loadUserData();
-            if (userData.referralCode === referrerCode) {
-                this.addTickets(1, 'referral');
-                userData.referralsCount++;
-                this.saveUserData(userData);
-            }
-            
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur enregistrement parrainage:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Récupère les parrainages de l'utilisateur
-     * @returns {Array} Liste des parrainages
-     */
-    getUserReferrals() {
-        const userData = this.loadUserData();
-        const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
-        
-        return referrals.filter(ref => ref.referrerCode === userData.referralCode);
-    }
-
-    // ===== CLASSEMENT =====
-    
-    /**
-     * Met à jour le classement avec un nouveau score
-     * @param {Object} scoreData - Données du score
-     * @returns {boolean} Succès de la mise à jour du classement
-     */
-    updateLeaderboard(scoreData) {
-        if (!scoreData || !Number.isInteger(scoreData.score)) {
-            console.warn('⚠️ Données de score invalides pour le classement');
-            return false;
-        }
-
-        try {
-            const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
-            const userData = this.loadUserData();
-            
-            const entry = {
-                id: userData.userId,
-                username: userData.username || 'Joueur anonyme',
-                score: scoreData.score,
-                totalQuestions: scoreData.totalQuestions,
-                date: new Date().toISOString(),
-                month: new Date().toISOString().substring(0, 7) // YYYY-MM
-            };
-
-            // Recherche d'une entrée existante pour ce mois
-            const currentMonth = new Date().toISOString().substring(0, 7);
-            const existingIndex = leaderboard.findIndex(
-                item => item.id === userData.userId && item.month === currentMonth
-            );
-
-            if (existingIndex >= 0) {
-                // Mise à jour si meilleur score
-                if (scoreData.score > leaderboard[existingIndex].score) {
-                    leaderboard[existingIndex] = entry;
-                } else {
-                    return false; // Pas de mise à jour car le score n'est pas meilleur
-                }
-            } else {
-                // Nouvelle entrée
-                leaderboard.push(entry);
-            }
-
-            // Tri par score décroissant
-            leaderboard.sort((a, b) => b.score - a.score);
-            
-            // Limitation du nombre d'entrées
-            if (leaderboard.length > STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES) {
-                leaderboard.splice(STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES);
-            }
-
-            this.secureSet(STORAGE_KEYS.LEADERBOARD, leaderboard);
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur mise à jour classement:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Récupère le classement mensuel
-     * @param {number} limit - Nombre d'entrées à retourner
-     * @returns {Array} Classement mensuel
-     */
-    getMonthlyLeaderboard(limit = 10) {
-        const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
-        const currentMonth = new Date().toISOString().substring(0, 7);
-        
-        return leaderboard
-            .filter(entry => entry.month === currentMonth)
-            .slice(0, limit);
-    }
-
-    // ===== PARTICIPATION AU TIRAGE =====
-    
-    /**
-     * Enregistre la participation au tirage mensuel
-     * @param {Object} participationData - Données de participation
-     * @returns {boolean} Succès de l'enregistrement de la participation
-     */
-    recordParticipation(participationData) {
-        if (!participationData || !participationData.username || !participationData.email) {
-            console.warn('⚠️ Données de participation incomplètes');
-            return false;
-        }
-
-        try {
-            const userData = this.loadUserData();
-
-            // Vérification si l'utilisateur a déjà participé ce mois-ci
-            if (userData.hasParticipated && userData.participationDate &&
-                userData.participationDate.substring(0, 7) === new Date().toISOString().substring(0, 7)) {
-                console.warn('⚠️ L\'utilisateur a déjà participé ce mois-ci');
-                return false;
-            }
-
-            const participation = {
-                id: this.generateId(),
-                userId: userData.userId,
-                username: participationData.username,
-                email: participationData.email,
-                date: new Date().toISOString(),
-                month: new Date().toISOString().substring(0, 7),
-                tickets: userData.totalTickets,
-                gdprConsent: true
-            };
-
-            // Sauvegarde des données de participation
-            this.secureSet(STORAGE_KEYS.PARTICIPATION, participation);
-            
-            // Mise à jour des données utilisateur
-            userData.hasParticipated = true;
-            userData.participationDate = participation.date;
-            userData.monthlyParticipations++;
-            userData.username = participationData.username;
-            userData.email = participationData.email;
-            
-            this.saveUserData(userData);
-            
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur enregistrement participation:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Récupère les données de participation
-     * @returns {Object|null} Données de participation
-     */
-    getParticipation() {
-        return this.secureGet(STORAGE_KEYS.PARTICIPATION);
-    }
-
-    // ===== ANALYTICS ET STATISTIQUES =====
-    
-    /**
-     * Enregistre une activité utilisateur
-     * @param {string} action - Type d'action
-     * @param {Object} data - Données associées
-     */
-    logActivity(action, data = {}) {
-        if (!action) {
-            console.warn('⚠️ Action d\'activité non spécifiée');
-            return;
-        }
-
-        try {
-            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
-            
-            const activity = {
-                id: this.generateId(),
-                action,
-                data,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent.substring(0, 100) // Limité pour la vie privée
-            };
-
-            analytics.push(activity);
-            
-            // Limitation de l'historique (30 derniers jours)
-            const thirtyDaysAgo = new Date();
-            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-            
-            const filteredAnalytics = analytics.filter(
-                item => new Date(item.timestamp) > thirtyDaysAgo
-            );
-
-            this.secureSet(STORAGE_KEYS.ANALYTICS, filteredAnalytics);
-        } catch (error) {
-            console.error('❌ Erreur log activité:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
-    }
-
-    /**
-     * Récupère les statistiques d'utilisation
-     * @returns {Object} Statistiques
-     */
-    getAnalytics() {
-        try {
-            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
-            const userData = this.loadUserData();
-            const quizHistory = this.getQuizHistory();
-            
-            const totalScores = quizHistory.reduce((acc, quiz) => acc + quiz.score, 0);
-            const averageScore = quizHistory.length > 0 ? totalScores / quizHistory.length : 0;
-
-            return {
-                totalActivities: analytics.length,
-                totalQuizzes: userData.totalQuizzes,
-                bestScore: userData.bestScore,
-                averageScore: averageScore,
-                perfectScores: userData.perfectScores,
-                totalTickets: userData.totalTickets,
-                referralsCount: userData.referralsCount,
-                accountAge: this.calculateAccountAge(userData.createdAt),
-                lastActivity: userData.lastActiveDate
-            };
-        } catch (error) {
-            console.error('❌ Erreur lors de la récupération des analytics:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return {
-                totalActivities: 0,
-                totalQuizzes: 0,
-                bestScore: 0,
-                averageScore: 0,
-                perfectScores: 0,
-                totalTickets: 0,
-                referralsCount: 0,
-                accountAge: 0,
-                lastActivity: null
-            };
-        }
-    }
-
-    // ===== FONCTIONS UTILITAIRES =====
-    
-    /**
-     * Sauvegarde sécurisée avec gestion d'erreurs
-     * @param {string} key - Clé de stockage
-     * @param {*} data - Données à sauvegarder
-     * @returns {boolean} Succès de la sauvegarde
-     */
-    secureSet(key, data) {
-        if (!this.isSupported) return false;
-        
-        try {
-            const serializedData = JSON.stringify(data);
-            
-            // Vérification de la taille
-            if (serializedData.length > STORAGE_LIMITS.MAX_STORAGE_SIZE) {
-                console.warn('⚠️ Données trop volumineuses pour le stockage');
-                showStorageErrorNotification(STORAGE_MESSAGES.quota);
-                return false;
-            }
-            
-            localStorage.setItem(key, serializedData);
-            return true;
-        } catch (error) {
-            if (error.name === 'QuotaExceededError') {
-                console.warn('⚠️ Quota de stockage dépassé - Nettoyage en cours...');
-                this.performCleanup();
-                // Nouvelle tentative après nettoyage
-                try {
-                    localStorage.setItem(key, JSON.stringify(data));
-                    return true;
-                } catch (retryError) {
-                    console.error('❌ Impossible de sauvegarder après nettoyage:', retryError);
-                    showStorageErrorNotification(STORAGE_MESSAGES.error);
-                    return false;
-                }
-            }
-            console.error('❌ Erreur sauvegarde sécurisée:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Chargement sécurisé avec gestion d'erreurs
-     * @param {string} key - Clé de stockage
-     * @returns {*} Données chargées ou null
-     */
-    secureGet(key) {
-        if (!this.isSupported) return null;
-        
-        try {
-            const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : null;
-        } catch (error) {
-            console.error('❌ Erreur chargement sécurisé:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return null;
-        }
-    }
-
-    /**
-     * Suppression sécurisée
-     * @param {string} key - Clé de stockage
-     * @returns {boolean} Succès de la suppression
-     */
-    secureRemove(key) {
-        if (!this.isSupported) return false;
-        
-        try {
-            localStorage.removeItem(key);
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur suppression sécurisée:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    // ===== GÉNÉRATION D'IDENTIFIANTS =====
-    
-    /**
-     * Génère un ID utilisateur unique
-     * @returns {string} ID utilisateur
-     */
-    generateUserId() {
-        const timestamp = Date.now().toString();
-        const random = Math.random().toString(36).substring(2, 8);
-        return `user_${timestamp}_${random}`;
-    }
-
-    /**
-     * Génère un code de parrainage
-     * @returns {string} Code de parrainage
-     */
-    generateReferralCode() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let result = '';
-        for (let i = 0; i < 8; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return result;
-    }
-
-    /**
-     * Génère un ID générique
-     * @returns {string} ID unique
-     */
-    generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substring(2);
-    }
-
-    // ===== VALIDATION ET MIGRATION =====
-    
-    /**
-     * Valide les données utilisateur
-     * @param {Object} userData - Données à valider
-     * @returns {Object} Données validées
-     */
-    validateUserData(userData) {
-        const validated = { ...userData };
-        
-        // Validation des champs critiques
-        validated.totalTickets = Math.max(0, parseInt(validated.totalTickets) || 0);
-        validated.totalQuizzes = Math.max(0, parseInt(validated.totalQuizzes) || 0);
-        validated.bestScore = Math.max(0, parseInt(validated.bestScore) || 0);
-        validated.referralsCount = Math.max(0, parseInt(validated.referralsCount) || 0);
-        
-        // Validation des chaînes
-        if (validated.username && typeof validated.username === 'string') {
-            validated.username = validated.username.trim().substring(0, 50);
-        }
-        
-        if (validated.email && typeof validated.email === 'string') {
-            validated.email = validated.email.trim().toLowerCase();
-        }
-        
-        return validated;
-    }
-
-    /**
-     * Migre les données vers une nouvelle version
-     * @param {Object} oldData - Anciennes données
-     * @returns {Object} Données migrées
-     */
-    migrateUserData(oldData) {
-        console.log('🔄 Migration des données utilisateur...');
-        
-        const defaultData = this.createDefaultUserData();
-        const migratedData = { ...defaultData, ...oldData };
-        
-        // Mise à jour de la version
-        migratedData.dataVersion = this.version;
-        
-        // Sauvegarde des données migrées
-        this.saveUserData(migratedData);
-        
-        console.log('✅ Migration terminée');
-        return migratedData;
-    }
-
-    // ===== MAINTENANCE ET NETTOYAGE =====
-    
-    /**
-     * Effectue la maintenance périodique
-     */
-    performMaintenance() {
-        try {
-            // Nettoyage des données obsolètes
-            this.cleanupOldData();
-            
-            // Vérification de l'intégrité
-            this.validateDataIntegrity();
-            
-            // Optimisation de l'espace
-            this.optimizeStorage();
-            
-            console.log('🧹 Maintenance du stockage terminée');
-        } catch (error) {
-            console.error('❌ Erreur durant la maintenance:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
-    }
-
-    /**
-     * Nettoyage d'urgence en cas de quota dépassé
-     */
-    performCleanup() {
-        try {
-            console.log('🧹 Nettoyage d\'urgence du stockage...');
-            
-            // Suppression des anciennes analytics
-            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
-            const recentAnalytics = analytics.slice(-50); // Garde seulement les 50 dernières
-            this.secureSet(STORAGE_KEYS.ANALYTICS, recentAnalytics);
-            
-            // Nettoyage de l'historique
-            const history = this.getQuizHistory();
-            const recentHistory = history.slice(0, 50); // Garde seulement les 50 derniers
-            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, recentHistory);
-            
-            console.log('✅ Nettoyage d\'urgence terminé');
-        } catch (error) {
-            console.error('❌ Erreur durant le nettoyage:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
-    }
-
-    // ===== FONCTIONS PRIVÉES SUPPLÉMENTAIRES =====
-    
-    createDefaultSettings() {
-        return {
-            notifications: true,
-            soundEffects: true,
-            animations: true,
-            theme: 'default',
-            language: 'fr'
-        };
-    }
-
-    ensureDataStructures() {
-        // Vérifie et initialise les structures de données nécessaires
-        const keys = [
-            STORAGE_KEYS.USER_DATA,
-            STORAGE_KEYS.QUIZ_HISTORY,
-            STORAGE_KEYS.LEADERBOARD,
-            STORAGE_KEYS.REFERRALS,
-            STORAGE_KEYS.ANALYTICS
-        ];
-
-        keys.forEach(key => {
-            if (!this.secureGet(key)) {
-                const defaultValue = key === STORAGE_KEYS.USER_DATA ? 
-                    this.createDefaultUserData() : [];
-                this.secureSet(key, defaultValue);
-            }
-        });
-    }
-
-    updateUserStats(quizResult) {
-        const userData = this.loadUserData();
-        
-        // Mise à jour des statistiques
-        userData.totalQuizzes++;
-        userData.bestScore = Math.max(userData.bestScore, quizResult.score);
-        
-        if (quizResult.score === quizResult.totalQuestions) {
-            userData.perfectScores++;
-        }
-        
-        // Calcul de la moyenne
-        userData.averageScore = this.calculateAverageScore();
-        
-        this.saveUserData(userData);
-    }
-
-    calculateAverageScore() {
-        const history = this.getQuizHistory();
-        if (history.length === 0) return 0;
-        
-        const totalScore = history.reduce((sum, quiz) => sum + quiz.score, 0);
-        return Math.round((totalScore / history.length) * 100) / 100;
-    }
-
-    calculateAccountAge(createdAt) {
-        const created = new Date(createdAt);
-        const now = new Date();
-        const diffTime = Math.abs(now - created);
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Jours
-    }
-
-    migrateData() {
-        // Logique de migration pour les futures versions
-    }
-
-    cleanupOldData() {
-        // Suppression des données obsolètes (plus de 6 mois)
-    }
-
-    validateDataIntegrity() {
-        // Vérification de l'intégrité des données
-    }
-
-    optimizeStorage() {
-        // Optimisation de l'espace de stockage
-    }
+  },
+  "expansionPlans": {
+    "nextCategories": [
+      "gameplay",
+      "personnages", 
+      "saisons",
+      "maps"
+    ],
+    "targetTotal": 300,
+    "plannedUpdates": [
+      {
+        "version": "1.1",
+        "date": "2025-02-01",
+        "additions": "50 questions gameplay",
+        "categories": ["gameplay"]
+      },
+      {
+        "version": "1.2", 
+        "date": "2025-02-15",
+        "additions": "50 questions personnages + saisons",
+        "categories": ["personnages", "saisons"]
+      }
+    ]
+  }
 }
-
-// ===== MESSAGES D'ERREUR CENTRALISÉS =====
-const STORAGE_MESSAGES = {
-    error: "Erreur de stockage : vos données ne peuvent pas être enregistrées. Certaines fonctionnalités sont limitées.",
-    unavailable: "Le stockage local est désactivé ou indisponible. Certaines fonctionnalités sont limitées.",
-    quota: "Espace de stockage insuffisant. Veuillez libérer de l'espace pour continuer à utiliser le quiz."
-};
-
-// ===== NOTIFICATION ACCESSIBLE ERREUR STOCKAGE =====
-function showStorageErrorNotification(message) {
-    let notif = document.getElementById('storageErrorNotification');
-    if (!notif) {
-        notif = document.createElement('div');
-        notif.id = 'storageErrorNotification';
-        notif.className = 'storage-error-notification';
-        notif.setAttribute('role', 'alert');
-        notif.setAttribute('aria-live', 'assertive');
-        notif.setAttribute('tabindex', '-1');
-        document.body.appendChild(notif);
-    }
-    notif.innerHTML = `
-        <span>${message}</span>
-        <button class="close-storage-error" aria-label="Fermer la notification">&times;</button>
-    `;
-    notif.classList.add('active');
-    notif.focus();
-    function handleEscClose(e) {
-        if (e.key === 'Escape') {
-            notif.classList.remove('active');
-            document.removeEventListener('keydown', handleEscClose);
-        }
-    }
-    document.addEventListener('keydown', handleEscClose);
-    const closeBtn = notif.querySelector('.close-storage-error');
-    if (closeBtn) closeBtn.onclick = () => notif.classList.remove('active');
-    setTimeout(() => {
-        notif.classList.remove('active');
-    }, 8000);
-}
-
-// ===== INSTANCE GLOBALE =====
-const quizStorage = new QuizStorage();
-
-// ===== EXPORT POUR UTILISATION =====
-window.QuizStorage = {
-    // Instance principale
-    storage: quizStorage,
-    
-    // Méthodes rapides pour l'app
-    saveUser: (data) => quizStorage.saveUserData(data),
-    loadUser: () => quizStorage.loadUserData(),
-    saveQuiz: (result) => quizStorage.saveQuizResult(result),
-    addTickets: (amount, source) => quizStorage.addTickets(amount, source),
-    getTickets: () => quizStorage.getTickets(),
-    participate: (data) => quizStorage.recordParticipation(data),
-    referral: (referrer, newUser) => quizStorage.recordReferral(referrer, newUser),
-    leaderboard: (scoreData) => quizStorage.updateLeaderboard(scoreData),
-    getLeaderboard: (limit) => quizStorage.getMonthlyLeaderboard(limit),
-    analytics: () => quizStorage.getAnalytics(),
-    
-    // Utilitaires
-    isSupported: () => quizStorage.isSupported,
-    cleanup: () => quizStorage.performCleanup(),
-    
-    // Pour debug
-    keys: STORAGE_KEYS,
-    limits: STORAGE_LIMITS
-};
-
-console.log('💾 Storage.js chargé! Système de persistance prêt');
