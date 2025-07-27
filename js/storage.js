@@ -1,914 +1,640 @@
-// ===== STORAGE.JS - GESTION LOCALSTORAGE QUIZ CODM =====
+/**
+ * ===== QUIZ CODM - GESTION DU STOCKAGE =====
+ * localStorage pour scores, classements et statistiques utilisateur
+ * Auteur: Coyd WILLZ
+ */
 
-// ===== CONSTANTES DE STOCKAGE =====
+// ===== CONFIGURATION DU STOCKAGE =====
+const STORAGE_CONFIG = {
+    prefix: 'codm_quiz_',
+    maxLeaderboardEntries: 100,
+    maxHistoryEntries: 50,
+    dataVersion: '1.0',
+    autoCleanup: true,
+    backupInterval: 24 * 60 * 60 * 1000 // 24 heures
+};
+
+// ===== CLÉS DE STOCKAGE =====
 const STORAGE_KEYS = {
-    USER_DATA: 'quizCODM_userData',
-    QUIZ_HISTORY: 'quizCODM_quizHistory',
-    LEADERBOARD: 'quizCODM_leaderboard',
-    REFERRALS: 'quizCODM_referrals',
-    SETTINGS: 'quizCODM_settings',
-    PARTICIPATION: 'quizCODM_participation',
-    ANALYTICS: 'quizCODM_analytics'
-};
-
-// Limites de stockage
-const STORAGE_LIMITS = {
-    MAX_QUIZ_HISTORY: 100,
-    MAX_LEADERBOARD_ENTRIES: 50,
-    MAX_REFERRALS: 1000,
-    MAX_STORAGE_SIZE: 5 * 1024 * 1024 // 5MB
-};
-
-// ===== CLASSE PRINCIPALE DE GESTION DU STOCKAGE =====
-class QuizStorage {
-    constructor() {
-        this.isSupported = this.checkStorageSupport();
-        this.version = '1.0.0';
-        this.initializeStorage();
-    }
-
-    // ===== VÉRIFICATION DU SUPPORT =====
-    checkStorageSupport() {
-        try {
-            const test = '__storage_test__';
-            localStorage.setItem(test, test);
-            localStorage.removeItem(test);
-            return true;
-        } catch (error) {
-            console.error('❌ localStorage non supporté:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
-            return false;
-        }
-    }
-
-    // ===== INITIALISATION =====
-    initializeStorage() {
-        if (!this.isSupported) {
-            console.warn('⚠️ Stockage local non disponible - Mode dégradé');
-            showStorageErrorNotification(STORAGE_MESSAGES.unavailable);
-            return;
-        }
-
-        try {
-            // Migration des données si nécessaire
-            this.migrateData();
-            // Initialisation des structures de base
-            this.ensureDataStructures();
-            // Nettoyage périodique
-            this.performMaintenance();
-            console.log('✅ Système de stockage initialisé');
-        } catch (error) {
-            console.error('❌ Erreur initialisation stockage:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
-    }
-
-    // ===== GESTION DES DONNÉES UTILISATEUR =====
+    // Scores et classements
+    leaderboard: 'leaderboard',
+    userBestScore: 'user_best_score',
+    userStats: 'user_stats',
     
-    /**
-     * Initialise les données utilisateur par défaut
-     * @returns {Object} Données utilisateur par défaut
-     */
-    createDefaultUserData() {
-        const now = new Date();
-        return {
-            // Identité
-            userId: this.generateUserId(),
-            username: null,
-            email: null,
-            createdAt: now.toISOString(),
-            lastActiveDate: now.toISOString(),
-            
-            // Quiz
-            lastPlayDate: null,
-            todayScore: 0,
-            totalQuizzes: 0,
+    // Historique des parties
+    gameHistory: 'game_history',
+    dailyStats: 'daily_stats',
+    
+    // Préférences utilisateur
+    userPreferences: 'user_preferences',
+    userName: 'user_name',
+    
+    // Données techniques
+    lastCleanup: 'last_cleanup',
+    dataVersion: 'data_version',
+    installDate: 'install_date'
+};
+
+// ===== STRUCTURE DES DONNÉES =====
+
+/**
+ * Structure d'une entrée de score
+ */
+const ScoreEntry = {
+    id: null,           // ID unique de la partie
+    playerName: '',     // Nom du joueur
+    score: 0,           // Score obtenu (/10)
+    percentage: 0,      // Pourcentage de réussite
+    timeElapsed: 0,     // Temps écoulé en millisecondes
+    date: null,         // Date de la partie
+    questionsCount: 10, // Nombre de questions
+    difficulty: 'mixed', // Difficulté du quiz
+    category: 'mixed'   // Catégorie des questions
+};
+
+/**
+ * Structure des statistiques utilisateur
+ */
+const UserStats = {
+    totalGames: 0,           // Nombre total de parties
+    totalCorrectAnswers: 0,  // Réponses correctes totales
+    totalQuestions: 0,       // Questions totales posées
+    bestScore: 0,            // Meilleur score
+    bestPercentage: 0,       // Meilleur pourcentage
+    averageScore: 0,         // Score moyen
+    averageTime: 0,          // Temps moyen par partie
+    streak: 0,               // Série de bonnes réponses
+    bestStreak: 0,           // Meilleure série
+    playDays: 0,             // Jours de jeu
+    createdAt: null,         // Date de création
+    updatedAt: null          // Dernière mise à jour
+};
+
+// ===== FONCTIONS DE BASE =====
+
+/**
+ * Génère une clé complète avec préfixe
+ * @param {string} key - Clé de base
+ * @returns {string} Clé avec préfixe
+ */
+function getStorageKey(key) {
+    return STORAGE_CONFIG.prefix + key;
+}
+
+/**
+ * Sauvegarde sécurisée dans localStorage
+ * @param {string} key - Clé de stockage
+ * @param {any} data - Données à sauvegarder
+ * @returns {boolean} Succès de l'opération
+ */
+function saveData(key, data) {
+    try {
+        const fullKey = getStorageKey(key);
+        const serializedData = JSON.stringify({
+            data: data,
+            timestamp: Date.now(),
+            version: STORAGE_CONFIG.dataVersion
+        });
+        
+        localStorage.setItem(fullKey, serializedData);
+        console.log(`💾 Données sauvegardées: ${key}`);
+        return true;
+    } catch (error) {
+        console.error(`❌ Erreur sauvegarde ${key}:`, error);
+        
+        // Tentative de nettoyage en cas de quota dépassé
+        if (error.name === 'QuotaExceededError') {
+            performCleanup();
+            // Réessayer une fois
+            try {
+                localStorage.setItem(getStorageKey(key), JSON.stringify(data));
+                return true;
+            } catch (retryError) {
+                console.error('❌ Échec après nettoyage:', retryError);
+            }
+        }
+        return false;
+    }
+}
+
+/**
+ * Chargement sécurisé depuis localStorage
+ * @param {string} key - Clé de stockage
+ * @param {any} defaultValue - Valeur par défaut
+ * @returns {any} Données chargées ou valeur par défaut
+ */
+function loadData(key, defaultValue = null) {
+    try {
+        const fullKey = getStorageKey(key);
+        const item = localStorage.getItem(fullKey);
+        
+        if (!item) {
+            return defaultValue;
+        }
+        
+        const parsed = JSON.parse(item);
+        
+        // Vérifier la structure des données
+        if (parsed && typeof parsed === 'object' && parsed.data !== undefined) {
+            return parsed.data;
+        }
+        
+        // Format ancien ou simple
+        return parsed || defaultValue;
+    } catch (error) {
+        console.error(`❌ Erreur chargement ${key}:`, error);
+        return defaultValue;
+    }
+}
+
+/**
+ * Supprime une clé du localStorage
+ * @param {string} key - Clé à supprimer
+ * @returns {boolean} Succès de l'opération
+ */
+function removeData(key) {
+    try {
+        const fullKey = getStorageKey(key);
+        localStorage.removeItem(fullKey);
+        console.log(`🗑️ Données supprimées: ${key}`);
+        return true;
+    } catch (error) {
+        console.error(`❌ Erreur suppression ${key}:`, error);
+        return false;
+    }
+}
+
+// ===== GESTION DES SCORES =====
+
+/**
+ * Sauvegarde un nouveau score
+ * @param {Object} scoreData - Données du score
+ * @returns {boolean} Succès de l'opération
+ */
+function saveScore(scoreData) {
+    try {
+        // Créer l'entrée de score
+        const scoreEntry = {
+            ...ScoreEntry,
+            ...scoreData,
+            id: Date.now() + Math.random().toString(36).substr(2, 9),
+            date: new Date().toISOString(),
+            percentage: Math.round((scoreData.score / scoreData.questionsCount) * 100)
+        };
+        
+        // Sauvegarder dans l'historique
+        addToGameHistory(scoreEntry);
+        
+        // Mettre à jour le classement
+        updateLeaderboard(scoreEntry);
+        
+        // Mettre à jour les statistiques utilisateur
+        updateUserStats(scoreEntry);
+        
+        // Mettre à jour le meilleur score personnel
+        updatePersonalBest(scoreEntry);
+        
+        console.log('🏆 Score sauvegardé:', scoreEntry);
+        return true;
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde score:', error);
+        return false;
+    }
+}
+
+/**
+ * Ajoute une partie à l'historique
+ * @param {Object} scoreEntry - Entrée de score
+ */
+function addToGameHistory(scoreEntry) {
+    let history = loadData(STORAGE_KEYS.gameHistory, []);
+    
+    // Ajouter la nouvelle partie
+    history.unshift(scoreEntry);
+    
+    // Limiter le nombre d'entrées
+    if (history.length > STORAGE_CONFIG.maxHistoryEntries) {
+        history = history.slice(0, STORAGE_CONFIG.maxHistoryEntries);
+    }
+    
+    saveData(STORAGE_KEYS.gameHistory, history);
+}
+
+/**
+ * Met à jour le classement
+ * @param {Object} scoreEntry - Nouvelle entrée
+ */
+function updateLeaderboard(scoreEntry) {
+    let leaderboard = loadData(STORAGE_KEYS.leaderboard, []);
+    
+    // Ajouter la nouvelle entrée
+    leaderboard.push(scoreEntry);
+    
+    // Trier par score décroissant, puis par temps croissant
+    leaderboard.sort((a, b) => {
+        if (a.score !== b.score) {
+            return b.score - a.score; // Score décroissant
+        }
+        return a.timeElapsed - b.timeElapsed; // Temps croissant
+    });
+    
+    // Limiter le nombre d'entrées
+    if (leaderboard.length > STORAGE_CONFIG.maxLeaderboardEntries) {
+        leaderboard = leaderboard.slice(0, STORAGE_CONFIG.maxLeaderboardEntries);
+    }
+    
+    saveData(STORAGE_KEYS.leaderboard, leaderboard);
+}
+
+/**
+ * Met à jour les statistiques utilisateur
+ * @param {Object} scoreEntry - Nouvelle partie
+ */
+function updateUserStats(scoreEntry) {
+    let stats = loadData(STORAGE_KEYS.userStats, { ...UserStats });
+    
+    // Initialiser si première fois
+    if (!stats.createdAt) {
+        stats.createdAt = new Date().toISOString();
+    }
+    
+    // Mettre à jour les statistiques
+    stats.totalGames++;
+    stats.totalCorrectAnswers += scoreEntry.score;
+    stats.totalQuestions += scoreEntry.questionsCount;
+    
+    // Calculer le nouveau score moyen
+    stats.averageScore = Math.round((stats.totalCorrectAnswers / stats.totalGames) * 100) / 100;
+    
+    // Calculer le nouveau temps moyen
+    const totalTime = (stats.averageTime * (stats.totalGames - 1)) + scoreEntry.timeElapsed;
+    stats.averageTime = Math.round(totalTime / stats.totalGames);
+    
+    // Mettre à jour les records
+    if (scoreEntry.score > stats.bestScore) {
+        stats.bestScore = scoreEntry.score;
+    }
+    
+    if (scoreEntry.percentage > stats.bestPercentage) {
+        stats.bestPercentage = scoreEntry.percentage;
+    }
+    
+    // Mettre à jour la série
+    if (scoreEntry.score === scoreEntry.questionsCount) {
+        stats.streak++;
+        if (stats.streak > stats.bestStreak) {
+            stats.bestStreak = stats.streak;
+        }
+    } else {
+        stats.streak = 0;
+    }
+    
+    // Compter les jours de jeu uniques
+    const today = new Date().toDateString();
+    const lastPlayDate = stats.lastPlayDate;
+    if (lastPlayDate !== today) {
+        stats.playDays++;
+        stats.lastPlayDate = today;
+    }
+    
+    stats.updatedAt = new Date().toISOString();
+    
+    saveData(STORAGE_KEYS.userStats, stats);
+}
+
+/**
+ * Met à jour le meilleur score personnel
+ * @param {Object} scoreEntry - Nouvelle partie
+ */
+function updatePersonalBest(scoreEntry) {
+    const currentBest = loadData(STORAGE_KEYS.userBestScore, null);
+    
+    if (!currentBest || 
+        scoreEntry.score > currentBest.score || 
+        (scoreEntry.score === currentBest.score && scoreEntry.timeElapsed < currentBest.timeElapsed)) {
+        
+        saveData(STORAGE_KEYS.userBestScore, scoreEntry);
+        console.log('🎯 Nouveau record personnel!');
+    }
+}
+
+// ===== FONCTIONS DE RÉCUPÉRATION =====
+
+/**
+ * Récupère le classement complet
+ * @param {number} limit - Nombre d'entrées à retourner
+ * @returns {Array} Classement trié
+ */
+function getLeaderboard(limit = 10) {
+    const leaderboard = loadData(STORAGE_KEYS.leaderboard, []);
+    return leaderboard.slice(0, limit);
+}
+
+/**
+ * Récupère l'historique des parties
+ * @param {number} limit - Nombre d'entrées à retourner
+ * @returns {Array} Historique des parties
+ */
+function getGameHistory(limit = 20) {
+    const history = loadData(STORAGE_KEYS.gameHistory, []);
+    return history.slice(0, limit);
+}
+
+/**
+ * Récupère les statistiques utilisateur
+ * @returns {Object} Statistiques complètes
+ */
+function getUserStats() {
+    return loadData(STORAGE_KEYS.userStats, { ...UserStats });
+}
+
+/**
+ * Récupère le meilleur score personnel
+ * @returns {Object|null} Meilleur score ou null
+ */
+function getPersonalBest() {
+    return loadData(STORAGE_KEYS.userBestScore, null);
+}
+
+/**
+ * Récupère les statistiques du jour
+ * @returns {Object} Stats quotidiennes
+ */
+function getDailyStats() {
+    const today = new Date().toDateString();
+    let dailyStats = loadData(STORAGE_KEYS.dailyStats, {});
+    
+    if (!dailyStats[today]) {
+        dailyStats[today] = {
+            gamesPlayed: 0,
+            totalScore: 0,
             bestScore: 0,
             averageScore: 0,
-            perfectScores: 0,
-            
-            // Système de tickets
-            totalTickets: 0,
-            ticketsEarned: 0,
-            ticketsFromShares: 0,
-            ticketsFromReferrals: 0,
-            
-            // Participation
-            hasParticipated: false,
-            participationDate: null,
-            monthlyParticipations: 0,
-            
-            // Parrainage
-            referralCode: this.generateReferralCode(),
-            referralsCount: 0,
-            referredBy: null,
-            
-            // Préférences
-            settings: this.createDefaultSettings(),
-            
-            // Version des données
-            dataVersion: this.version
+            timeSpent: 0
         };
     }
-
-    /**
-     * Sauvegarde les données utilisateur
-     * @param {Object} userData - Données utilisateur à sauvegarder
-     * @returns {boolean} Succès de la sauvegarde
-     */
-    saveUserData(userData) {
-        try {
-            if (!userData) return false;
-
-            // Validation des données
-            const validatedData = this.validateUserData(userData);
-            
-            // Mise à jour de la date de dernière activité
-            validatedData.lastActiveDate = new Date().toISOString();
-            
-            // Sauvegarde sécurisée
-            return this.secureSet(STORAGE_KEYS.USER_DATA, validatedData);
-        } catch (error) {
-            console.error('❌ Erreur sauvegarde données utilisateur:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Charge les données utilisateur
-     * @returns {Object} Données utilisateur ou données par défaut
-     */
-    loadUserData() {
-        try {
-            const userData = this.secureGet(STORAGE_KEYS.USER_DATA);
-            
-            if (!userData) {
-                const defaultData = this.createDefaultUserData();
-                this.saveUserData(defaultData);
-                return defaultData;
-            }
-
-            // Vérification de la migration nécessaire
-            if (userData.dataVersion !== this.version) {
-                return this.migrateUserData(userData);
-            }
-
-            return userData;
-        } catch (error) {
-            console.error('❌ Erreur chargement données utilisateur:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return this.createDefaultUserData();
-        }
-    }
-
-    // ===== HISTORIQUE DES QUIZ =====
     
-    /**
-     * Sauvegarde un résultat de quiz
-     * @param {Object} quizResult - Résultat du quiz
-     * @returns {boolean} Succès de la sauvegarde
-     */
-    saveQuizResult(quizResult) {
-        try {
-            const history = this.getQuizHistory();
-            const result = {
-                id: this.generateId(),
-                date: new Date().toISOString(),
-                score: quizResult.score,
-                totalQuestions: quizResult.totalQuestions,
-                timeSpent: quizResult.timeSpent || null,
-                questions: quizResult.questions || [],
-                answers: quizResult.answers || [],
-                difficulty: quizResult.difficulty || 'mixed'
-            };
+    return dailyStats[today];
+}
 
-            // Ajout au début de l'historique
-            history.unshift(result);
-            
-            // Limitation du nombre d'entrées
-            if (history.length > STORAGE_LIMITS.MAX_QUIZ_HISTORY) {
-                history.splice(STORAGE_LIMITS.MAX_QUIZ_HISTORY);
-            }
+// ===== GESTION DU NOM UTILISATEUR =====
 
-            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, history);
-            
-            // Mise à jour des statistiques utilisateur
-            this.updateUserStats(result);
-            
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur sauvegarde résultat quiz:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
+/**
+ * Sauvegarde le nom d'utilisateur
+ * @param {string} name - Nom d'utilisateur
+ * @returns {boolean} Succès de l'opération
+ */
+function saveUserName(name) {
+    if (!name || name.trim().length === 0) {
+        return false;
     }
-
-    /**
-     * Récupère l'historique des quiz
-     * @param {number} limit - Nombre de résultats à retourner
-     * @returns {Array} Historique des quiz
-     */
-    getQuizHistory(limit = null) {
-        const history = this.secureGet(STORAGE_KEYS.QUIZ_HISTORY) || [];
-        return limit ? history.slice(0, limit) : history;
-    }
-
-    // ===== SYSTÈME DE TICKETS =====
     
-    /**
-     * Ajoute des tickets à l'utilisateur
-     * @param {number} amount - Nombre de tickets à ajouter
-     * @param {string} source - Source des tickets (quiz, share, referral)
-     * @returns {number} Nombre total de tickets
-     */
-    addTickets(amount, source = 'quiz') {
-        if (!Number.isInteger(amount) || amount <= 0) {
-            console.warn('⚠️ Ajout de tickets invalide:', amount);
-            return this.getTickets(); // Retourne le nombre actuel de tickets
-        }
+    const cleanName = name.trim().substring(0, 20); // Limiter à 20 caractères
+    return saveData(STORAGE_KEYS.userName, cleanName);
+}
 
-        try {
-            const userData = this.loadUserData();
-            
-            userData.totalTickets += amount;
-            userData.ticketsEarned += amount;
-            
-            // Suivi par source
-            switch (source) {
-                case 'share':
-                    userData.ticketsFromShares += amount;
-                    break;
-                case 'referral':
-                    userData.ticketsFromReferrals += amount;
-                    break;
-                default:
-                    console.warn('⚠️ Source de tickets inconnue:', source);
-                    break;
-            }
+/**
+ * Récupère le nom d'utilisateur
+ * @returns {string} Nom d'utilisateur ou nom par défaut
+ */
+function getUserName() {
+    return loadData(STORAGE_KEYS.userName, 'Joueur CODM');
+}
 
-            this.saveUserData(userData);
-            
-            // Log de l'activité
-            this.logActivity('tickets_earned', { amount, source });
-            
-            return userData.totalTickets;
-        } catch (error) {
-            console.error('❌ Erreur ajout tickets:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return this.getTickets(); // Retourne le nombre actuel de tickets
-        }
-    }
+// ===== PRÉFÉRENCES UTILISATEUR =====
 
-    /**
-     * Récupère le nombre de tickets de l'utilisateur
-     * @returns {number} Nombre de tickets
-     */
-    getTickets() {
-        const userData = this.loadUserData();
-        return userData.totalTickets || 0;
-    }
-
-    // ===== SYSTÈME DE PARRAINAGE =====
+/**
+ * Sauvegarde les préférences utilisateur
+ * @param {Object} preferences - Préférences
+ * @returns {boolean} Succès de l'opération
+ */
+function saveUserPreferences(preferences) {
+    const defaultPrefs = {
+        soundEnabled: true,
+        animationsEnabled: true,
+        showExplanations: true,
+        autoNextQuestion: false,
+        theme: 'dark'
+    };
     
-    /**
-     * Enregistre un nouveau parrainage
-     * @param {string} referrerCode - Code du parrain
-     * @param {string} newUserCode - Code du nouveau utilisateur
-     * @returns {boolean} Succès de l'enregistrement du parrainage
-     */
-    recordReferral(referrerCode, newUserCode) {
-        if (!referrerCode || !newUserCode) {
-            console.warn('⚠️ Codes de parrainage invalides');
-            return false;
-        }
+    const mergedPrefs = { ...defaultPrefs, ...preferences };
+    return saveData(STORAGE_KEYS.userPreferences, mergedPrefs);
+}
 
-        try {
-            const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
+/**
+ * Récupère les préférences utilisateur
+ * @returns {Object} Préférences utilisateur
+ */
+function getUserPreferences() {
+    return loadData(STORAGE_KEYS.userPreferences, {
+        soundEnabled: true,
+        animationsEnabled: true,
+        showExplanations: true,
+        autoNextQuestion: false,
+        theme: 'dark'
+    });
+}
 
-            // Vérification si le parrainage existe déjà
-            if (referrals.some(ref => ref.referrerCode === referrerCode && ref.newUserCode === newUserCode)) {
-                console.warn('⚠️ Ce parrainage existe déjà');
-                return false;
-            }
-            
-            const referral = {
-                id: this.generateId(),
-                referrerCode,
-                newUserCode,
-                date: new Date().toISOString(),
-                status: 'completed'
-            };
+// ===== UTILITAIRES ET MAINTENANCE =====
 
-            referrals.push(referral);
-            
-            // Limitation du nombre de parrainages
-            if (referrals.length > STORAGE_LIMITS.MAX_REFERRALS) {
-                referrals.shift();
-            }
-
-            this.secureSet(STORAGE_KEYS.REFERRALS, referrals);
-            
-            // Ajout des tickets bonus au parrain si c'est l'utilisateur actuel
-            const userData = this.loadUserData();
-            if (userData.referralCode === referrerCode) {
-                this.addTickets(1, 'referral');
-                userData.referralsCount++;
-                this.saveUserData(userData);
-            }
-            
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur enregistrement parrainage:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Récupère les parrainages de l'utilisateur
-     * @returns {Array} Liste des parrainages
-     */
-    getUserReferrals() {
-        const userData = this.loadUserData();
-        const referrals = this.secureGet(STORAGE_KEYS.REFERRALS) || [];
+/**
+ * Nettoie les données anciennes
+ */
+function performCleanup() {
+    try {
+        console.log('🧹 Nettoyage des données...');
         
-        return referrals.filter(ref => ref.referrerCode === userData.referralCode);
-    }
-
-    // ===== CLASSEMENT =====
-    
-    /**
-     * Met à jour le classement avec un nouveau score
-     * @param {Object} scoreData - Données du score
-     * @returns {boolean} Succès de la mise à jour du classement
-     */
-    updateLeaderboard(scoreData) {
-        if (!scoreData || !Number.isInteger(scoreData.score)) {
-            console.warn('⚠️ Données de score invalides pour le classement');
-            return false;
-        }
-
-        try {
-            const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
-            const userData = this.loadUserData();
-            
-            const entry = {
-                id: userData.userId,
-                username: userData.username || 'Joueur anonyme',
-                score: scoreData.score,
-                totalQuestions: scoreData.totalQuestions,
-                date: new Date().toISOString(),
-                month: new Date().toISOString().substring(0, 7) // YYYY-MM
-            };
-
-            // Recherche d'une entrée existante pour ce mois
-            const currentMonth = new Date().toISOString().substring(0, 7);
-            const existingIndex = leaderboard.findIndex(
-                item => item.id === userData.userId && item.month === currentMonth
-            );
-
-            if (existingIndex >= 0) {
-                // Mise à jour si meilleur score
-                if (scoreData.score > leaderboard[existingIndex].score) {
-                    leaderboard[existingIndex] = entry;
-                } else {
-                    return false; // Pas de mise à jour car le score n'est pas meilleur
-                }
-            } else {
-                // Nouvelle entrée
-                leaderboard.push(entry);
-            }
-
-            // Tri par score décroissant
-            leaderboard.sort((a, b) => b.score - a.score);
-            
-            // Limitation du nombre d'entrées
-            if (leaderboard.length > STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES) {
-                leaderboard.splice(STORAGE_LIMITS.MAX_LEADERBOARD_ENTRIES);
-            }
-
-            this.secureSet(STORAGE_KEYS.LEADERBOARD, leaderboard);
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur mise à jour classement:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Récupère le classement mensuel
-     * @param {number} limit - Nombre d'entrées à retourner
-     * @returns {Array} Classement mensuel
-     */
-    getMonthlyLeaderboard(limit = 10) {
-        const leaderboard = this.secureGet(STORAGE_KEYS.LEADERBOARD) || [];
-        const currentMonth = new Date().toISOString().substring(0, 7);
+        // Nettoyer l'historique ancien (> 30 jours)
+        const cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - 30);
         
-        return leaderboard
-            .filter(entry => entry.month === currentMonth)
-            .slice(0, limit);
-    }
-
-    // ===== PARTICIPATION AU TIRAGE =====
-    
-    /**
-     * Enregistre la participation au tirage mensuel
-     * @param {Object} participationData - Données de participation
-     * @returns {boolean} Succès de l'enregistrement de la participation
-     */
-    recordParticipation(participationData) {
-        if (!participationData || !participationData.username || !participationData.email) {
-            console.warn('⚠️ Données de participation incomplètes');
-            return false;
-        }
-
-        try {
-            const userData = this.loadUserData();
-
-            // Vérification si l'utilisateur a déjà participé ce mois-ci
-            if (userData.hasParticipated && userData.participationDate &&
-                userData.participationDate.substring(0, 7) === new Date().toISOString().substring(0, 7)) {
-                console.warn('⚠️ L\'utilisateur a déjà participé ce mois-ci');
-                return false;
-            }
-
-            const participation = {
-                id: this.generateId(),
-                userId: userData.userId,
-                username: participationData.username,
-                email: participationData.email,
-                date: new Date().toISOString(),
-                month: new Date().toISOString().substring(0, 7),
-                tickets: userData.totalTickets,
-                gdprConsent: true
-            };
-
-            // Sauvegarde des données de participation
-            this.secureSet(STORAGE_KEYS.PARTICIPATION, participation);
-            
-            // Mise à jour des données utilisateur
-            userData.hasParticipated = true;
-            userData.participationDate = participation.date;
-            userData.monthlyParticipations++;
-            userData.username = participationData.username;
-            userData.email = participationData.email;
-            
-            this.saveUserData(userData);
-            
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur enregistrement participation:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Récupère les données de participation
-     * @returns {Object|null} Données de participation
-     */
-    getParticipation() {
-        return this.secureGet(STORAGE_KEYS.PARTICIPATION);
-    }
-
-    // ===== ANALYTICS ET STATISTIQUES =====
-    
-    /**
-     * Enregistre une activité utilisateur
-     * @param {string} action - Type d'action
-     * @param {Object} data - Données associées
-     */
-    logActivity(action, data = {}) {
-        if (!action) {
-            console.warn('⚠️ Action d\'activité non spécifiée');
-            return;
-        }
-
-        try {
-            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
-            
-            const activity = {
-                id: this.generateId(),
-                action,
-                data,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent.substring(0, 100) // Limité pour la vie privée
-            };
-
-            analytics.push(activity);
-            
-            // Limitation de l'historique (30 derniers jours)
-            const thirtyDaysAgo = new Date();
-            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-            
-            const filteredAnalytics = analytics.filter(
-                item => new Date(item.timestamp) > thirtyDaysAgo
-            );
-
-            this.secureSet(STORAGE_KEYS.ANALYTICS, filteredAnalytics);
-        } catch (error) {
-            console.error('❌ Erreur log activité:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
-    }
-
-    /**
-     * Récupère les statistiques d'utilisation
-     * @returns {Object} Statistiques
-     */
-    getAnalytics() {
-        try {
-            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
-            const userData = this.loadUserData();
-            const quizHistory = this.getQuizHistory();
-            
-            const totalScores = quizHistory.reduce((acc, quiz) => acc + quiz.score, 0);
-            const averageScore = quizHistory.length > 0 ? totalScores / quizHistory.length : 0;
-
-            return {
-                totalActivities: analytics.length,
-                totalQuizzes: userData.totalQuizzes,
-                bestScore: userData.bestScore,
-                averageScore: averageScore,
-                perfectScores: userData.perfectScores,
-                totalTickets: userData.totalTickets,
-                referralsCount: userData.referralsCount,
-                accountAge: this.calculateAccountAge(userData.createdAt),
-                lastActivity: userData.lastActiveDate
-            };
-        } catch (error) {
-            console.error('❌ Erreur lors de la récupération des analytics:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return {
-                totalActivities: 0,
-                totalQuizzes: 0,
-                bestScore: 0,
-                averageScore: 0,
-                perfectScores: 0,
-                totalTickets: 0,
-                referralsCount: 0,
-                accountAge: 0,
-                lastActivity: null
-            };
-        }
-    }
-
-    // ===== FONCTIONS UTILITAIRES =====
-    
-    /**
-     * Sauvegarde sécurisée avec gestion d'erreurs
-     * @param {string} key - Clé de stockage
-     * @param {*} data - Données à sauvegarder
-     * @returns {boolean} Succès de la sauvegarde
-     */
-    secureSet(key, data) {
-        if (!this.isSupported) return false;
+        let history = loadData(STORAGE_KEYS.gameHistory, []);
+        history = history.filter(entry => new Date(entry.date) > cutoffDate);
+        saveData(STORAGE_KEYS.gameHistory, history);
         
-        try {
-            const serializedData = JSON.stringify(data);
-            
-            // Vérification de la taille
-            if (serializedData.length > STORAGE_LIMITS.MAX_STORAGE_SIZE) {
-                console.warn('⚠️ Données trop volumineuses pour le stockage');
-                showStorageErrorNotification(STORAGE_MESSAGES.quota);
-                return false;
-            }
-            
-            localStorage.setItem(key, serializedData);
-            return true;
-        } catch (error) {
-            if (error.name === 'QuotaExceededError') {
-                console.warn('⚠️ Quota de stockage dépassé - Nettoyage en cours...');
-                this.performCleanup();
-                // Nouvelle tentative après nettoyage
-                try {
-                    localStorage.setItem(key, JSON.stringify(data));
-                    return true;
-                } catch (retryError) {
-                    console.error('❌ Impossible de sauvegarder après nettoyage:', retryError);
-                    showStorageErrorNotification(STORAGE_MESSAGES.error);
-                    return false;
-                }
-            }
-            console.error('❌ Erreur sauvegarde sécurisée:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    /**
-     * Chargement sécurisé avec gestion d'erreurs
-     * @param {string} key - Clé de stockage
-     * @returns {*} Données chargées ou null
-     */
-    secureGet(key) {
-        if (!this.isSupported) return null;
+        // Nettoyer les stats quotidiennes anciennes (> 7 jours)
+        const weekCutoff = new Date();
+        weekCutoff.setDate(weekCutoff.getDate() - 7);
         
-        try {
-            const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : null;
-        } catch (error) {
-            console.error('❌ Erreur chargement sécurisé:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return null;
-        }
-    }
-
-    /**
-     * Suppression sécurisée
-     * @param {string} key - Clé de stockage
-     * @returns {boolean} Succès de la suppression
-     */
-    secureRemove(key) {
-        if (!this.isSupported) return false;
-        
-        try {
-            localStorage.removeItem(key);
-            return true;
-        } catch (error) {
-            console.error('❌ Erreur suppression sécurisée:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-            return false;
-        }
-    }
-
-    // ===== GÉNÉRATION D'IDENTIFIANTS =====
-    
-    /**
-     * Génère un ID utilisateur unique
-     * @returns {string} ID utilisateur
-     */
-    generateUserId() {
-        const timestamp = Date.now().toString();
-        const random = Math.random().toString(36).substring(2, 8);
-        return `user_${timestamp}_${random}`;
-    }
-
-    /**
-     * Génère un code de parrainage
-     * @returns {string} Code de parrainage
-     */
-    generateReferralCode() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let result = '';
-        for (let i = 0; i < 8; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return result;
-    }
-
-    /**
-     * Génère un ID générique
-     * @returns {string} ID unique
-     */
-    generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substring(2);
-    }
-
-    // ===== VALIDATION ET MIGRATION =====
-    
-    /**
-     * Valide les données utilisateur
-     * @param {Object} userData - Données à valider
-     * @returns {Object} Données validées
-     */
-    validateUserData(userData) {
-        const validated = { ...userData };
-        
-        // Validation des champs critiques
-        validated.totalTickets = Math.max(0, parseInt(validated.totalTickets) || 0);
-        validated.totalQuizzes = Math.max(0, parseInt(validated.totalQuizzes) || 0);
-        validated.bestScore = Math.max(0, parseInt(validated.bestScore) || 0);
-        validated.referralsCount = Math.max(0, parseInt(validated.referralsCount) || 0);
-        
-        // Validation des chaînes
-        if (validated.username && typeof validated.username === 'string') {
-            validated.username = validated.username.trim().substring(0, 50);
-        }
-        
-        if (validated.email && typeof validated.email === 'string') {
-            validated.email = validated.email.trim().toLowerCase();
-        }
-        
-        return validated;
-    }
-
-    /**
-     * Migre les données vers une nouvelle version
-     * @param {Object} oldData - Anciennes données
-     * @returns {Object} Données migrées
-     */
-    migrateUserData(oldData) {
-        console.log('🔄 Migration des données utilisateur...');
-        
-        const defaultData = this.createDefaultUserData();
-        const migratedData = { ...defaultData, ...oldData };
-        
-        // Mise à jour de la version
-        migratedData.dataVersion = this.version;
-        
-        // Sauvegarde des données migrées
-        this.saveUserData(migratedData);
-        
-        console.log('✅ Migration terminée');
-        return migratedData;
-    }
-
-    // ===== MAINTENANCE ET NETTOYAGE =====
-    
-    /**
-     * Effectue la maintenance périodique
-     */
-    performMaintenance() {
-        try {
-            // Nettoyage des données obsolètes
-            this.cleanupOldData();
-            
-            // Vérification de l'intégrité
-            this.validateDataIntegrity();
-            
-            // Optimisation de l'espace
-            this.optimizeStorage();
-            
-            console.log('🧹 Maintenance du stockage terminée');
-        } catch (error) {
-            console.error('❌ Erreur durant la maintenance:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
-    }
-
-    /**
-     * Nettoyage d'urgence en cas de quota dépassé
-     */
-    performCleanup() {
-        try {
-            console.log('🧹 Nettoyage d\'urgence du stockage...');
-            
-            // Suppression des anciennes analytics
-            const analytics = this.secureGet(STORAGE_KEYS.ANALYTICS) || [];
-            const recentAnalytics = analytics.slice(-50); // Garde seulement les 50 dernières
-            this.secureSet(STORAGE_KEYS.ANALYTICS, recentAnalytics);
-            
-            // Nettoyage de l'historique
-            const history = this.getQuizHistory();
-            const recentHistory = history.slice(0, 50); // Garde seulement les 50 derniers
-            this.secureSet(STORAGE_KEYS.QUIZ_HISTORY, recentHistory);
-            
-            console.log('✅ Nettoyage d\'urgence terminé');
-        } catch (error) {
-            console.error('❌ Erreur durant le nettoyage:', error);
-            showStorageErrorNotification(STORAGE_MESSAGES.error);
-        }
-    }
-
-    // ===== FONCTIONS PRIVÉES SUPPLÉMENTAIRES =====
-    
-    createDefaultSettings() {
-        return {
-            notifications: true,
-            soundEffects: true,
-            animations: true,
-            theme: 'default',
-            language: 'fr'
-        };
-    }
-
-    ensureDataStructures() {
-        // Vérifie et initialise les structures de données nécessaires
-        const keys = [
-            STORAGE_KEYS.USER_DATA,
-            STORAGE_KEYS.QUIZ_HISTORY,
-            STORAGE_KEYS.LEADERBOARD,
-            STORAGE_KEYS.REFERRALS,
-            STORAGE_KEYS.ANALYTICS
-        ];
-
-        keys.forEach(key => {
-            if (!this.secureGet(key)) {
-                const defaultValue = key === STORAGE_KEYS.USER_DATA ? 
-                    this.createDefaultUserData() : [];
-                this.secureSet(key, defaultValue);
+        let dailyStats = loadData(STORAGE_KEYS.dailyStats, {});
+        Object.keys(dailyStats).forEach(date => {
+            if (new Date(date) < weekCutoff) {
+                delete dailyStats[date];
             }
         });
-    }
-
-    updateUserStats(quizResult) {
-        const userData = this.loadUserData();
+        saveData(STORAGE_KEYS.dailyStats, dailyStats);
         
-        // Mise à jour des statistiques
-        userData.totalQuizzes++;
-        userData.bestScore = Math.max(userData.bestScore, quizResult.score);
+        // Marquer le dernier nettoyage
+        saveData(STORAGE_KEYS.lastCleanup, Date.now());
         
-        if (quizResult.score === quizResult.totalQuestions) {
-            userData.perfectScores++;
-        }
-        
-        // Calcul de la moyenne
-        userData.averageScore = this.calculateAverageScore();
-        
-        this.saveUserData(userData);
-    }
-
-    calculateAverageScore() {
-        const history = this.getQuizHistory();
-        if (history.length === 0) return 0;
-        
-        const totalScore = history.reduce((sum, quiz) => sum + quiz.score, 0);
-        return Math.round((totalScore / history.length) * 100) / 100;
-    }
-
-    calculateAccountAge(createdAt) {
-        const created = new Date(createdAt);
-        const now = new Date();
-        const diffTime = Math.abs(now - created);
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Jours
-    }
-
-    migrateData() {
-        // Logique de migration pour les futures versions
-    }
-
-    cleanupOldData() {
-        // Suppression des données obsolètes (plus de 6 mois)
-    }
-
-    validateDataIntegrity() {
-        // Vérification de l'intégrité des données
-    }
-
-    optimizeStorage() {
-        // Optimisation de l'espace de stockage
+        console.log('✅ Nettoyage terminé');
+    } catch (error) {
+        console.error('❌ Erreur lors du nettoyage:', error);
     }
 }
 
-// ===== MESSAGES D'ERREUR CENTRALISÉS =====
-const STORAGE_MESSAGES = {
-    error: "Erreur de stockage : vos données ne peuvent pas être enregistrées. Certaines fonctionnalités sont limitées.",
-    unavailable: "Le stockage local est désactivé ou indisponible. Certaines fonctionnalités sont limitées.",
-    quota: "Espace de stockage insuffisant. Veuillez libérer de l'espace pour continuer à utiliser le quiz."
-};
-
-// ===== NOTIFICATION ACCESSIBLE ERREUR STOCKAGE =====
-function showStorageErrorNotification(message) {
-    let notif = document.getElementById('storageErrorNotification');
-    if (!notif) {
-        notif = document.createElement('div');
-        notif.id = 'storageErrorNotification';
-        notif.className = 'storage-error-notification';
-        notif.setAttribute('role', 'alert');
-        notif.setAttribute('aria-live', 'assertive');
-        notif.setAttribute('tabindex', '-1');
-        document.body.appendChild(notif);
+/**
+ * Vérifie si un nettoyage est nécessaire
+ */
+function checkCleanupNeeded() {
+    const lastCleanup = loadData(STORAGE_KEYS.lastCleanup, 0);
+    const now = Date.now();
+    
+    if (now - lastCleanup > STORAGE_CONFIG.backupInterval) {
+        performCleanup();
     }
-    notif.innerHTML = `
-        <span>${message}</span>
-        <button class="close-storage-error" aria-label="Fermer la notification">&times;</button>
-    `;
-    notif.classList.add('active');
-    notif.focus();
-    function handleEscClose(e) {
-        if (e.key === 'Escape') {
-            notif.classList.remove('active');
-            document.removeEventListener('keydown', handleEscClose);
-        }
-    }
-    document.addEventListener('keydown', handleEscClose);
-    const closeBtn = notif.querySelector('.close-storage-error');
-    if (closeBtn) closeBtn.onclick = () => notif.classList.remove('active');
-    setTimeout(() => {
-        notif.classList.remove('active');
-    }, 8000);
 }
 
-// ===== INSTANCE GLOBALE =====
-const quizStorage = new QuizStorage();
+/**
+ * Exporte toutes les données utilisateur
+ * @returns {Object} Données exportées
+ */
+function exportUserData() {
+    const exportData = {
+        version: STORAGE_CONFIG.dataVersion,
+        exportDate: new Date().toISOString(),
+        data: {}
+    };
+    
+    // Exporter toutes les données importantes
+    Object.values(STORAGE_KEYS).forEach(key => {
+        const data = loadData(key, null);
+        if (data !== null) {
+            exportData.data[key] = data;
+        }
+    });
+    
+    return exportData;
+}
 
-// ===== EXPORT POUR UTILISATION =====
+/**
+ * Importe des données utilisateur
+ * @param {Object} importData - Données à importer
+ * @returns {boolean} Succès de l'importation
+ */
+function importUserData(importData) {
+    try {
+        if (!importData.data || typeof importData.data !== 'object') {
+            throw new Error('Format de données invalide');
+        }
+        
+        // Importer toutes les données
+        Object.entries(importData.data).forEach(([key, value]) => {
+            saveData(key, value);
+        });
+        
+        console.log('✅ Données importées avec succès');
+        return true;
+    } catch (error) {
+        console.error('❌ Erreur lors de l\'importation:', error);
+        return false;
+    }
+}
+
+/**
+ * Remet à zéro toutes les données
+ * @param {boolean} confirm - Confirmation de suppression
+ * @returns {boolean} Succès de l'opération
+ */
+function resetAllData(confirm = false) {
+    if (!confirm) {
+        console.warn('⚠️ Confirmation requise pour reset');
+        return false;
+    }
+    
+    try {
+        // Supprimer toutes les clés
+        Object.values(STORAGE_KEYS).forEach(key => {
+            removeData(key);
+        });
+        
+        // Réinitialiser la date d'installation
+        saveData(STORAGE_KEYS.installDate, new Date().toISOString());
+        
+        console.log('🔄 Toutes les données ont été supprimées');
+        return true;
+    } catch (error) {
+        console.error('❌ Erreur lors du reset:', error);
+        return false;
+    }
+}
+
+// ===== EXPOSITION GLOBALE =====
+
+// Export pour utilisation dans d'autres fichiers
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        // Fonctions principales
+        saveScore,
+        getLeaderboard,
+        getGameHistory,
+        getUserStats,
+        getPersonalBest,
+        getDailyStats,
+        
+        // Gestion utilisateur
+        saveUserName,
+        getUserName,
+        saveUserPreferences,
+        getUserPreferences,
+        
+        // Maintenance
+        performCleanup,
+        exportUserData,
+        importUserData,
+        resetAllData,
+        
+        // Base
+        saveData,
+        loadData,
+        removeData
+    };
+}
+
+// Rendre disponible globalement
 window.QuizStorage = {
-    // Instance principale
-    storage: quizStorage,
-    
-    // Méthodes rapides pour l'app
-    saveUser: (data) => quizStorage.saveUserData(data),
-    loadUser: () => quizStorage.loadUserData(),
-    saveQuiz: (result) => quizStorage.saveQuizResult(result),
-    addTickets: (amount, source) => quizStorage.addTickets(amount, source),
-    getTickets: () => quizStorage.getTickets(),
-    participate: (data) => quizStorage.recordParticipation(data),
-    referral: (referrer, newUser) => quizStorage.recordReferral(referrer, newUser),
-    leaderboard: (scoreData) => quizStorage.updateLeaderboard(scoreData),
-    getLeaderboard: (limit) => quizStorage.getMonthlyLeaderboard(limit),
-    analytics: () => quizStorage.getAnalytics(),
-    
-    // Utilitaires
-    isSupported: () => quizStorage.isSupported,
-    cleanup: () => quizStorage.performCleanup(),
-    
-    // Pour debug
-    keys: STORAGE_KEYS,
-    limits: STORAGE_LIMITS
+    saveScore,
+    getLeaderboard,
+    getGameHistory,
+    getUserStats,
+    getPersonalBest,
+    getDailyStats,
+    saveUserName,
+    getUserName,
+    saveUserPreferences,
+    getUserPreferences,
+    exportUserData,
+    importUserData,
+    resetAllData
 };
 
-console.log('💾 Storage.js chargé! Système de persistance prêt');
+// ===== INITIALISATION =====
+
+// Initialiser le stockage au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('💾 Initialisation du stockage...');
+    
+    // Vérifier si c'est la première visite
+    const installDate = loadData(STORAGE_KEYS.installDate, null);
+    if (!installDate) {
+        saveData(STORAGE_KEYS.installDate, new Date().toISOString());
+        console.log('🎉 Première visite détectée');
+    }
+    
+    // Vérifier si nettoyage nécessaire
+    if (STORAGE_CONFIG.autoCleanup) {
+        checkCleanupNeeded();
+    }
+    
+    // Afficher les statistiques de stockage
+    const stats = getUserStats();
+    console.log('📊 Stats utilisateur:', {
+        totalGames: stats.totalGames,
+        bestScore: stats.bestScore,
+        averageScore: stats.averageScore
+    });
+    
+    console.log('✅ Stockage initialisé');
+});
+
+console.log('💾 Quiz CODM - Système de stockage chargé');
