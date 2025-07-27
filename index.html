@@ -3,460 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz CODM - Teste tes connaissances Call of Duty Mobile</title>
-    <meta name="description" content="Quiz quotidien Call of Duty Mobile. Teste tes connaissances et gagne des cartes cadeaux ! 10 gagnants par mois.">
-
-    <!-- Mots-clés pour le SEO (à adapter) -->
-    <meta name="keywords" content="quiz, codm, call of duty mobile, jeu, concours, cartes cadeaux, multijoueur">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://coyd111.github.io/quiz-codm">
-    <meta property="og:title" content="Quiz CODM - Teste tes connaissances Call of Duty Mobile">
-    <meta property="og:description" content="Quiz quotidien Call of Duty Mobile. Teste tes connaissances et gagne des cartes cadeaux ! 11 gagnants par mois.">
-    <meta property="og:image" content="https://img.freepik.com/vecteurs-libre/design-arriere-plan-symbole-faq-moderne-elegant-pour-resoudre-problemes_1017-58258.jpg?semt=ais_hybrid&w=740">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://coyd111.github.io/quiz-codm">
-    <meta property="twitter:title" content="Quiz CODM - Teste tes connaissances Call of Duty Mobile">
-    <meta property="twitter:description" content="Quiz quotidien Call of Duty Mobile. Teste tes connaissances et gagne des cartes cadeaux ! 10 gagnants par mois.">
-    <meta property="twitter:image" content="https://img.freepik.com/vecteurs-libre/design-arriere-plan-symbole-faq-moderne-elegant-pour-resoudre-problemes_1017-58258.jpg?semt=ais_hybrid&w=740">
-    
+    <meta name="description" content="Quiz CODM - Quiz quotidien gratuit sur Call of Duty Mobile. Testez vos connaissances et défiez vos amis !">
+    <meta name="keywords" content="Call of Duty Mobile, quiz, CODM, gaming, gratuit">
+    <title>Quiz CODM - Quiz Call of Duty Mobile Gratuit</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="...INTEGRITE..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/responsive.css">
-    <style>
-    /* Styles additionnels pour accessibilité et badges */
-    .accessible-notification {
-        position: fixed;
-        top: 12px;
-        left: 50%;
-        transform: translateX(-50%);
-        min-width: 260px;
-        max-width: 90vw;
-        background: #181818;
-        color: #fff;
-        font-size: 1.1em;
-        border-radius: 8px;
-        box-shadow: 0 4px 14px #000b,0 0 0 2px #ffe600;
-        z-index: 2000;
-        padding: 16px 32px 16px 24px;
-        outline: none;
-        display: none;
-        opacity: 0.98;
-        transition: opacity 0.3s;
-    }
-    .confirmation-message {
-        background: #0a3c1b;
-        color: #fff;
-        border-radius: 6px;
-        margin-bottom: 12px;
-        padding: 10px 18px;
-        font-weight: 500;
-        box-shadow: 0 2px 8px #0003;
-        display: none;
-    }
-    @media (max-width: 600px) {
-        .user-stats-header {
-            font-size: 0.95em;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .accessible-notification {
-            padding: 10px 12px;
-            font-size: 1em;
-        }
-    }
-    </style>
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Zone de notification accessible -->
-    <div id="globalNotification" class="accessible-notification" role="alert" aria-live="assertive" tabindex="-1" style="display:none"></div>
-    <!-- Accessibility Skip Link -->
-    <a href="#main" class="skip-link">Aller au contenu principal</a>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-    <a href="/" class="logo">
-        <i class="fas fa-gamepad"></i>
-        <span>Quiz CODM</span>
-    </a>
-    <div class="user-stats-header" style="z-index:1002; position:relative;">
-    <!-- Styles renforcés pour badges -->
-        <span class="score-badge" title="Score du jour" style="color:#fff; text-shadow:0 0 8px #ffe600,0 0 4px #fff; font-weight:700; font-size:1.2em; background:rgba(0,0,0,0.65); border-radius:6px; padding:3px 9px; margin-right:8px;">
-    <i class="fas fa-star"></i>
-    <span id="todayScoreHeader">0/10</span>
-</span>
-<span class="tickets-badge" title="Tickets cumulés pour le tirage" style="color:#fff; text-shadow:0 0 8px #00ffb0,0 0 4px #fff; font-weight:700; font-size:1.2em; background:rgba(0,0,0,0.65); border-radius:6px; padding:3px 9px;">
-    <i class="fas fa-ticket-alt"></i>
-    <span id="totalTicketsHeader">0</span>
-</span>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader"></div>
+        <p>Chargement du quiz CODM...</p>
     </div>
-    <button class="burger-menu" aria-label="Ouvrir le menu" aria-expanded="false" data-target="mobileNav">
-        <span class="burger-line"></span>
-        <span class="burger-line"></span>
-        <span class="burger-line"></span>
-    </button>
-    <nav class="nav">
-        <a href="#quiz" class="nav-link">Quiz</a>
-        <a href="#leaderboard" class="nav-link">Classement</a>
-        <a href="#prizes" class="nav-link">Tirages</a>
-    </nav>
-</div>
-        </div>
-        <!-- Mobile Navigation -->
-        <div class="mobile-overlay" data-target="mobileNav"></div>
-        <nav class="mobile-nav" id="mobileNav">
-            <div class="mobile-nav-content">
-                <div class="mobile-nav-links">
-                    <a href="#quiz" class="mobile-nav-link"><i class="fas fa-question-circle"></i>Quiz</a>
-                    <a href="#leaderboard" class="mobile-nav-link"><i class="fas fa-trophy"></i>Classement</a>
-                    <a href="#prizes" class="mobile-nav-link"><i class="fas fa-gift"></i>Tirages</a>
-                    <a href="pages/mentions-legales.html" class="mobile-nav-link"><i class="fas fa-file-alt"></i>Mentions légales</a>
-                    <a href="pages/politique-confidentialite.html" class="mobile-nav-link"><i class="fas fa-shield-alt"></i>Confidentialité</a>
-                    <a href="mailto:Coyd2976@gmail.com" class="mobile-nav-link"><i class="fas fa-envelope"></i>Contact</a>
-                </div>
-            </div>
-        </nav>
-    </header>
 
-
-
-    <!-- Main Content -->
-    <main class="main" id="main">
-        <div class="container">
-            
-            <!-- Welcome Section -->
-            <section class="welcome-section" id="welcome">
-                <div class="welcome-content">
-                    <h1 class="main-title">
-                        <i class="fas fa-trophy"></i>
-                        Quiz Call of Duty Mobile
-                    </h1>
-                    <p class="main-subtitle">
-                        Teste tes connaissances et gagne des cartes cadeaux !<br>
-                        <strong>10 gagnants × 5€ chaque mois</strong>
-                    </p>
-                    <div class="stats">
+    <!-- Main Container -->
+    <div id="app" class="app-container">
+        
+        <!-- Home Screen -->
+        <section id="home-screen" class="screen active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title">Quiz CODM</h1>
+                    <p class="hero-subtitle">Quiz quotidien gratuit sur Call of Duty Mobile</p>
+                    <p class="hero-description">Testez vos connaissances sur l'univers CODM : armes, cartes, personnages, modes de jeu et bien plus !</p>
+                    
+                    <div class="hero-stats">
                         <div class="stat-item">
-                            <span class="stat-number" id="totalPlayers">1,247</span>
-                            <span class="stat-label">Joueurs</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">50€</span>
-                            <span class="stat-label">Prix mensuel</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" id="questionsCount">250</span>
+                            <span class="stat-number">10</span>
                             <span class="stat-label">Questions</span>
                         </div>
+                        <div class="stat-item">
+                            <span class="stat-number">300+</span>
+                            <span class="stat-label">Questions disponibles</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Gratuit</span>
+                        </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Quiz Section -->
-            <section class="quiz-section" id="quiz">
-                <div class="quiz-container">
                     
-                    <!-- Quiz Not Started -->
-                    <div class="quiz-start" id="quizStart">
-                        <div class="quiz-card">
-                            <div class="quiz-header">
-                                <h2><i class="fas fa-play-circle"></i> Prêt pour le défi ?</h2>
-                                <p>10 questions sur Call of Duty Mobile t'attendent !</p>
-                            </div>
-                            <div class="quiz-info">
-                                <div class="info-item">
-                                    <i class="fas fa-clock"></i>
-                                    <span>1 quiz par jour</span>
-                                </div>
-                                <div class="info-item">
-                                    <i class="fas fa-question-circle"></i>
-                                    <span>10 questions</span>
-                                </div>
-                                <div class="info-item">
-                                    <i class="fas fa-gift"></i>
-                                    <span>Tickets gratuits</span>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary btn-large" id="startQuizBtn" aria-label="Commencer le quiz quotidien" tabindex="0">
-                                <i class="fas fa-play"></i>
-                                Commencer le Quiz
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Quiz In Progress -->
-                    <div class="quiz-game hidden" id="quizGame">
-                        <div class="quiz-card">
-                            <div class="quiz-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" id="progressFill"></div>
-                                </div>
-                                <span class="question-counter">
-                                    Question <span id="currentQuestion">1</span> / 10
-                                </span>
-                            </div>
-                            
-                            <div class="question-container">
-                                <h3 class="question-text" id="questionText">
-                                    Quelle est l'arme d'assaut la plus populaire dans CODM ?
-                                </h3>
-                                
-                                <div class="answers-container" id="answersContainer">
-                                    <!-- Réponses générées dynamiquement -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quiz Results -->
-                    <div class="quiz-results hidden" id="quizResults">
-                        <div class="quiz-card">
-                            <div class="results-header">
-                                <div class="score-circle">
-                                    <span class="score-text" id="finalScore">8/10</span>
-                                </div>
-                                <h2 class="results-title" id="resultsTitle">Excellent !</h2>
-                                <p class="results-message" id="resultsMessage">
-                                    Tu maîtrises vraiment Call of Duty Mobile !
-                                </p>
-                            </div>
-                            
-                            <div class="results-actions">
-                                <button class="btn btn-primary" id="participateBtn" aria-label="Participer au tirage mensuel" tabindex="0">
-                                    <i class="fas fa-ticket-alt"></i>
-                                    Participer au Tirage
-                                </button>
-                                <button class="btn btn-secondary" id="shareScoreBtn" aria-label="Partager mon score" tabindex="0">
-                                    <i class="fas fa-share"></i>
-                                    Partager mon Score
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Already Played Today -->
-                    <div class="quiz-completed hidden" id="quizCompleted">
-                        <div class="quiz-card">
-                            <div class="completed-content">
-                                <i class="fas fa-check-circle completed-icon"></i>
-                                <h2>Quiz terminé pour aujourd'hui !</h2>
-                                <p>Reviens demain pour un nouveau défi</p>
-                                <div class="completed-stats">
-                                    <div class="stat">
-                                        <span class="stat-value" id="todayScore">8/10</span>
-                                        <span class="stat-label">Ton score</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="stat-value" id="totalTickets">3</span>
-                                        <span class="stat-label">Tes tickets</span>
-                                    </div>
-                                </div>
-                                <button class="btn btn-secondary" id="shareBtn" aria-label="Partager et gagner des tickets" tabindex="0">
-                                    <i class="fas fa-share"></i>
-                                    Partager & Gagner des Tickets
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Participation Form -->
-            <div class="modal hidden" id="participationModal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3><i class="fas fa-ticket-alt"></i> Participer au Tirage</h3>
-                        <button class="modal-close" id="closeModal" aria-label="Fermer la fenêtre de participation">
-                            <i class="fas fa-times"></i>
-                        </div>
-                        <div class="quiz-info">
-                        </button>
-                    </div>
-                    <form class="participation-form" id="participationForm" action="https://formspree.io/f/mwpqlbvv" method="POST">
-    <!-- Message de confirmation après participation -->
-    <div id="participationConfirmation" class="confirmation-message" role="status" aria-live="polite" style="display:none;"></div>
-                        <div class="info-item">
-                            <i class="fas fa-clock"></i>
-                            <span>1 quiz par jour</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-question-circle"></i>
-                            <span>10 questions</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-gift"></i>
-                            <span>Tickets gratuits</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Pseudo :</label>
-                            <input type="text" id="username" name="username" required 
-                                   placeholder="Ton pseudo de joueur">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email :</label>
-                            <input type="email" id="email" name="email" required 
-                                   placeholder="ton.email@exemple.com">
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="rgpdConsent" name="rgpdConsent" required>
-                                <span class="checkmark"></span>
-                                J'accepte le traitement de mes données personnelles 
-                                <a href="pages/politique-confidentialite.html" target="_blank">
-                                    (Politique de confidentialité)
-                                </a>
-                            </label>
-                        </div>
-                        <div class="ticket-info">
-                            <p><i class="fas fa-ticket-alt"></i> Tu recevras <strong>1 ticket</strong> pour le tirage mensuel</p>
-                            <p class="bonus-info">
-                                <i class="fas fa-plus-circle"></i>
-                                Partage ton score pour gagner des tickets bonus !
-                            </p>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i>
-                            Participer au Tirage
-                        </button>
-                    </form>
+                    <button id="start-quiz-btn" class="btn btn-primary">
+                        Commencer le Quiz
+                    </button>
+                    
+                    <button id="leaderboard-btn" class="btn btn-secondary">
+                        Voir le Classement
+                    </button>
                 </div>
             </div>
+        </section>
 
-            <!-- Share Modal -->
-            <div class="modal hidden" id="shareModal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3><i class="fas fa-share"></i> Partager & Gagner</h3>
-                        <button class="modal-close" id="closeShareModal" aria-label="Fermer la fenêtre de partage">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="share-content">
-                        <p class="share-message">
-                            Partage ton score pour gagner plus de tickets !<br>
-                            <strong>Chaque ami inscrit via ton lien = +1 chance de gagner !</strong>
-                        </p>
-                        
-                        <div class="share-buttons">
-                            <button class="share-btn whatsapp" id="shareWhatsApp" data-platform="whatsapp">
-                                <i class="fab fa-whatsapp"></i>
-                                WhatsApp
-                            </button>
-                            <button class="share-btn facebook" id="shareFacebook" data-platform="facebook">
-                                <i class="fab fa-facebook-f"></i>
-                                Facebook
-                            </button>
-                            <button class="share-btn twitter" id="shareTwitter" data-platform="twitter">
-                                <i class="fab fa-twitter"></i>
-                                Twitter
-                            </button>
-                            <button class="share-btn messenger" id="shareMessenger" data-platform="messenger">
-                                <i class="fab fa-facebook-messenger"></i>
-                                Messenger
-                            </button>
+        <!-- Quiz Screen -->
+        <section id="quiz-screen" class="screen">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
                         </div>
-                        
-                        <div class="referral-section">
-                            <h4>Ton lien de parrainage :</h4>
-                            <div class="referral-link">
-                                <input type="text" id="referralLinkInput" readonly 
-                                       value="https://quizcodm.com?ref=tonpseudo" aria-label="Lien de parrainage (lecture seule)">
-                                <button class="copy-btn" id="copyLinkBtn" aria-label="Copier le lien de parrainage">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <span id="question-counter" class="question-counter">1/10</span>
                     </div>
+                    <button id="quit-quiz-btn" class="btn-quit">✕</button>
+                </div>
+                
+                <div class="quiz-content">
+    <div id="question-image" class="question-image"></div>
+    <h2 id="question-text" class="question-text"></h2>
+    <div id="answers-container" class="answers-container"></div>
+    <div id="explanation" class="explanation" style="display:none;margin-top:1em;color:#01ff38;font-weight:500;"></div>
+</div>
+                
+                <div class="quiz-footer">
+                    <button id="next-question-btn" class="btn btn-primary" disabled>
+                        Question Suivante
+                    </button>
                 </div>
             </div>
+        </section>
 
-            <!-- Leaderboard Section -->
-            <section class="leaderboard-section" id="leaderboard">
-                <div class="section-header">
-                    <h2><i class="fas fa-trophy"></i> Classement du Mois</h2>
-                    <p>Les 10 meilleurs scores de ce mois</p>
+        <!-- Results Screen -->
+        <section id="results-screen" class="screen">
+            <div class="results-container">
+                <div class="results-header">
+                    <h2>Résultats du Quiz</h2>
                 </div>
-                <div class="leaderboard-container">
-                    <div class="leaderboard-list" id="leaderboardList" aria-live="polite">
-                        <!-- Classement généré dynamiquement -->
+                
+                <div class="score-display">
+                    <div class="score-circle">
+                        <span id="final-score" class="score-number">0/10</span>
+                    </div>
+                    <p id="score-message" class="score-message"></p>
+                </div>
+                
+                <div class="score-details">
+                    <div class="detail-item">
+                        <span class="label">Bonnes réponses :</span>
+                        <span id="correct-count" class="value">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Mauvaises réponses :</span>
+                        <span id="incorrect-count" class="value">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Pourcentage :</span>
+                        <span id="percentage" class="value">0%</span>
                     </div>
                 </div>
-            </section>
-
-            <!-- Winners Section -->
-            <section class="winners-section" id="prizes">
-                <div class="section-header">
-                    <h2><i class="fas fa-gift"></i> Gagnants du Mois Dernier</h2>
-                    <p>Félicitations aux 10 heureux gagnants !</p>
+                
+                <div class="results-actions">
+                    <button id="share-score-btn" class="btn btn-primary">
+                        Partager mon Score
+                    </button>
+                    <button id="replay-btn" class="btn btn-secondary">
+                        Rejouer Demain
+                    </button>
+                    <button id="home-btn" class="btn btn-tertiary">
+                        Accueil
+                    </button>
                 </div>
-                <div class="winners-container">
-                    <div class="winners-grid" id="winnersList" aria-live="polite">
-                        <!-- Gagnants générés dynamiquement -->
-                    </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard Screen -->
+        <section id="leaderboard-screen" class="screen">
+            <div class="leaderboard-container">
+                <div class="leaderboard-header">
+                    <h2>🏆 Classement Local</h2>
+                    <button id="close-leaderboard-btn" class="btn-close">✕</button>
                 </div>
-                <div class="next-draw">
-                    <p><i class="fas fa-calendar-alt"></i> Prochain tirage dans <span id="countdown">40 jours</span></p>
+                
+                <div id="leaderboard-list" class="leaderboard-list">
+                    <!-- Scores will be inserted here -->
                 </div>
-            </section>
+                
+                <div class="leaderboard-footer">
+                    <p class="leaderboard-note">Classement réinitialisé chaque mois</p>
+                </div>
+            </div>
+        </section>
 
-        </div>
-    </main>
-
-
+        <!-- Share Modal -->
+<!--
+<div id="share-modal" class="modal">
+  ...
+</div>
+-->
 
     <!-- Footer -->
-    <footer class="footer" role="contentinfo" aria-label="Informations légales et RGPD">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-links" aria-label="Liens légaux et contact">
-                    <a href="pages/mentions-legales.html">Mentions légales</a>
-                    <a href="pages/politique-confidentialite.html">Politique de confidentialité</a>
-                    <a href="mailto:Coyd2976@gmail.com">Contact</a>
-                </div>
-                <div class="footer-disclaimer" aria-label="Disclaimer et RGPD">
-                    <p>Quiz CODM n'est pas affilié à Activision ou Call of Duty Mobile</p>
-                    <p>&copy; 2025 Quiz CODM - Tous droits réservés</p>
-                </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Quiz CODM - Créé par Coyd WILLZ</p>
+            <div class="footer-links">
+                <a href="pages/mentions-legales.html">Mentions légales</a>
+                <a href="pages/politique-confidentialite.html">Politique de confidentialité</a>
+                <a href="mailto:Coyd2976@gmail.com">Contact</a>
             </div>
         </div>
     </footer>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay hidden" id="loadingOverlay">
-        <div class="loading-spinner">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>Chargement...</p>
-        </div>
-    </div>
-
     <!-- JavaScript Files -->
+    <script src="assets/images.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/questions.js"></script>
     <script src="js/share.js"></script>
-    <script src="js/referral.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
