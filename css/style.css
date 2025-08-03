@@ -1,4 +1,20 @@
 /* ===== RESET & BASE STYLES ===== */
+
+.highlight-link {
+    color: #FFD700;
+}
+
+.footer-link {
+    color: #FFD700;
+    margin: 0 1rem;
+}
+
+.explanation-visible {
+    display: block !important;
+    margin-top: 1em;
+    color: #01ff38;
+    font-weight: 500;
+}
 * {
     margin: 0;
     padding: 0;
@@ -91,6 +107,45 @@ body {
 /* ===== APP CONTAINER ===== */
 .app-container {
     min-height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.main-content {
+    width: 100%;
+    display: block;
+}
+
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: var(--spacing-lg);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.quiz-container, .results-container, .leaderboard-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md);
+    box-sizing: border-box;
+    display: block;
+}
+
+.screen.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    width: 100%;
+    margin: 0;
+    padding: var(--spacing-md) 0;
+    background: rgba(0, 0, 0, 0.95);
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+    text-align: center;
     position: relative;
 }
 
@@ -130,15 +185,14 @@ body {
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.7) 100%);
-    z-index: 1;
+    z-index: 0;
+    pointer-events: none;
 }
 
-.hero-content,
-.quiz-container,
-.results-container {
+.hero-content, .quiz-container, .results-container, .leaderboard-container, .modal-content {
     position: relative;
-    z-index: 2; /* Ensure content is above the overlay */
-}
+    z-index: 1;
+} /* Ensure content is above the overlay */
 
 .hero-title {
     font-family: var(--font-secondary);
@@ -159,10 +213,9 @@ body {
 }
 
 .hero-description {
-    font-size: 1.1rem;
-    color: var(--light-gray);
-    margin-bottom: var(--spacing-xl);
-    opacity: 0.9;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+    opacity: 0.85;
 }
 
 /* ===== HERO STATS ===== */
@@ -181,6 +234,7 @@ body {
     padding: var(--spacing-md);
     border-radius: var(--radius-lg);
     border: 1px solid rgba(255, 215, 0, 0.2);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     min-width: 120px;
 }
@@ -261,6 +315,7 @@ body {
     border-radius: var(--radius-xl);
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-lg);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 215, 0, 0.1);
 }
@@ -407,6 +462,7 @@ body {
     border-radius: var(--radius-xl);
     padding: var(--spacing-xxl);
     box-shadow: var(--shadow-lg);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 215, 0, 0.1);
 }
@@ -479,10 +535,10 @@ body {
     border-radius: var(--radius-xl);
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-lg);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 215, 0, 0.1);
 }
-
 .leaderboard-header {
     display: flex;
     justify-content: space-between;
@@ -550,14 +606,23 @@ body {
 }
 
 .modal-content {
-    background: rgba(26, 26, 26, 0.95);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-xl);
-    max-width: 500px;
-    width: 90%;
+    background: rgba(26, 26, 26, 0.98);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    max-width: 340px;
+    width: 98vw;
+    min-width: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.96rem;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 215, 0, 0.2);
 }
+
 
 .modal-header {
     display: flex;
@@ -692,4 +757,16 @@ body {
 /* Ensure correct/incorrect styles persist when disabled */
 .btn-answer.correct:disabled, .btn-answer.incorrect:disabled {
     opacity: 1;
+}
+
+/* Ajoutez vos styles personnalisés ici */
+
+.gold-link {
+    color: #FFD700;
+}
+.spaced-link {
+    margin: 0 1rem;
+}
+.external-link {
+    text-decoration: underline;
 }
