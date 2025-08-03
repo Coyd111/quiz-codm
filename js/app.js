@@ -235,21 +235,42 @@ function handleShowLeaderboard() {
 }
 
 function handleShareScore() {
-    // Récupérer les données du score à partager
-    const scoreData = {
-        score: appState.userScore,
-        total: APP_CONFIG.totalQuestions,
-        timeElapsed: appState.timeElapsed,
-        playerName: appState.playerName || "Invité"
-    };
-
-    // Vérifier la présence du module de partage et ouvrir la modale
-    if (window.QuizShare && typeof window.QuizShare.openShareModal === "function") {
-        window.QuizShare.openShareModal(scoreData);
+    // Récupérer les données du score à partager à partir de l'écran de résultats si possible
+    let scoreData = null;
+    // Si updateResultsScreen a déjà été appelé, on tente de retrouver les vraies valeurs
+    if (window._lastScoreData && typeof window._lastScoreData.score === 'number') {
+        scoreData = window._lastScoreData;
     } else {
-        alert("Le module de partage n'est pas chargé !");
+        scoreData = {
+            score: typeof APP_CONFIG.userScore === 'number' ? APP_CONFIG.userScore : 0,
+            questionsCount: appState.currentQuiz && appState.currentQuiz.questions ? appState.currentQuiz.questions.length : APP_CONFIG.totalQuestions,
+            timeElapsed: typeof appState.timeElapsed === 'number' ? appState.timeElapsed : 0,
+            playerName: (typeof QuizStorage !== 'undefined' && QuizStorage.getUserName) ? QuizStorage.getUserName() : (appState.playerName || 'Invité')
+        };
+    }
+
+    // Diagnostic console
+    if (!window.QuizShare) {
+        console.error('[Partage] QuizShare n\'est pas défini sur window.');
+        alert("Erreur : Le module de partage n'est pas chargé ! (QuizShare absent)");
+        return;
+    }
+    if (typeof window.QuizShare.openShareModal !== 'function') {
+        console.error('[Partage] QuizShare.openShareModal n\'est pas une fonction. Valeur :', window.QuizShare.openShareModal);
+        alert("Erreur : La fonction de partage n'est pas disponible !");
+        return;
+    }
+
+    try {
+        window.QuizShare.openShareModal(scoreData);
+        console.log('[Partage] Modal de partage ouvert avec les données :', scoreData);
+    } catch (e) {
+        console.error('[Partage] Erreur lors de l\'ouverture du modal de partage :', e);
+        alert("Une erreur est survenue lors de l'ouverture du partage. Consultez la console.");
     }
 }
+
+
 
 function handleQuitQuiz() {
     if (confirm('Êtes-vous sûr de vouloir quitter ? Votre progression sera perdue.')) {
@@ -405,6 +426,7 @@ function endQuiz() {
     QuizStorage.saveScore(scoreData);
     updateResultsScreen(scoreData);
     showScreen('results-screen');
+    window._lastScoreData = scoreData; // Stocke pour le partage
     console.log('🏁 Quiz terminé!', scoreData);
 }
 
