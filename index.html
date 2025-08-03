@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/animations.css">
     
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-papmKjv4Q+V9+0lK8FJr2L8u3wF4vJZlL0wQnVv8f4u8lK6E5w8v5u0F+Q2wU4p8lF8wQ8v5u0F+Q2wU4p8lF8w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,40 +31,24 @@
 
     <!-- Main Container -->
     <div id="app" class="app-container">
-        
+      <main class="main-content">
         <!-- Home Screen -->
         <section id="home-screen" class="screen active">
-            <div class="hero-section">
-                <div class="hero-content">
-                    <h1 class="hero-title">Quiz CODM</h1>
-                    <p class="hero-subtitle">Quiz quotidien gratuit sur Call of Duty Mobile</p>
-                    <p class="hero-description">Testez vos connaissances sur l'univers CODM : armes, cartes, personnages, modes de jeu et bien plus !</p>
-                    
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <span class="stat-number">10</span>
-                            <span class="stat-label">Questions</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">300+</span>
-                            <span class="stat-label">Questions disponibles</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">Gratuit</span>
-                        </div>
-                    </div>
-                    
-                    <button id="start-quiz-btn" class="btn btn-primary">
-                        Commencer le Quiz
-                    </button>
-                    
-                    <button id="leaderboard-btn" class="btn btn-secondary">
-                        Voir le Classement
-                    </button>
-                </div>
-            </div>
-        </section>
+  <div class="hero-section compact">
+    <h1 class="hero-title">Quiz CODM</h1>
+    <div class="hero-stats compact">
+      <div class="stat-item"><span class="stat-number">10</span><span class="stat-label">Questions</span></div>
+      <div class="stat-item"><span class="stat-number">300+</span><span class="stat-label">Questions</span></div>
+      <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Gratuit</span></div>
+    </div>
+    <p class="hero-subtitle">Quiz quotidien gratuit sur CODM</p>
+    <p class="hero-description hide-on-mobile">Testez vos connaissances sur l'univers CODM : armes, cartes, personnages, modes de jeu et plus !</p>
+    <div class="home-actions">
+      <button id="start-quiz-btn" class="btn btn-primary">Commencer le Quiz</button>
+      <button id="leaderboard-btn" class="btn btn-secondary">Classement</button>
+    </div>
+  </div>
+</section>
 
         <!-- Quiz Screen -->
         <section id="quiz-screen" class="screen">
@@ -81,7 +67,7 @@
     <div id="question-image" class="question-image"></div>
     <h2 id="question-text" class="question-text"></h2>
     <div id="answers-container" class="answers-container"></div>
-    <div id="explanation" class="explanation" style="display:none;margin-top:1em;color:#01ff38;font-weight:500;"></div>
+    <div id="explanation" class="explanation"></div>
 </div>
                 
                 <div class="quiz-footer">
@@ -152,32 +138,28 @@
                 </div>
             </div>
         </section>
-
-        <!-- Share Modal -->
-<!--
-<div id="share-modal" class="modal">
-  ...
-</div>
--->
-
-    <!-- Footer -->
-    <footer class="footer">
+      </main>
+      <!-- Share Modal -->
+      <div id="share-modal" class="modal"></div>
+      <!-- Footer -->
+      <footer class="footer">
         <div class="footer-content">
-            <p>&copy; 2025 Quiz CODM - Créé par Coyd WILLZ</p>
-            <div class="footer-links">
-                <a href="pages/mentions-legales.html">Mentions légales</a>
-                <a href="pages/politique-confidentialite.html">Politique de confidentialité</a>
-                <a href="mailto:Coyd2976@gmail.com">Contact</a>
-            </div>
+          <p>&copy; 2025 Quiz CODM - Créé par Coyd WILLZ</p>
+          <div class="footer-links">
+            <a href="pages/mentions-legales.html">Mentions légales</a>
+            <a href="pages/politique-confidentialite.html">Politique de confidentialité</a>
+            <a href="mailto:Coyd2976@gmail.com">Contact</a>
+          </div>
         </div>
-    </footer>
-
+      </footer>
+    </div>
     <!-- JavaScript Files -->
     <script src="assets/images.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/questions.js"></script>
     <script src="js/share.js"></script>
+    <script src="js/referral.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
