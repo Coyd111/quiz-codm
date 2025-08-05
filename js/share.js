@@ -7,7 +7,7 @@
 // ===== CONFIGURATION DU PARTAGE =====
 const SHARE_CONFIG = {
     siteName: 'Quiz CODM',
-    siteUrl: window.location.origin,
+    siteUrl: window.location.origin + '/quiz-codm/',
     hashtags: ['CODM', 'CallOfDutyMobile', 'Quiz', 'Gaming'],
     defaultMessage: 'Je viens de faire le Quiz Call of Duty Mobile !',
     shareImage: null, // URL d'image pour partage (sera générée)
