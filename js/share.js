@@ -10,7 +10,7 @@ const SHARE_CONFIG = {
     siteUrl: window.location.origin + '/quiz-codm/',
     hashtags: ['CODM', 'CallOfDutyMobile', 'Quiz', 'Gaming'],
     defaultMessage: 'Je viens de faire le Quiz Call of Duty Mobile !',
-    shareImage: null, // URL d'image pour partage (sera générée)
+    shareImage: 'https://uhdpaper.com/wp-content/uploads/2022/07/call-of-duty-mobile-uhdpaper.com-4K-8.2931.jpg', // Image de partage
     enabledPlatforms: ['twitter', 'facebook', 'whatsapp', 'telegram', 'copy', 'native']
 };
 
